@@ -55,8 +55,8 @@ export function SeasonalCalendarPage() {
   return (
     <div className="space-y-5">
       <div>
-        <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 flex items-center gap-2">🌱 Seasonal Calendar</h1>
-        <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">Know what's in season to buy cheaper, fresher produce</p>
+        <h1 className="text-2xl font-bold text-gray-800 dark:text-[#FFFFFF] flex items-center gap-2">🌱 Seasonal Calendar</h1>
+        <p className="text-gray-500 dark:text-[#9E9E9E] text-sm mt-1">Know what's in season to buy cheaper, fresher produce</p>
       </div>
 
       {/* Search */}
@@ -67,7 +67,7 @@ export function SeasonalCalendarPage() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search produce..."
-          className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm outline-none focus:border-green-400"
+          className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-[#1E1E1E] text-sm outline-none focus:border-green-400"
         />
       </div>
 
@@ -76,7 +76,7 @@ export function SeasonalCalendarPage() {
         {months.map((m) => (
           <button key={m} onClick={() => setSelectedMonth(m)}
             className={`flex flex-col items-center p-2 rounded-xl transition-all ${
-              selectedMonth === m ? "bg-green-600 text-white shadow-md" : "bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-green-50"
+              selectedMonth === m ? "bg-green-600 text-white shadow-md" : "bg-white dark:bg-[#1E1E1E] border border-gray-100 dark:border-[#2D2D2D] text-gray-600 dark:text-gray-300 hover:bg-green-50"
             }`}>
             <span className="text-xs font-semibold mb-1">{m}</span>
             <div className="flex flex-wrap gap-0.5 justify-center">
@@ -102,16 +102,16 @@ export function SeasonalCalendarPage() {
 
       {/* Selected month items */}
       <div>
-        <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-3">
+        <h2 className="text-lg font-bold text-gray-800 dark:text-[#FFFFFF] mb-3">
           {selectedMonth} {new Date().getFullYear()} – In Season Now
         </h2>
         <div className="space-y-3">
           {filtered.map((item) => (
-            <div key={item.item} className="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-gray-700">
+            <div key={item.item} className="bg-white dark:bg-[#1E1E1E] rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-[#2D2D2D]">
               <div className="flex items-center gap-3 mb-2">
                 <span className="text-3xl">{item.emoji}</span>
                 <div className="flex-1">
-                  <p className="font-semibold text-gray-800 dark:text-gray-100">{item.item}</p>
+                  <p className="font-semibold text-gray-800 dark:text-[#FFFFFF]">{item.item}</p>
                   <p className="text-sm text-gray-500">{item.priceRange}</p>
                 </div>
                 <span className={`text-xs px-2 py-1 rounded-full font-medium ${statusColors[item.status]}`}>

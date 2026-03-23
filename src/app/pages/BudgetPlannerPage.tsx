@@ -112,12 +112,12 @@ export function BudgetPlannerPage() {
   return (
     <div className="space-y-5">
       <div>
-        <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 flex items-center gap-2">💰 Budget Planner</h1>
-        <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">Track your grocery spending and savings goals</p>
+        <h1 className="text-2xl font-bold text-gray-800 dark:text-[#FFFFFF] flex items-center gap-2">💰 Budget Planner</h1>
+        <p className="text-gray-500 dark:text-[#9E9E9E] text-sm mt-1">Track your grocery spending and savings goals</p>
       </div>
 
       {/* Budget Summary */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-gray-700">
+      <div className="bg-white dark:bg-[#1E1E1E] rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-[#2D2D2D]">
         <div className="flex items-center justify-between mb-4">
           <div>
             <p className="text-gray-500 text-sm mb-1">Monthly Budget – March 2026</p>
@@ -125,14 +125,14 @@ export function BudgetPlannerPage() {
               <div className="flex items-center gap-2">
                 <span className="text-2xl font-bold text-gray-400">₱</span>
                 <input type="number" value={budgetInput} onChange={(e) => setBudgetInput(e.target.value)}
-                  className="text-2xl font-bold border-b-2 border-green-400 outline-none w-28 dark:bg-transparent dark:text-gray-100" />
+                  className="text-2xl font-bold border-b-2 border-green-400 outline-none w-28 dark:bg-transparent dark:text-[#FFFFFF]" />
                 <button onClick={() => { setBudget(Number(budgetInput)); setEditBudget(false); }}
                   className="text-xs px-3 py-1 bg-green-600 text-white rounded-lg">Save</button>
               </div>
             ) : (
-              <p className="text-3xl font-bold text-gray-800 dark:text-gray-100 flex items-center gap-2">
+              <p className="text-3xl font-bold text-gray-800 dark:text-[#FFFFFF] flex items-center gap-2">
                 ₱{budget.toLocaleString()}
-                <button onClick={() => setEditBudget(true)} className="text-xs px-2 py-0.5 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-500 font-normal">Edit</button>
+                <button onClick={() => setEditBudget(true)} className="text-xs px-2 py-0.5 rounded-lg bg-gray-100 dark:bg-[#2D2D2D] text-gray-500 font-normal">Edit</button>
               </p>
             )}
           </div>
@@ -147,7 +147,7 @@ export function BudgetPlannerPage() {
             <span>₱{spent.toFixed(0)} spent</span>
             <span>{progress.toFixed(0)}%</span>
           </div>
-          <div className="h-3 rounded-full bg-gray-100 dark:bg-gray-700 overflow-hidden">
+          <div className="h-3 rounded-full bg-gray-100 dark:bg-[#2D2D2D] overflow-hidden">
             <div className="h-full rounded-full transition-all"
               style={{ width: `${progress}%`, background: progress > 80 ? "#ef4444" : progress > 60 ? "#f59e0b" : "#2E7D32" }} />
           </div>
@@ -158,7 +158,7 @@ export function BudgetPlannerPage() {
       {/* AI Insights */}
       <div className="space-y-2">
         <div className="flex items-center gap-2 mb-1">
-          <p className="font-bold text-gray-800 dark:text-gray-100">🤖 AI Savings Insights</p>
+          <p className="font-bold text-gray-800 dark:text-[#FFFFFF]">🤖 AI Savings Insights</p>
           <AIBadge />
         </div>
         <AITip>You're spending 20% more on meat this month. Try chicken instead of pork to save ₱500.</AITip>
@@ -175,8 +175,8 @@ export function BudgetPlannerPage() {
 
       {/* Charts */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-gray-700">
-          <h3 className="font-bold text-gray-800 dark:text-gray-100 mb-3">Spending by Category</h3>
+        <div className="bg-white dark:bg-[#1E1E1E] rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-[#2D2D2D]">
+          <h3 className="font-bold text-gray-800 dark:text-[#FFFFFF] mb-3">Spending by Category</h3>
           <ResponsiveContainer width="100%" height={200}>
             <PieChart>
               <Pie data={spendingData} dataKey="amount" nameKey="category" cx="50%" cy="50%" outerRadius={80}>
@@ -188,8 +188,8 @@ export function BudgetPlannerPage() {
           </ResponsiveContainer>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-gray-700">
-          <h3 className="font-bold text-gray-800 dark:text-gray-100 mb-3">Monthly Spending Trend</h3>
+        <div className="bg-white dark:bg-[#1E1E1E] rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-[#2D2D2D]">
+          <h3 className="font-bold text-gray-800 dark:text-[#FFFFFF] mb-3">Monthly Spending Trend</h3>
           <ResponsiveContainer width="100%" height={200}>
             <BarChart data={monthlyData}>
               <XAxis dataKey="month" tick={{ fontSize: 11 }} />
@@ -204,7 +204,7 @@ export function BudgetPlannerPage() {
       {/* Savings Goals */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100">🎯 Savings Goals</h2>
+          <h2 className="text-lg font-bold text-gray-800 dark:text-[#FFFFFF]">🎯 Savings Goals</h2>
           <button onClick={() => setAddGoalOpen(true)}
             className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-green-600 text-white text-sm font-medium hover:bg-green-700 transition-colors">
             <Plus size={14} /> Add Goal
@@ -214,16 +214,16 @@ export function BudgetPlannerPage() {
           {goalsState.map((g) => {
             const pct = Math.min((g.saved / g.target) * 100, 100);
             return (
-              <div key={g.id} className="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-gray-700">
+              <div key={g.id} className="bg-white dark:bg-[#1E1E1E] rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-[#2D2D2D]">
                 <div className="flex items-center gap-3 mb-3">
                   <span className="text-3xl">{g.emoji}</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-gray-800 dark:text-gray-100">{g.name}</p>
+                    <p className="font-semibold text-gray-800 dark:text-[#FFFFFF]">{g.name}</p>
                     <p className="text-sm text-gray-400">₱{g.saved.toLocaleString()} of ₱{g.target.toLocaleString()}</p>
                   </div>
                   <p className="font-bold text-green-700 text-lg">{pct.toFixed(0)}%</p>
                 </div>
-                <div className="h-2.5 rounded-full bg-gray-100 dark:bg-gray-700 overflow-hidden">
+                <div className="h-2.5 rounded-full bg-gray-100 dark:bg-[#2D2D2D] overflow-hidden">
                   <div className="h-full rounded-full bg-green-600 transition-all" style={{ width: `${pct}%` }} />
                 </div>
               </div>
@@ -235,21 +235,21 @@ export function BudgetPlannerPage() {
       {/* Transactions */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100">📋 Recent Purchases</h2>
+          <h2 className="text-lg font-bold text-gray-800 dark:text-[#FFFFFF]">📋 Recent Purchases</h2>
           <button onClick={() => setAddTxOpen(true)}
-            className="flex items-center gap-1 px-3 py-1.5 rounded-xl border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+            className="flex items-center gap-1 px-3 py-1.5 rounded-xl border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 text-sm hover:bg-gray-50 dark:hover:bg-[#2D2D2D] transition-colors">
             <Plus size={14} /> Add Manual
           </button>
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
+        <div className="bg-white dark:bg-[#1E1E1E] rounded-2xl shadow-sm border border-gray-100 dark:border-[#2D2D2D] overflow-hidden">
           {transactions.map((tx, idx) => (
-            <div key={tx.id} className={`flex items-center gap-3 px-4 py-3 ${idx !== transactions.length - 1 ? "border-b border-gray-50 dark:border-gray-700" : ""}`}>
+            <div key={tx.id} className={`flex items-center gap-3 px-4 py-3 ${idx !== transactions.length - 1 ? "border-b border-gray-50 dark:border-[#2D2D2D]" : ""}`}>
               <span className="text-2xl">{tx.emoji}</span>
               <div className="flex-1">
-                <p className="font-medium text-gray-700 dark:text-gray-200 text-sm">{tx.item}</p>
+                <p className="font-medium text-gray-700 dark:text-[#E0E0E0] text-sm">{tx.item}</p>
                 <p className="text-xs text-gray-400">{tx.date} · {tx.qty}</p>
               </div>
-              <p className="font-semibold text-gray-700 dark:text-gray-200">₱{tx.amount.toFixed(2)}</p>
+              <p className="font-semibold text-gray-700 dark:text-[#E0E0E0]">₱{tx.amount.toFixed(2)}</p>
             </div>
           ))}
         </div>
@@ -258,35 +258,35 @@ export function BudgetPlannerPage() {
       {/* Add Goal Modal */}
       {addGoalOpen && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setAddGoalOpen(false)}>
-          <div className="bg-white dark:bg-gray-800 rounded-2xl max-w-sm w-full p-5 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-white dark:bg-[#1E1E1E] rounded-2xl max-w-sm w-full p-5 shadow-2xl" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold text-lg text-gray-800 dark:text-gray-100">Add Savings Goal</h3>
-              <button onClick={() => setAddGoalOpen(false)} className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-400">
+              <h3 className="font-bold text-lg text-gray-800 dark:text-[#FFFFFF]">Add Savings Goal</h3>
+              <button onClick={() => setAddGoalOpen(false)} className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-[#2D2D2D] transition-colors text-gray-400">
                 <X size={18} />
               </button>
             </div>
             <div className="space-y-3">
               <div>
-                <label className="text-sm font-medium text-gray-700 dark:text-gray-200 block mb-1">Goal Name</label>
+                <label className="text-sm font-medium text-gray-700 dark:text-[#E0E0E0] block mb-1">Goal Name</label>
                 <input
                   value={goalName}
                   onChange={(e) => setGoalName(e.target.value)}
                   placeholder="e.g. Emergency Fund"
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 text-sm outline-none focus:border-green-400 dark:bg-gray-700 dark:text-gray-100"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 text-sm outline-none focus:border-green-400 dark:bg-[#2D2D2D] dark:text-[#FFFFFF]"
                 />
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-700 dark:text-gray-200 block mb-1">Target Amount (₱)</label>
+                <label className="text-sm font-medium text-gray-700 dark:text-[#E0E0E0] block mb-1">Target Amount (₱)</label>
                 <input
                   type="number"
                   value={goalTarget}
                   onChange={(e) => setGoalTarget(e.target.value)}
                   placeholder="e.g. 5000"
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 text-sm outline-none focus:border-green-400 dark:bg-gray-700 dark:text-gray-100"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 text-sm outline-none focus:border-green-400 dark:bg-[#2D2D2D] dark:text-[#FFFFFF]"
                 />
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-700 dark:text-gray-200 block mb-1">Icon (optional)</label>
+                <label className="text-sm font-medium text-gray-700 dark:text-[#E0E0E0] block mb-1">Icon (optional)</label>
                 <div className="flex gap-2 flex-wrap">
                   {["🎯", "🏦", "🧊", "🏠", "✈️", "📱", "💍", "🎓"].map((e) => (
                     <button
@@ -313,29 +313,29 @@ export function BudgetPlannerPage() {
       {/* Add Manual Transaction Modal */}
       {addTxOpen && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setAddTxOpen(false)}>
-          <div className="bg-white dark:bg-gray-800 rounded-2xl max-w-sm w-full p-5 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-white dark:bg-[#1E1E1E] rounded-2xl max-w-sm w-full p-5 shadow-2xl" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold text-lg text-gray-800 dark:text-gray-100">Add Purchase</h3>
-              <button onClick={() => setAddTxOpen(false)} className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-400">
+              <h3 className="font-bold text-lg text-gray-800 dark:text-[#FFFFFF]">Add Purchase</h3>
+              <button onClick={() => setAddTxOpen(false)} className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-[#2D2D2D] transition-colors text-gray-400">
                 <X size={18} />
               </button>
             </div>
             <div className="space-y-3">
               <div>
-                <label className="text-sm font-medium text-gray-700 dark:text-gray-200 block mb-1">Item Name</label>
+                <label className="text-sm font-medium text-gray-700 dark:text-[#E0E0E0] block mb-1">Item Name</label>
                 <input
                   value={txItem}
                   onChange={(e) => setTxItem(e.target.value)}
                   placeholder="e.g. Bangus, Pechay..."
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 text-sm outline-none focus:border-green-400 dark:bg-gray-700 dark:text-gray-100"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 text-sm outline-none focus:border-green-400 dark:bg-[#2D2D2D] dark:text-[#FFFFFF]"
                 />
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-700 dark:text-gray-200 block mb-1">Category (optional)</label>
+                <label className="text-sm font-medium text-gray-700 dark:text-[#E0E0E0] block mb-1">Category (optional)</label>
                 <select
                   value={txCategory}
                   onChange={(e) => setTxCategory(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 text-sm outline-none"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-[#2D2D2D] text-gray-700 dark:text-[#E0E0E0] text-sm outline-none"
                 >
                   {["Vegetables", "Meat", "Rice", "Fish", "Fruits", "Others"].map((c) => (
                     <option key={c}>{c}</option>
@@ -343,21 +343,21 @@ export function BudgetPlannerPage() {
                 </select>
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-700 dark:text-gray-200 block mb-1">Amount Spent (₱)</label>
+                <label className="text-sm font-medium text-gray-700 dark:text-[#E0E0E0] block mb-1">Amount Spent (₱)</label>
                 <input
                   type="number"
                   value={txAmount}
                   onChange={(e) => setTxAmount(e.target.value)}
                   placeholder="0.00"
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 text-sm outline-none focus:border-green-400 dark:bg-gray-700 dark:text-gray-100"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 text-sm outline-none focus:border-green-400 dark:bg-[#2D2D2D] dark:text-[#FFFFFF]"
                 />
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-700 dark:text-gray-200 block mb-1">Date</label>
+                <label className="text-sm font-medium text-gray-700 dark:text-[#E0E0E0] block mb-1">Date</label>
                 <input
                   value={txDate}
                   onChange={(e) => setTxDate(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 text-sm outline-none focus:border-green-400 dark:bg-gray-700 dark:text-gray-100"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 text-sm outline-none focus:border-green-400 dark:bg-[#2D2D2D] dark:text-[#FFFFFF]"
                   placeholder="Mar 21"
                 />
               </div>

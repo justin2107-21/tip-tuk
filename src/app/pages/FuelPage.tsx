@@ -71,8 +71,8 @@ export function FuelPage() {
   return (
     <div className="space-y-5">
       <div>
-        <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 flex items-center gap-2">⛽ Fuel Prices</h1>
-        <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">Real-time fuel prices by brand and area</p>
+        <h1 className="text-2xl font-bold text-gray-800 dark:text-[#FFFFFF] flex items-center gap-2">⛽ Fuel Prices</h1>
+        <p className="text-gray-500 dark:text-[#9E9E9E] text-sm mt-1">Real-time fuel prices by brand and area</p>
       </div>
 
       {/* Filters — now both dropdowns */}
@@ -80,20 +80,20 @@ export function FuelPage() {
         <select
           value={fuelType}
           onChange={(e) => setFuelType(e.target.value)}
-          className="px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 outline-none text-sm font-semibold"
+          className="px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-[#1E1E1E] text-gray-700 dark:text-[#E0E0E0] outline-none text-sm font-semibold"
         >
           {fuelTypeOptions.map((ft) => <option key={ft}>{ft}</option>)}
         </select>
 
         <select value={area} onChange={(e) => setArea(e.target.value)}
-          className="px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 outline-none text-sm">
+          className="px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-[#1E1E1E] text-gray-700 dark:text-[#E0E0E0] outline-none text-sm">
           {areas.map((a) => <option key={a}>{a}</option>)}
         </select>
 
         {/* Toggle */}
-        <div className="flex items-center bg-gray-100 dark:bg-gray-800 rounded-full p-1 gap-1">
-          <button onClick={() => setViewBy("brand")} className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${viewBy === "brand" ? "bg-white dark:bg-gray-700 shadow-sm text-gray-800 dark:text-gray-100" : "text-gray-500"}`}>By Brand</button>
-          <button onClick={() => setViewBy("area")} className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${viewBy === "area" ? "bg-white dark:bg-gray-700 shadow-sm text-gray-800 dark:text-gray-100" : "text-gray-500"}`}>By Area</button>
+        <div className="flex items-center bg-gray-100 dark:bg-[#1E1E1E] rounded-full p-1 gap-1">
+          <button onClick={() => setViewBy("brand")} className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${viewBy === "brand" ? "bg-white dark:bg-[#2D2D2D] shadow-sm text-gray-800 dark:text-[#FFFFFF]" : "text-gray-500"}`}>By Brand</button>
+          <button onClick={() => setViewBy("area")} className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${viewBy === "area" ? "bg-white dark:bg-[#2D2D2D] shadow-sm text-gray-800 dark:text-[#FFFFFF]" : "text-gray-500"}`}>By Area</button>
         </div>
       </div>
 
@@ -113,9 +113,9 @@ export function FuelPage() {
           const prev = data[data.length - 2].v;
           const rising = last > prev;
           return (
-            <div key={ft} className="bg-white dark:bg-gray-800 rounded-xl p-3 shadow-sm border border-gray-100 dark:border-gray-700">
+            <div key={ft} className="bg-white dark:bg-[#1E1E1E] rounded-xl p-3 shadow-sm border border-gray-100 dark:border-[#2D2D2D]">
               <p className="text-xs text-gray-500 font-medium mb-1">{ft}</p>
-              <p className="font-bold text-gray-800 dark:text-gray-100">₱{last.toFixed(2)}</p>
+              <p className="font-bold text-gray-800 dark:text-[#FFFFFF]">₱{last.toFixed(2)}</p>
               <div className="flex items-center gap-1 text-xs mb-2">
                 {rising ? <TrendingUp size={12} className="text-red-500" /> : <TrendingDown size={12} className="text-green-500" />}
                 <span className={rising ? "text-red-500" : "text-green-500"}>7-day trend</span>
@@ -154,12 +154,12 @@ export function FuelPage() {
       {/* Brand / Area list */}
       {viewBy === "brand" ? (
         <div className="space-y-2">
-          <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100">Ranked by Price – {fuelType}</h2>
+          <h2 className="text-lg font-bold text-gray-800 dark:text-[#FFFFFF]">Ranked by Price – {fuelType}</h2>
           {sorted.map((b, i) => (
-            <div key={b.brand} className="bg-white dark:bg-gray-800 rounded-xl px-4 py-3 shadow-sm border border-gray-100 dark:border-gray-700 flex items-center gap-3">
+            <div key={b.brand} className="bg-white dark:bg-[#1E1E1E] rounded-xl px-4 py-3 shadow-sm border border-gray-100 dark:border-[#2D2D2D] flex items-center gap-3">
               <span className="font-bold text-gray-400 text-sm w-5">#{i + 1}</span>
               <span className="text-xl">{b.logo}</span>
-              <p className="flex-1 font-semibold text-gray-800 dark:text-gray-100">{b.brand}</p>
+              <p className="flex-1 font-semibold text-gray-800 dark:text-[#FFFFFF]">{b.brand}</p>
               {i < 3 && (
                 <span className="text-xs font-bold px-2 py-1 rounded-full bg-green-100 text-green-700">
                   Save ₱{(getPriceForType(sorted[sorted.length - 1], fuelType) - getPriceForType(b, fuelType)).toFixed(2)}
@@ -174,12 +174,12 @@ export function FuelPage() {
         </div>
       ) : (
         <div className="space-y-2">
-          <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100">By Area – {fuelType}</h2>
+          <h2 className="text-lg font-bold text-gray-800 dark:text-[#FFFFFF]">By Area – {fuelType}</h2>
           {areaData.map((a) => (
-            <div key={a.area} className="bg-white dark:bg-gray-800 rounded-xl px-4 py-3 shadow-sm border border-gray-100 dark:border-gray-700 flex items-center gap-3">
+            <div key={a.area} className="bg-white dark:bg-[#1E1E1E] rounded-xl px-4 py-3 shadow-sm border border-gray-100 dark:border-[#2D2D2D] flex items-center gap-3">
               <span className="text-xl">📍</span>
               <div className="flex-1">
-                <p className="font-semibold text-gray-800 dark:text-gray-100">{a.area}</p>
+                <p className="font-semibold text-gray-800 dark:text-[#FFFFFF]">{a.area}</p>
                 <p className="text-xs text-gray-400">Range: ₱{a.min.toFixed(2)} – ₱{a.max.toFixed(2)}</p>
               </div>
               <div className="text-right">
@@ -193,7 +193,7 @@ export function FuelPage() {
       )}
 
       {/* Page Disclaimer */}
-      <div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
+      <div className="border-t border-gray-200 dark:border-[#2D2D2D] pt-4 mt-4">
         <p className="text-xs text-gray-400 text-center">
           Source: DOE — Oil Industry Management Bureau • Updates weekly
         </p>
@@ -202,10 +202,10 @@ export function FuelPage() {
       {/* Set Alert Modal */}
       {alertModalOpen && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setAlertModalOpen(false)}>
-          <div className="bg-white dark:bg-gray-800 rounded-2xl max-w-sm w-full p-6 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-white dark:bg-[#1E1E1E] rounded-2xl max-w-sm w-full p-6 shadow-2xl" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold text-lg text-gray-800 dark:text-gray-100">🔔 Set Price Alert</h3>
-              <button onClick={() => setAlertModalOpen(false)} className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-400">
+              <h3 className="font-bold text-lg text-gray-800 dark:text-[#FFFFFF]">🔔 Set Price Alert</h3>
+              <button onClick={() => setAlertModalOpen(false)} className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-[#2D2D2D] transition-colors text-gray-400">
                 <X size={18} />
               </button>
             </div>
@@ -219,27 +219,27 @@ export function FuelPage() {
             ) : (
               <div className="space-y-3">
                 <div>
-                  <label className="text-sm font-medium text-gray-700 dark:text-gray-200 block mb-1">Fuel Type</label>
-                  <div className="px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-200 text-sm">
+                  <label className="text-sm font-medium text-gray-700 dark:text-[#E0E0E0] block mb-1">Fuel Type</label>
+                  <div className="px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#2D2D2D] text-gray-700 dark:text-[#E0E0E0] text-sm">
                     {fuelType}
                   </div>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700 dark:text-gray-200 block mb-1">Target Price (₱/L)</label>
+                  <label className="text-sm font-medium text-gray-700 dark:text-[#E0E0E0] block mb-1">Target Price (₱/L)</label>
                   <input
                     type="number"
                     value={alertTarget}
                     onChange={(e) => setAlertTarget(e.target.value)}
                     placeholder="e.g. 65.00"
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 outline-none focus:border-green-400 text-sm"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-[#2D2D2D] text-gray-700 dark:text-[#E0E0E0] outline-none focus:border-green-400 text-sm"
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700 dark:text-gray-200 block mb-1">Area</label>
+                  <label className="text-sm font-medium text-gray-700 dark:text-[#E0E0E0] block mb-1">Area</label>
                   <select
                     value={alertArea}
                     onChange={(e) => setAlertArea(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 outline-none text-sm"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-[#2D2D2D] text-gray-700 dark:text-[#E0E0E0] outline-none text-sm"
                   >
                     {areas.map((a) => <option key={a}>{a}</option>)}
                   </select>

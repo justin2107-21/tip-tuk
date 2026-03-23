@@ -57,8 +57,8 @@ export function WasteReductionPage() {
   return (
     <div className="space-y-5">
       <div>
-        <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 flex items-center gap-2">♻️ Waste Reduction Alerts</h1>
-        <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">Surplus markdown alerts to save money & reduce food waste</p>
+        <h1 className="text-2xl font-bold text-gray-800 dark:text-[#FFFFFF] flex items-center gap-2">♻️ Waste Reduction Alerts</h1>
+        <p className="text-gray-500 dark:text-[#9E9E9E] text-sm mt-1">Surplus markdown alerts to save money & reduce food waste</p>
       </div>
 
       {/* Flash Sales */}
@@ -91,13 +91,13 @@ export function WasteReductionPage() {
         </div>
         <div className="space-y-2">
           {markdownSchedule.map((m, i) => (
-            <div key={i} className="flex items-center gap-3 p-3 bg-white dark:bg-gray-800 rounded-xl">
+            <div key={i} className="flex items-center gap-3 p-3 bg-white dark:bg-[#1E1E1E] rounded-xl">
               <div className="w-14 text-center">
                 <p className="text-xs text-gray-400">{m.day}</p>
                 <p className="text-sm font-bold text-purple-700">{m.time}</p>
               </div>
               <div className="flex-1">
-                <p className="text-sm font-medium text-gray-700 dark:text-gray-200">{m.store}</p>
+                <p className="text-sm font-medium text-gray-700 dark:text-[#E0E0E0]">{m.store}</p>
                 <p className="text-xs text-gray-400">{m.category} markdown</p>
               </div>
               {m.predicted && <span className="text-xs px-2 py-0.5 rounded-full bg-purple-100 text-purple-700">🤖 Predicted</span>}
@@ -110,14 +110,14 @@ export function WasteReductionPage() {
       </div>
 
       {/* Nearby Surplus */}
-      <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100">🏪 Nearby Surplus Items</h2>
+      <h2 className="text-lg font-bold text-gray-800 dark:text-[#FFFFFF]">🏪 Nearby Surplus Items</h2>
 
       <div className="space-y-4">
         {surplusStores.map((store) => (
-          <div key={store.id} className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
-            <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-700 flex items-start justify-between">
+          <div key={store.id} className="bg-white dark:bg-[#1E1E1E] rounded-2xl shadow-sm border border-gray-100 dark:border-[#2D2D2D] overflow-hidden">
+            <div className="px-4 py-3 border-b border-gray-100 dark:border-[#2D2D2D] flex items-start justify-between">
               <div>
-                <p className="font-bold text-gray-800 dark:text-gray-100">{store.store}</p>
+                <p className="font-bold text-gray-800 dark:text-[#FFFFFF]">{store.store}</p>
                 <p className="text-xs text-gray-400 mt-0.5">📍 {store.address} · {store.distance}</p>
               </div>
               <button
@@ -138,7 +138,7 @@ export function WasteReductionPage() {
                   <div key={item.name} className="px-4 py-3 flex items-center gap-3">
                     <span className="text-2xl">{item.emoji}</span>
                     <div className="flex-1">
-                      <p className="font-medium text-gray-700 dark:text-gray-200 text-sm">{item.name}</p>
+                      <p className="font-medium text-gray-700 dark:text-[#E0E0E0] text-sm">{item.name}</p>
                       <p className="text-xs text-orange-500 flex items-center gap-1"><Clock size={10} /> {item.expiry}</p>
                     </div>
                     <div className="text-right">

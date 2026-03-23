@@ -42,9 +42,7 @@ export function Navbar({ onMobileMenuToggle, mobileMenuOpen }: NavbarProps) {
 
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 flex-shrink-0">
-          <div className="w-9 h-9 rounded-full bg-white flex items-center justify-center shadow-sm">
-            <span className="text-lg">🛒</span>
-          </div>
+          <img src="/favicon1.ico" alt="Anopresyo" className="w-9 h-9 rounded-full shadow-sm" />
           <div className="hidden sm:block">
             <span className="text-white font-bold text-xl" style={{ fontFamily: "Poppins, sans-serif" }}>
               Ano<span style={{ color: "#FFB300" }}>presyo</span>
@@ -110,38 +108,38 @@ export function Navbar({ onMobileMenuToggle, mobileMenuOpen }: NavbarProps) {
             className="bg-white dark:bg-[#1E1E1E] rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100 dark:border-gray-700">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100 dark:border-[#2D2D2D]">
               <div className="flex items-center gap-2">
-                <Bell size={18} className="text-green-700 dark:text-green-400" />
-                <h3 className="font-bold text-gray-800 dark:text-gray-100">Price Alerts & AI Tips</h3>
+                <Bell size={18} className="text-green-700 dark:text-[#4CAF50]" />
+                <h3 className="font-bold text-gray-800 dark:text-[#FFFFFF]">Price Alerts & AI Tips</h3>
                 <span className="text-xs bg-orange-400 text-white px-2 py-0.5 rounded-full font-semibold">{notifications.length}</span>
               </div>
               <button
                 onClick={() => setBellOpen(false)}
-                className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-400"
+                className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-[#2D2D2D] transition-colors text-gray-400"
               >
                 <X size={18} />
               </button>
             </div>
-            <div className="max-h-96 overflow-y-auto divide-y divide-gray-50 dark:divide-gray-700">
+            <div className="max-h-96 overflow-y-auto divide-y divide-gray-50 dark:divide-[#2D2D2D]">
               {notifications.map((n) => (
-                <div key={n.id} className="flex items-start gap-3 px-5 py-3.5 hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors">
+                <div key={n.id} className="flex items-start gap-3 px-5 py-3.5 hover:bg-gray-50 dark:hover:bg-[#2D2D2D]/50 transition-colors">
                   <span className="text-xl flex-shrink-0 mt-0.5">{n.icon}</span>
                   <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-gray-800 dark:text-gray-100 text-sm">{n.title}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{n.body}</p>
-                    <p className="text-xs text-gray-400 mt-1">{n.time}</p>
+                    <p className="font-semibold text-gray-800 dark:text-[#FFFFFF] text-sm">{n.title}</p>
+                    <p className="text-xs text-gray-500 dark:text-[#E0E0E0] mt-0.5">{n.body}</p>
+                    <p className="text-xs text-gray-400 dark:text-[#9E9E9E] mt-1">{n.time}</p>
                   </div>
                   {n.type === "ai" && (
-                    <span className="flex-shrink-0 text-xs px-1.5 py-0.5 rounded-full bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300 font-medium">AI</span>
+                    <span className="flex-shrink-0 text-xs px-1.5 py-0.5 rounded-full bg-purple-100 dark:bg-[#7B1FA2]/30 text-purple-700 dark:text-[#CE93D8] font-medium">AI</span>
                   )}
                 </div>
               ))}
             </div>
-            <div className="px-5 py-3 border-t border-gray-100 dark:border-gray-700">
+            <div className="px-5 py-3 border-t border-gray-100 dark:border-[#2D2D2D]">
               <button
                 onClick={() => setBellOpen(false)}
-                className="w-full py-2 text-sm text-green-700 dark:text-green-400 font-semibold hover:bg-green-50 dark:hover:bg-green-900/20 rounded-xl transition-colors"
+                className="w-full py-2 text-sm text-green-700 dark:text-[#4CAF50] font-semibold hover:bg-green-50 dark:hover:bg-[#4CAF50]/10 rounded-xl transition-colors"
               >
                 Mark all as read
               </button>

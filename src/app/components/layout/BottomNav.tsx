@@ -13,7 +13,7 @@ const navItems = [
 export function BottomNav() {
   const { basketCount } = useApp();
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 flex md:hidden">
+    <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-[#121212] border-t border-gray-200 dark:border-[#2D2D2D] flex md:hidden">
       {navItems.map((item) => (
         <NavLink
           key={item.to}

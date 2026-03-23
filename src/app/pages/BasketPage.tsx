@@ -42,14 +42,14 @@ export function BasketPage() {
   return (
     <div className="space-y-5">
       {/* Header */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-gray-700">
-        <p className="text-gray-500 dark:text-gray-400 text-sm mb-1">Estimated Total</p>
+      <div className="bg-white dark:bg-[#1E1E1E] rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-[#2D2D2D]">
+        <p className="text-gray-500 dark:text-[#9E9E9E] text-sm mb-1">Estimated Total</p>
         <p className="text-4xl font-bold text-green-700 mb-1">₱{totalCost.toFixed(2)}</p>
         {savings > 0 && (
           <p className="text-sm text-green-600 font-medium mb-3">🎉 You're saving ₱{savings.toFixed(2)} from usual prices!</p>
         )}
         <div className="flex flex-wrap gap-2">
-          <button className="flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+          <button className="flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 text-sm font-medium hover:bg-gray-50 dark:hover:bg-[#2D2D2D] transition-colors">
             <Share2 size={15} /> Share Basket
           </button>
           <button
@@ -77,14 +77,14 @@ export function BasketPage() {
           <p className="text-gray-400 text-sm">Add items from the Home page to get started.</p>
         </div>
       ) : (
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
+        <div className="bg-white dark:bg-[#1E1E1E] rounded-2xl shadow-sm border border-gray-100 dark:border-[#2D2D2D] overflow-hidden">
           {basket.map((item, idx) => {
             const priceDiff = item.price - item.usualPrice;
             return (
-              <div key={item.id} className={`flex items-center gap-3 px-4 py-4 ${idx !== basket.length - 1 ? "border-b border-gray-50 dark:border-gray-700" : ""}`}>
+              <div key={item.id} className={`flex items-center gap-3 px-4 py-4 ${idx !== basket.length - 1 ? "border-b border-gray-50 dark:border-[#2D2D2D]" : ""}`}>
                 <span className="text-3xl">{item.emoji}</span>
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-gray-800 dark:text-gray-100">{item.name}</p>
+                  <p className="font-semibold text-gray-800 dark:text-[#FFFFFF]">{item.name}</p>
                   <div className="flex items-center gap-2">
                     <p className="text-sm text-gray-500">₱{item.price}/{item.unit}</p>
                     {priceDiff < 0 && (
@@ -97,24 +97,24 @@ export function BasketPage() {
                 </div>
                 <div className="flex items-center gap-2">
                   <button onClick={() => updateQuantity(item.id, item.quantity - 0.5)}
-                    className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                    className="w-8 h-8 rounded-full bg-gray-100 dark:bg-[#2D2D2D] flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-[#1E1E1E] transition-colors">
                     <Minus size={14} />
                   </button>
-                  <span className="w-10 text-center font-semibold text-gray-800 dark:text-gray-100 text-sm">{item.quantity}{item.unit}</span>
+                  <span className="w-10 text-center font-semibold text-gray-800 dark:text-[#FFFFFF] text-sm">{item.quantity}{item.unit}</span>
                   <button onClick={() => updateQuantity(item.id, item.quantity + 0.5)}
-                    className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                    className="w-8 h-8 rounded-full bg-gray-100 dark:bg-[#2D2D2D] flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-[#1E1E1E] transition-colors">
                     <Plus size={14} />
                   </button>
                 </div>
-                <p className="font-bold text-gray-800 dark:text-gray-100 w-20 text-right">₱{(item.price * item.quantity).toFixed(2)}</p>
+                <p className="font-bold text-gray-800 dark:text-[#FFFFFF] w-20 text-right">₱{(item.price * item.quantity).toFixed(2)}</p>
                 <button onClick={() => removeFromBasket(item.id)} className="text-gray-300 hover:text-red-400 transition-colors">
                   <Trash2 size={18} />
                 </button>
               </div>
             );
           })}
-          <div className="px-4 py-4 bg-green-50 dark:bg-green-900/20 flex items-center justify-between">
-            <p className="font-bold text-gray-700 dark:text-gray-200 text-lg">Total</p>
+          <div className="px-4 py-4 bg-green-50 dark:bg-[#4CAF50]/10 flex items-center justify-between">
+            <p className="font-bold text-gray-700 dark:text-[#E0E0E0] text-lg">Total</p>
             <p className="font-bold text-green-700 text-2xl">₱{totalCost.toFixed(2)}</p>
           </div>
         </div>
@@ -127,19 +127,19 @@ export function BasketPage() {
           onClick={() => setRecipeOpen(false)}
         >
           <div
-            className="bg-white dark:bg-gray-800 rounded-2xl max-w-lg w-full shadow-2xl max-h-[80vh] overflow-y-auto"
+            className="bg-white dark:bg-[#1E1E1E] rounded-2xl max-w-lg w-full shadow-2xl max-h-[80vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="p-5 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between sticky top-0 bg-white dark:bg-gray-800 z-10">
+            <div className="p-5 border-b border-gray-100 dark:border-[#2D2D2D] flex items-center justify-between sticky top-0 bg-white dark:bg-[#1E1E1E] z-10">
               <div>
-                <h3 className="font-bold text-lg text-gray-800 dark:text-gray-100">🤖 Tipid Recipes from Your Basket</h3>
+                <h3 className="font-bold text-lg text-gray-800 dark:text-[#FFFFFF]">🤖 Tipid Recipes from Your Basket</h3>
                 <p className="text-xs text-gray-400 mt-0.5">Generated using your basket items + best deals</p>
               </div>
               <div className="flex items-center gap-2">
                 <AIBadge />
                 <button
                   onClick={() => setRecipeOpen(false)}
-                  className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-400"
+                  className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-[#2D2D2D] transition-colors text-gray-400"
                 >
                   <X size={18} />
                 </button>
@@ -147,11 +147,11 @@ export function BasketPage() {
             </div>
             <div className="p-5 space-y-4">
               {recipes.map((r) => (
-                <div key={r.name} className="border border-gray-100 dark:border-gray-700 rounded-xl p-4">
+                <div key={r.name} className="border border-gray-100 dark:border-[#2D2D2D] rounded-xl p-4">
                   <div className="flex items-start gap-3 mb-3">
                     <span className="text-4xl">{r.emoji}</span>
                     <div>
-                      <p className="font-bold text-gray-800 dark:text-gray-100">{r.name}</p>
+                      <p className="font-bold text-gray-800 dark:text-[#FFFFFF]">{r.name}</p>
                       <div className="flex gap-3 text-sm text-gray-500 mt-0.5 flex-wrap">
                         <span>₱{r.cost} total</span>
                         <span>·</span>
@@ -176,7 +176,7 @@ export function BasketPage() {
               ))}
             </div>
             <div className="px-5 pb-5">
-              <button onClick={() => setRecipeOpen(false)} className="w-full py-2 rounded-xl border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+              <button onClick={() => setRecipeOpen(false)} className="w-full py-2 rounded-xl border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 font-medium hover:bg-gray-50 dark:hover:bg-[#2D2D2D] transition-colors">
                 Close
               </button>
             </div>

@@ -134,14 +134,14 @@ export function HomePage() {
       {/* Best Deals Section */}
       <section>
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 flex items-center gap-2">
+          <h2 className="text-xl font-bold text-gray-800 dark:text-[#FFFFFF] flex items-center gap-2">
             🔥 Best Deals
           </h2>
           <div className="flex gap-1">
             {periods.map((p) => (
               <button key={p} onClick={() => setActivePeriod(p)}
                 className={`px-3 py-1 rounded-full text-sm font-semibold transition-colors ${
-                  activePeriod === p ? "bg-green-600 text-white" : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-green-50"
+                  activePeriod === p ? "bg-green-600 text-white" : "bg-gray-100 dark:bg-[#1E1E1E] text-gray-600 dark:text-gray-300 hover:bg-green-50"
                 }`}>{p}</button>
             ))}
           </div>
@@ -152,12 +152,12 @@ export function HomePage() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {filteredDeals.map((item) => (
-              <div key={item.id} className="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-shadow">
+              <div key={item.id} className="bg-white dark:bg-[#1E1E1E] rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-[#2D2D2D] hover:shadow-md transition-shadow">
                 <div className="flex items-start justify-between mb-2">
                   <div className="flex items-center gap-2">
                     <span className="text-3xl">{item.emoji}</span>
                     <div>
-                      <p className="font-semibold text-gray-800 dark:text-gray-100">{item.name}</p>
+                      <p className="font-semibold text-gray-800 dark:text-[#FFFFFF]">{item.name}</p>
                       <p className="text-gray-400 text-xs">per {item.unit || "kg"}</p>
                     </div>
                   </div>
@@ -189,15 +189,15 @@ export function HomePage() {
 
       {/* Getting Expensive */}
       <section>
-        <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 flex items-center gap-2 mb-3">
+        <h2 className="text-xl font-bold text-gray-800 dark:text-[#FFFFFF] flex items-center gap-2 mb-3">
           ⚠️ Getting Expensive
         </h2>
         <div className="space-y-2">
           {expensiveItems.map((item) => (
-            <div key={item.id} className="bg-white dark:bg-gray-800 rounded-xl px-4 py-3 shadow-sm border border-red-50 dark:border-gray-700 flex items-center gap-3">
+            <div key={item.id} className="bg-white dark:bg-[#1E1E1E] rounded-xl px-4 py-3 shadow-sm border border-red-50 dark:border-[#2D2D2D] flex items-center gap-3">
               <span className="text-2xl">{item.emoji}</span>
               <div className="flex-1">
-                <p className="font-semibold text-gray-800 dark:text-gray-100">{item.name}</p>
+                <p className="font-semibold text-gray-800 dark:text-[#FFFFFF]">{item.name}</p>
                 <p className="text-xs text-gray-400">Usual: ₱{item.usual}/kg</p>
               </div>
               <div className="text-right">
@@ -232,11 +232,11 @@ export function HomePage() {
       {/* Bantay Presyo */}
       <section>
         <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
-          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">📊 Bantay Presyo</h2>
+          <h2 className="text-xl font-bold text-gray-800 dark:text-[#FFFFFF]">📊 Bantay Presyo</h2>
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="text-sm border border-gray-200 dark:border-gray-600 rounded-lg px-3 py-1.5 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 outline-none"
+            className="text-sm border border-gray-200 dark:border-gray-600 rounded-lg px-3 py-1.5 bg-white dark:bg-[#1E1E1E] text-gray-700 dark:text-[#E0E0E0] outline-none"
           >
             <option>Best Deal</option>
             <option>Name</option>
@@ -250,26 +250,26 @@ export function HomePage() {
           {categories.map((cat) => (
             <button key={cat} onClick={() => { setActiveCategory(cat); setVisibleCount(PAGE_SIZE); }}
               className={`flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
-                activeCategory === cat ? "bg-green-600 text-white" : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-green-50"
+                activeCategory === cat ? "bg-green-600 text-white" : "bg-white dark:bg-[#1E1E1E] text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-green-50"
               }`}>{cat}</button>
           ))}
         </div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
+        <div className="bg-white dark:bg-[#1E1E1E] rounded-2xl shadow-sm border border-gray-100 dark:border-[#2D2D2D] overflow-hidden">
           {visibleItems.length === 0 ? (
             <p className="text-center text-gray-400 py-8 text-sm">No items found.</p>
           ) : (
             visibleItems.map((item, idx) => (
-              <div key={item.id} className={`flex items-center gap-3 px-4 py-3 ${idx !== visibleItems.length - 1 ? "border-b border-gray-50 dark:border-gray-700" : ""} hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors`}>
+              <div key={item.id} className={`flex items-center gap-3 px-4 py-3 ${idx !== visibleItems.length - 1 ? "border-b border-gray-50 dark:border-[#2D2D2D]" : ""} hover:bg-gray-50 dark:hover:bg-[#2D2D2D]/50 transition-colors`}>
                 <span className="text-2xl">{item.emoji}</span>
                 <div className="flex-1 min-w-0">
-                  <p className="font-medium text-gray-800 dark:text-gray-100 truncate">{item.name}</p>
+                  <p className="font-medium text-gray-800 dark:text-[#FFFFFF] truncate">{item.name}</p>
                   <p className="text-xs text-gray-400">Usual: ₱{item.usual}/kg</p>
                 </div>
                 <span className={`text-xs font-bold px-2 py-1 rounded-full ${statusColor(item.status)}`}>
                   {statusDot(item.status)} {item.status}
                 </span>
-                <span className="font-bold text-gray-800 dark:text-gray-100 text-base w-16 text-right">₱{item.price}</span>
+                <span className="font-bold text-gray-800 dark:text-[#FFFFFF] text-base w-16 text-right">₱{item.price}</span>
                 <button onClick={() => toggleFav(item.id)} className="text-gray-300 hover:text-red-400 transition-colors">
                   <Heart size={16} fill={favorites.includes(item.id) ? "#f87171" : "none"} stroke={favorites.includes(item.id) ? "#f87171" : "currentColor"} />
                 </button>
@@ -299,7 +299,7 @@ export function HomePage() {
       </section>
 
       {/* Page Disclaimer */}
-      <div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
+      <div className="border-t border-gray-200 dark:border-[#2D2D2D] pt-4 mt-4">
         <p className="text-xs text-gray-400 text-center">
           📋 Source: DA Bantay Presyo official price monitoring (90 commodities). Not a government app.
         </p>

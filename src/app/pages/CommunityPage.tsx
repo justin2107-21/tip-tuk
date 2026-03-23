@@ -242,7 +242,7 @@ function MapPin({
       {/* Tooltip card */}
       {isActive && (
         <div
-          className="absolute z-40 bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-100 dark:border-gray-600 p-3 w-52"
+          className="absolute z-40 bg-white dark:bg-[#1E1E1E] rounded-xl shadow-2xl border border-gray-100 dark:border-gray-600 p-3 w-52"
           style={
             isBelow
               ? { top: "calc(100% + 6px)", left: "50%", transform: "translateX(-50%)" }
@@ -260,17 +260,17 @@ function MapPin({
           )}
 
           <div className="flex items-start justify-between gap-2 mb-1">
-            <p className="font-semibold text-gray-800 dark:text-gray-100 text-sm leading-tight">{pin.item}</p>
+            <p className="font-semibold text-gray-800 dark:text-[#FFFFFF] text-sm leading-tight">{pin.item}</p>
             <button onClick={onClose} className="text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 mt-0.5 flex-shrink-0">
               <X size={13} />
             </button>
           </div>
-          <p className="text-green-600 dark:text-green-400 font-bold text-base">{pin.price}</p>
-          <p className="text-gray-500 dark:text-gray-400 text-xs mt-0.5">📍 {pin.label}</p>
+          <p className="text-green-600 dark:text-[#4CAF50] font-bold text-base">{pin.price}</p>
+          <p className="text-gray-500 dark:text-[#9E9E9E] text-xs mt-0.5">📍 {pin.label}</p>
           <p className="text-gray-400 text-xs">{pin.timeAgo}</p>
           <div className="mt-2">
             {pin.verified
-              ? <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 font-medium">✅ Verified</span>
+              ? <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 dark:bg-[#4CAF50]/10 text-green-700 dark:text-[#4CAF50] font-medium">✅ Verified</span>
               : <span className="text-xs px-2 py-0.5 rounded-full bg-yellow-50 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400 font-medium">⚠️ Unverified</span>
             }
           </div>
@@ -402,10 +402,10 @@ export function CommunityPage() {
       {/* ── Header ── */}
       <div className="flex items-start justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-[#FFFFFF] flex items-center gap-2">
             👥 Community Price Reports
           </h1>
-          <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">Real prices reported by your neighbors</p>
+          <p className="text-gray-500 dark:text-[#9E9E9E] text-sm mt-1">Real prices reported by your neighbors</p>
         </div>
         <button
           onClick={openSubmit}
@@ -417,29 +417,29 @@ export function CommunityPage() {
       </div>
 
       {/* ── MAP SECTION ── */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-visible">
+      <div className="bg-white dark:bg-[#1E1E1E] rounded-2xl shadow-sm border border-gray-100 dark:border-[#2D2D2D] overflow-visible">
 
         {/* Map toolbar */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-gray-700 flex-wrap gap-2">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-[#2D2D2D] flex-wrap gap-2">
           {/* Region dropdown */}
           <div className="relative">
             <button
               onClick={() => setRegionOpen(o => !o)}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-100 text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors min-h-[44px]"
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-100 dark:bg-[#2D2D2D] text-gray-800 dark:text-[#FFFFFF] text-sm font-medium hover:bg-gray-200 dark:hover:bg-[#1E1E1E] transition-colors min-h-[44px]"
             >
               📍 {activeRegion}
               <ChevronDown size={14} className={`transition-transform duration-200 ${regionOpen ? "rotate-180" : ""}`} />
             </button>
             {regionOpen && (
               <div
-                className="absolute top-full left-0 mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl shadow-xl z-30 overflow-hidden min-w-[190px]"
+                className="absolute top-full left-0 mt-1 bg-white dark:bg-[#1E1E1E] border border-gray-200 dark:border-gray-600 rounded-xl shadow-xl z-30 overflow-hidden min-w-[190px]"
                 onClick={e => e.stopPropagation()}
               >
                 {regions.map(r => (
                   <button
                     key={r}
                     onClick={() => { setActiveRegion(r); setRegionOpen(false); }}
-                    className={`w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors ${activeRegion === r ? "text-green-600 dark:text-green-400 font-semibold bg-green-50 dark:bg-green-900/20" : "text-gray-700 dark:text-gray-200"}`}
+                    className={`w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50 dark:hover:bg-[#2D2D2D] transition-colors ${activeRegion === r ? "text-green-600 dark:text-[#4CAF50] font-semibold bg-green-50 dark:bg-[#4CAF50]/10" : "text-gray-700 dark:text-[#E0E0E0]"}`}
                   >
                     {r}
                   </button>
@@ -453,17 +453,17 @@ export function CommunityPage() {
             <span className="text-xs text-gray-400 dark:text-gray-500 mr-1 hidden sm:inline">Zoom</span>
             <button
               onClick={() => setZoom(z => Math.min(+(z + 0.2).toFixed(1), 2.0))}
-              className="w-11 h-11 rounded-xl bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-green-100 dark:hover:bg-green-900/30 flex items-center justify-center transition-colors text-xl font-bold select-none"
+              className="w-11 h-11 rounded-xl bg-gray-100 dark:bg-[#2D2D2D] text-gray-700 dark:text-[#E0E0E0] hover:bg-green-100 dark:hover:bg-[#4CAF50]/20/30 flex items-center justify-center transition-colors text-xl font-bold select-none"
               aria-label="Zoom in"
             >+</button>
             <button
               onClick={() => setZoom(z => Math.max(+(z - 0.2).toFixed(1), 0.6))}
-              className="w-11 h-11 rounded-xl bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-green-100 dark:hover:bg-green-900/30 flex items-center justify-center transition-colors text-xl font-bold select-none"
+              className="w-11 h-11 rounded-xl bg-gray-100 dark:bg-[#2D2D2D] text-gray-700 dark:text-[#E0E0E0] hover:bg-green-100 dark:hover:bg-[#4CAF50]/20/30 flex items-center justify-center transition-colors text-xl font-bold select-none"
               aria-label="Zoom out"
             >−</button>
             <button
               onClick={() => setZoom(1)}
-              className="h-11 px-3 rounded-xl bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-600 text-xs font-medium transition-colors"
+              className="h-11 px-3 rounded-xl bg-gray-100 dark:bg-[#2D2D2D] text-gray-500 dark:text-[#9E9E9E] hover:bg-gray-200 dark:hover:bg-[#1E1E1E] text-xs font-medium transition-colors"
               aria-label="Reset zoom"
             >Reset</button>
           </div>
@@ -499,7 +499,7 @@ export function CommunityPage() {
         </div>
 
         {/* Map legend */}
-        <div className="px-4 py-2.5 border-t border-gray-100 dark:border-gray-700 flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400 flex-wrap">
+        <div className="px-4 py-2.5 border-t border-gray-100 dark:border-[#2D2D2D] flex items-center gap-4 text-xs text-gray-500 dark:text-[#9E9E9E] flex-wrap">
           <span>📍 {mapPins.length} active report pins</span>
           <span>✅ Verified</span>
           <span>⚠️ Unverified</span>
@@ -515,8 +515,8 @@ export function CommunityPage() {
           {reports.map(r => (
             <div
               key={r.id}
-              className={`bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-sm border relative transition-shadow hover:shadow-md
-                ${r.isNew ? "border-green-400 dark:border-green-500" : "border-gray-100 dark:border-gray-700"}`}
+              className={`bg-white dark:bg-[#1E1E1E] rounded-2xl p-4 shadow-sm border relative transition-shadow hover:shadow-md
+                ${r.isNew ? "border-green-400 dark:border-green-500" : "border-gray-100 dark:border-[#2D2D2D]"}`}
             >
               {/* NEW badge */}
               {r.isNew && (
@@ -535,14 +535,14 @@ export function CommunityPage() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <p className="font-semibold text-gray-800 dark:text-gray-100">{r.user}</p>
+                    <p className="font-semibold text-gray-800 dark:text-[#FFFFFF]">{r.user}</p>
                     {r.badge && (
                       <span className="text-xs px-2 py-0.5 rounded-full bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 font-medium">{r.badge}</span>
                     )}
                     {r.isPending ? (
                       <span className="text-xs px-2 py-0.5 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 font-medium">⏳ Pending Verification</span>
                     ) : r.verified ? (
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 font-medium flex items-center gap-1">
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 dark:bg-[#4CAF50]/10 text-green-700 dark:text-[#4CAF50] font-medium flex items-center gap-1">
                         ✅ Verified <AIBadge size="sm" />
                       </span>
                     ) : (
@@ -554,11 +554,11 @@ export function CommunityPage() {
               </div>
 
               {/* Price card */}
-              <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-xl mb-3">
+              <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-[#2D2D2D] rounded-xl mb-3">
                 <span className="text-3xl">{r.emoji}</span>
                 <div>
-                  <p className="font-bold text-gray-800 dark:text-gray-100 text-lg">₱{r.price}/kg</p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">{r.item} at {r.market}</p>
+                  <p className="font-bold text-gray-800 dark:text-[#FFFFFF] text-lg">₱{r.price}/kg</p>
+                  <p className="text-sm text-gray-500 dark:text-[#9E9E9E]">{r.item} at {r.market}</p>
                 </div>
               </div>
 
@@ -566,20 +566,20 @@ export function CommunityPage() {
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => toggleVote(r.id, "up")}
-                  className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-sm transition-colors min-h-[36px] ${votes[r.id] === "up" ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400" : "bg-gray-100 dark:bg-gray-700 text-gray-500"}`}
+                  className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-sm transition-colors min-h-[36px] ${votes[r.id] === "up" ? "bg-green-100 dark:bg-[#4CAF50]/10 text-green-700 dark:text-[#4CAF50]" : "bg-gray-100 dark:bg-[#2D2D2D] text-gray-500"}`}
                 >
                   <ThumbsUp size={14} /> {r.upvotes + (votes[r.id] === "up" ? 1 : 0)}
                 </button>
                 <button
                   onClick={() => toggleVote(r.id, "down")}
-                  className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-sm transition-colors min-h-[36px] ${votes[r.id] === "down" ? "bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400" : "bg-gray-100 dark:bg-gray-700 text-gray-500"}`}
+                  className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-sm transition-colors min-h-[36px] ${votes[r.id] === "down" ? "bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400" : "bg-gray-100 dark:bg-[#2D2D2D] text-gray-500"}`}
                 >
                   <ThumbsDown size={14} />
                 </button>
                 {!r.isPending && (
                   <button
                     onClick={() => setCommentReportId(r.id)}
-                    className="flex items-center gap-1 px-3 py-1.5 rounded-full text-sm bg-gray-100 dark:bg-gray-700 text-gray-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-600 dark:hover:text-blue-400 transition-colors min-h-[36px]"
+                    className="flex items-center gap-1 px-3 py-1.5 rounded-full text-sm bg-gray-100 dark:bg-[#2D2D2D] text-gray-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-600 dark:hover:text-blue-400 transition-colors min-h-[36px]"
                   >
                     <MessageSquare size={14} /> {r.comments.length}
                   </button>
@@ -591,18 +591,18 @@ export function CommunityPage() {
 
         {/* Leaderboard — desktop only */}
         <div className="hidden lg:block w-56 flex-shrink-0">
-          <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-gray-700 sticky top-20">
-            <h3 className="font-bold text-gray-800 dark:text-gray-100 mb-3">🏆 Top Contributors</h3>
+          <div className="bg-white dark:bg-[#1E1E1E] rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-[#2D2D2D] sticky top-20">
+            <h3 className="font-bold text-gray-800 dark:text-[#FFFFFF] mb-3">🏆 Top Contributors</h3>
             <p className="text-xs text-gray-400 mb-3">This week</p>
             <div className="space-y-2">
               {leaderboard.map(l => (
                 <div
                   key={l.rank}
-                  className={`flex items-center gap-2 rounded-lg transition-colors ${l.name === "You" ? "bg-green-50 dark:bg-green-900/20 px-2 py-1" : ""}`}
+                  className={`flex items-center gap-2 rounded-lg transition-colors ${l.name === "You" ? "bg-green-50 dark:bg-[#4CAF50]/10 px-2 py-1" : ""}`}
                 >
                   <span className="text-lg">{l.badge}</span>
                   <div className="flex-1 min-w-0">
-                    <p className={`text-sm font-medium truncate ${l.name === "You" ? "text-green-700 dark:text-green-400" : "text-gray-700 dark:text-gray-200"}`}>
+                    <p className={`text-sm font-medium truncate ${l.name === "You" ? "text-green-700 dark:text-[#4CAF50]" : "text-gray-700 dark:text-[#E0E0E0]"}`}>
                       {l.name === "You" ? "You 🆕" : l.name}
                     </p>
                     <p className="text-xs text-gray-400">{l.points} pts</p>
@@ -610,7 +610,7 @@ export function CommunityPage() {
                 </div>
               ))}
             </div>
-            <div className="mt-4 p-2 bg-green-50 dark:bg-green-900/20 rounded-xl text-xs text-green-700 dark:text-green-400">
+            <div className="mt-4 p-2 bg-green-50 dark:bg-[#4CAF50]/10 rounded-xl text-xs text-green-700 dark:text-[#4CAF50]">
               🎯 Earn points for verified reports!
             </div>
           </div>
@@ -624,13 +624,13 @@ export function CommunityPage() {
           onClick={closeSubmit}
         >
           <div
-            className="bg-white dark:bg-gray-800 rounded-2xl max-w-md w-full shadow-2xl max-h-[90vh] overflow-y-auto"
+            className="bg-white dark:bg-[#1E1E1E] rounded-2xl max-w-md w-full shadow-2xl max-h-[90vh] overflow-y-auto"
             onClick={e => e.stopPropagation()}
           >
             {/* Modal header */}
-            <div className="p-5 border-b border-gray-100 dark:border-gray-700 flex items-start justify-between sticky top-0 bg-white dark:bg-gray-800 z-10">
+            <div className="p-5 border-b border-gray-100 dark:border-[#2D2D2D] flex items-start justify-between sticky top-0 bg-white dark:bg-[#1E1E1E] z-10">
               <div className="flex-1">
-                <h3 className="font-bold text-lg text-gray-800 dark:text-gray-100">Submit Price Report</h3>
+                <h3 className="font-bold text-lg text-gray-800 dark:text-[#FFFFFF]">Submit Price Report</h3>
                 <div className="flex gap-1 mt-3">
                   {[1,2,3,4].map(s => (
                     <div key={s} className={`flex-1 h-1.5 rounded-full transition-colors ${s <= step ? "bg-green-600" : "bg-gray-200 dark:bg-gray-600"}`} />
@@ -638,7 +638,7 @@ export function CommunityPage() {
                 </div>
                 <p className="text-xs text-gray-400 mt-1">Step {step} of 4</p>
               </div>
-              <button onClick={closeSubmit} className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-400 ml-3">
+              <button onClick={closeSubmit} className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-[#2D2D2D] transition-colors text-gray-400 ml-3">
                 <X size={18} />
               </button>
             </div>
@@ -649,16 +649,16 @@ export function CommunityPage() {
               {/* Step 1 — Select Item */}
               {step === 1 && (
                 <div className="space-y-3">
-                  <p className="font-semibold text-gray-700 dark:text-gray-200">1. Select Item</p>
+                  <p className="font-semibold text-gray-700 dark:text-[#E0E0E0]">1. Select Item</p>
                   <div className="grid grid-cols-3 gap-2">
                     {itemOptions.map(i => (
                       <button
                         key={i}
                         onClick={() => handleItemSelect(i)}
-                        className={`p-3 rounded-xl border text-sm hover:bg-green-50 dark:hover:bg-green-900/20 hover:border-green-400 transition-colors text-center
+                        className={`p-3 rounded-xl border text-sm hover:bg-green-50 dark:hover:bg-[#4CAF50]/20/20 hover:border-green-400 transition-colors text-center
                           ${selectedItem === i
-                            ? "border-green-500 bg-green-50 dark:bg-green-900/20 dark:border-green-500 text-gray-800 dark:text-gray-100"
-                            : "border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200"}`}
+                            ? "border-green-500 bg-green-50 dark:bg-[#4CAF50]/10 dark:border-green-500 text-gray-800 dark:text-[#FFFFFF]"
+                            : "border-gray-200 dark:border-gray-600 text-gray-700 dark:text-[#E0E0E0]"}`}
                       >
                         {i}
                       </button>
@@ -671,7 +671,7 @@ export function CommunityPage() {
                         value={otherItem}
                         onChange={e => setOtherItem(e.target.value)}
                         placeholder="Type item name (e.g. Sayote, Upo...)"
-                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 text-sm outline-none focus:border-green-400 dark:bg-gray-700 dark:text-gray-100"
+                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 text-sm outline-none focus:border-green-400 dark:bg-[#2D2D2D] dark:text-[#FFFFFF]"
                       />
                       <button
                         disabled={!otherItem.trim()}
@@ -688,9 +688,9 @@ export function CommunityPage() {
               {/* Step 2 — Enter Price */}
               {step === 2 && (
                 <div className="space-y-3">
-                  <p className="font-semibold text-gray-700 dark:text-gray-200">2. Enter Price</p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Item: <span className="font-medium text-gray-700 dark:text-gray-200">{selectedItem === "Other" ? otherItem : selectedItem}</span>
+                  <p className="font-semibold text-gray-700 dark:text-[#E0E0E0]">2. Enter Price</p>
+                  <p className="text-sm text-gray-500 dark:text-[#9E9E9E]">
+                    Item: <span className="font-medium text-gray-700 dark:text-[#E0E0E0]">{selectedItem === "Other" ? otherItem : selectedItem}</span>
                   </p>
                   <div className="flex items-center gap-2">
                     <span className="text-2xl font-bold text-gray-400">₱</span>
@@ -700,7 +700,7 @@ export function CommunityPage() {
                       onChange={e => setPrice(e.target.value)}
                       placeholder="0.00"
                       min="0"
-                      className="flex-1 text-2xl font-bold border-b-2 border-green-400 outline-none py-1 text-gray-800 dark:text-gray-100 dark:bg-transparent"
+                      className="flex-1 text-2xl font-bold border-b-2 border-green-400 outline-none py-1 text-gray-800 dark:text-[#FFFFFF] dark:bg-transparent"
                     />
                     <span className="text-gray-400">/kg</span>
                   </div>
@@ -720,13 +720,13 @@ export function CommunityPage() {
               {/* Step 3 — Select Market */}
               {step === 3 && (
                 <div className="space-y-3">
-                  <p className="font-semibold text-gray-700 dark:text-gray-200">3. Select Market</p>
+                  <p className="font-semibold text-gray-700 dark:text-[#E0E0E0]">3. Select Market</p>
                   <div className="space-y-2">
                     {marketOptions.map(m => (
                       <button
                         key={m}
                         onClick={() => { setSelectedMarket(m); setStep(4); }}
-                        className="w-full p-3 rounded-xl border border-gray-200 dark:border-gray-600 text-left text-sm hover:bg-green-50 dark:hover:bg-green-900/20 hover:border-green-400 transition-colors text-gray-700 dark:text-gray-200 min-h-[44px]"
+                        className="w-full p-3 rounded-xl border border-gray-200 dark:border-gray-600 text-left text-sm hover:bg-green-50 dark:hover:bg-[#4CAF50]/20/20 hover:border-green-400 transition-colors text-gray-700 dark:text-[#E0E0E0] min-h-[44px]"
                       >
                         📍 {m}
                       </button>
@@ -741,26 +741,26 @@ export function CommunityPage() {
               {/* Step 4 — Photo + Submit */}
               {step === 4 && (
                 <div className="space-y-4">
-                  <p className="font-semibold text-gray-700 dark:text-gray-200">
+                  <p className="font-semibold text-gray-700 dark:text-[#E0E0E0]">
                     4. Upload Photo <span className="text-gray-400 font-normal text-sm">(optional)</span>
                   </p>
-                  <div className="border-2 border-dashed border-gray-200 dark:border-gray-600 rounded-xl p-8 text-center cursor-pointer hover:border-green-400 hover:bg-green-50/50 dark:hover:bg-green-900/10 transition-colors min-h-[44px]">
+                  <div className="border-2 border-dashed border-gray-200 dark:border-gray-600 rounded-xl p-8 text-center cursor-pointer hover:border-green-400 hover:bg-green-50/50 dark:hover:bg-[#4CAF50]/20/10 transition-colors min-h-[44px]">
                     <Camera size={32} className="text-gray-300 mx-auto mb-2" />
                     <p className="text-sm text-gray-400">Tap to take a photo or upload</p>
                     <p className="text-xs text-gray-400 mt-1">Helps with AI verification (+bonus points)</p>
                   </div>
 
                   {/* Report summary */}
-                  <div className="bg-green-50 dark:bg-green-900/20 rounded-xl p-3.5 text-sm space-y-1">
-                    <p className="font-semibold text-green-700 dark:text-green-400 mb-2">📋 Report Summary</p>
+                  <div className="bg-green-50 dark:bg-[#4CAF50]/10 rounded-xl p-3.5 text-sm space-y-1">
+                    <p className="font-semibold text-green-700 dark:text-[#4CAF50] mb-2">📋 Report Summary</p>
                     <p className="text-gray-600 dark:text-gray-300">
-                      Item: <span className="font-medium text-gray-800 dark:text-gray-100">{selectedItem === "Other" ? otherItem : selectedItem}</span>
+                      Item: <span className="font-medium text-gray-800 dark:text-[#FFFFFF]">{selectedItem === "Other" ? otherItem : selectedItem}</span>
                     </p>
                     <p className="text-gray-600 dark:text-gray-300">
-                      Price: <span className="font-medium text-gray-800 dark:text-gray-100">₱{price}/kg</span>
+                      Price: <span className="font-medium text-gray-800 dark:text-[#FFFFFF]">₱{price}/kg</span>
                     </p>
                     <p className="text-gray-600 dark:text-gray-300">
-                      Market: <span className="font-medium text-gray-800 dark:text-gray-100">{selectedMarket}</span>
+                      Market: <span className="font-medium text-gray-800 dark:text-[#FFFFFF]">{selectedMarket}</span>
                     </p>
                   </div>
 
@@ -770,7 +770,7 @@ export function CommunityPage() {
                   >
                     ✅ Submit Report
                   </button>
-                  <p className="text-xs text-center text-green-600 dark:text-green-400">🎯 Earn +10 pts for this report!</p>
+                  <p className="text-xs text-center text-green-600 dark:text-[#4CAF50]">🎯 Earn +10 pts for this report!</p>
 
                   <button onClick={() => setStep(3)} className="w-full py-1.5 text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
                     ← Back
@@ -795,25 +795,25 @@ export function CommunityPage() {
           onClick={() => setCommentReportId(null)}
         >
           <div
-            className="bg-white dark:bg-gray-800 rounded-2xl max-w-md w-full shadow-2xl max-h-[85vh] overflow-y-auto"
+            className="bg-white dark:bg-[#1E1E1E] rounded-2xl max-w-md w-full shadow-2xl max-h-[85vh] overflow-y-auto"
             onClick={e => e.stopPropagation()}
           >
             {/* Sticky header */}
-            <div className="p-5 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between sticky top-0 bg-white dark:bg-gray-800 z-10">
+            <div className="p-5 border-b border-gray-100 dark:border-[#2D2D2D] flex items-center justify-between sticky top-0 bg-white dark:bg-[#1E1E1E] z-10">
               <div className="flex items-center gap-2">
                 <span className="text-2xl">{commentReport.emoji}</span>
                 <div>
-                  <p className="font-bold text-gray-800 dark:text-gray-100">{commentReport.item} — ₱{commentReport.price}/kg</p>
+                  <p className="font-bold text-gray-800 dark:text-[#FFFFFF]">{commentReport.item} — ₱{commentReport.price}/kg</p>
                   <p className="text-xs text-gray-400">{commentReport.market} · {commentReport.timeAgo}</p>
                 </div>
               </div>
-              <button onClick={() => setCommentReportId(null)} className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-400">
+              <button onClick={() => setCommentReportId(null)} className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-[#2D2D2D] transition-colors text-gray-400">
                 <X size={18} />
               </button>
             </div>
 
             {/* Report details */}
-            <div className="p-5 border-b border-gray-50 dark:border-gray-700">
+            <div className="p-5 border-b border-gray-50 dark:border-[#2D2D2D]">
               <div className="flex items-center gap-3 mb-3">
                 <div
                   className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0"
@@ -822,7 +822,7 @@ export function CommunityPage() {
                   {commentReport.initials}
                 </div>
                 <div>
-                  <p className="font-semibold text-gray-800 dark:text-gray-100">{commentReport.user}</p>
+                  <p className="font-semibold text-gray-800 dark:text-[#FFFFFF]">{commentReport.user}</p>
                   {commentReport.badge && (
                     <span className="text-xs px-2 py-0.5 rounded-full bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 font-medium">{commentReport.badge}</span>
                   )}
@@ -836,7 +836,7 @@ export function CommunityPage() {
 
             {/* Comments */}
             <div className="p-5">
-              <p className="font-semibold text-gray-700 dark:text-gray-200 mb-3 flex items-center gap-2">
+              <p className="font-semibold text-gray-700 dark:text-[#E0E0E0] mb-3 flex items-center gap-2">
                 <MessageSquare size={15} /> {commentReport.comments.length} Comments
               </p>
               <div className="space-y-3 mb-4">
@@ -849,8 +849,8 @@ export function CommunityPage() {
                       style={{ background: c.color }}>
                       {c.initials}
                     </div>
-                    <div className="flex-1 bg-gray-50 dark:bg-gray-700 rounded-xl px-3 py-2">
-                      <p className="font-medium text-gray-800 dark:text-gray-100 text-sm">{c.user}</p>
+                    <div className="flex-1 bg-gray-50 dark:bg-[#2D2D2D] rounded-xl px-3 py-2">
+                      <p className="font-medium text-gray-800 dark:text-[#FFFFFF] text-sm">{c.user}</p>
                       <p className="text-sm text-gray-600 dark:text-gray-300">{c.text}</p>
                       <p className="text-xs text-gray-400 mt-0.5">{c.time}</p>
                     </div>
@@ -866,7 +866,7 @@ export function CommunityPage() {
                   onChange={e => setNewComment(e.target.value)}
                   onKeyDown={e => e.key === "Enter" && handleAddComment()}
                   placeholder="Add a comment..."
-                  className="flex-1 px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm outline-none focus:border-green-400 dark:text-gray-100"
+                  className="flex-1 px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-[#2D2D2D] text-sm outline-none focus:border-green-400 dark:text-[#FFFFFF]"
                 />
                 <button
                   onClick={handleAddComment}
@@ -891,10 +891,10 @@ export function CommunityPage() {
       {/* ── Points Popup ── */}
       {showPointsPopup && (
         <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 text-center border-2 border-yellow-400 pointer-events-auto animate-bounce-once">
+          <div className="bg-white dark:bg-[#1E1E1E] rounded-2xl shadow-2xl p-8 text-center border-2 border-yellow-400 pointer-events-auto animate-bounce-once">
             <div className="text-5xl mb-3">🎉</div>
-            <p className="font-bold text-2xl text-gray-800 dark:text-gray-100">+10 points earned!</p>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Keep reporting to earn more!</p>
+            <p className="font-bold text-2xl text-gray-800 dark:text-[#FFFFFF]">+10 points earned!</p>
+            <p className="text-sm text-gray-500 dark:text-[#9E9E9E] mt-1">Keep reporting to earn more!</p>
             <div className="mt-3 px-4 py-1.5 bg-yellow-50 dark:bg-yellow-900/20 rounded-full inline-block">
               <p className="text-xs text-yellow-700 dark:text-yellow-400 font-medium">⭐ You're on the leaderboard!</p>
             </div>
