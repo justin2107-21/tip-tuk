@@ -1,0 +1,73 @@
+@import './fonts.css';
+@import './tailwind.css';
+@import './theme.css';
+
+/* Anopresyo Global Styles */
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #F8F9FA;
+  font-family: 'Inter', sans-serif;
+}
+
+.dark body {
+  background-color: #121212;
+}
+
+/* Dark mode card surface */
+.dark .dark-surface {
+  background-color: #1E1E1E;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #a7f3d0;
+  border-radius: 999px;
+}
+
+/* Dark mode overrides for Tailwind gray-800 cards → #1E1E1E */
+.dark .dark\:bg-gray-800 {
+  background-color: #1E1E1E !important;
+}
+
+/* Dark mode text overrides */
+.dark .dark\:text-gray-100 {
+  color: #FFFFFF !important;
+}
+
+.dark .dark\:text-gray-200 {
+  color: #E0E0E0 !important;
+}
+
+/* Dark mode primary green: #4CAF50 */
+.dark .dark\:text-green-400 {
+  color: #4CAF50 !important;
+}
+
+/* Dark mode accent orange: #FF9800 */
+.dark .dark\:text-orange-400 {
+  color: #FF9800 !important;
+}
+
+/* Points popup entrance animation */
+@keyframes popIn {
+  0%   { opacity: 0; transform: scale(0.6); }
+  70%  { opacity: 1; transform: scale(1.08); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.animate-bounce-once {
+  animation: popIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
