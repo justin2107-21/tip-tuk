@@ -216,12 +216,12 @@ export function EVPage() {
                     <p className="font-semibold text-gray-800 dark:text-[#FFFFFF] text-sm">{s.name}</p>
                     <p className="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase">{s.location}</p>
                     <div className="flex gap-2 mt-1">
-                      <span className={`text-xs px-2 py-0.5 rounded font-medium ${s.type.includes("DC") ? "bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400" : "bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400"}`}>{s.type.includes("DC") ? "DC" : "AC"}</span>
+                      <span className={`text-xs px-2 py-0.5 rounded font-medium ${s.type.includes("DC") ? "bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400" : "bg-green-100 text-green-700 dark:bg-[#1B5E20]/30 dark:text-[#81C784]"}`}>{s.type.includes("DC") ? "DC" : "AC"}</span>
                       <span className="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium">{s.hours}</span>
                     </div>
                   </div>
                   <div className="text-right flex-shrink-0">
-                    <p className="font-bold text-green-700 dark:text-green-400 text-base">₱{s.price.toFixed(2)}</p>
+                    <p className="font-bold text-green-700 dark:text-[#81C784] text-base">₱{s.price.toFixed(2)}</p>
                     <p className="text-xs text-gray-400 font-medium">/kWh</p>
                   </div>
                   <button onClick={() => toggleFav(s.id)} className="text-gray-300 hover:text-yellow-400 transition-colors flex-shrink-0">
@@ -332,9 +332,9 @@ export function EVPage() {
                               <p className="text-xs text-blue-600 dark:text-blue-400">Distance</p>
                               <p className="text-lg font-bold text-blue-700 dark:text-blue-300">{routeResults[selectedRoute].totalDistance} km</p>
                             </div>
-                            <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-3">
-                              <p className="text-xs text-green-600 dark:text-green-400">Total Time</p>
-                              <p className="text-lg font-bold text-green-700 dark:text-green-300">{Math.round(routeResults[selectedRoute].totalTime / 60)} min</p>
+                            <div className="bg-green-50 dark:bg-[#1B5E20]/30 rounded-lg p-3">
+                              <p className="text-xs text-green-600 dark:text-[#81C784]">Total Time</p>
+                              <p className="text-lg font-bold text-green-700 dark:text-[#81C784]">{Math.round(routeResults[selectedRoute].totalTime / 60)} min</p>
                             </div>
                             <div className="bg-orange-50 dark:bg-orange-900/20 rounded-lg p-3">
                               <p className="text-xs text-orange-600 dark:text-orange-400">Total Cost</p>
@@ -365,7 +365,7 @@ export function EVPage() {
                                       <p className="font-semibold text-gray-800 dark:text-white text-sm">{stop.name}</p>
                                       <p className="text-xs text-gray-500 dark:text-gray-400">📍 {stop.distance}km from start</p>
                                     </div>
-                                    {stop.charger !== "Arrival" && <span className="text-xs bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400 px-2 py-1 rounded">{stop.charger}</span>}
+                                    {stop.charger !== "Arrival" && <span className="text-xs bg-green-100 text-green-700 dark:bg-[#1B5E20]/30 dark:text-[#81C784] px-2 py-1 rounded">{stop.charger}</span>}
                                   </div>
                                   {stop.charger !== "Arrival" && (
                                     <div className="grid grid-cols-2 gap-2 text-xs">
@@ -388,7 +388,7 @@ export function EVPage() {
                                     </div>
                                   )}
                                   {stop.charger === "Arrival" && (
-                                    <p className="text-xyz font-semibold text-green-600 dark:text-green-400">🎉 Arrival! Battery: {stop.batteryArrival}%</p>
+                                    <p className="text-xyz font-semibold text-green-600 dark:text-[#81C784]">🎉 Arrival! Battery: {stop.batteryArrival}%</p>
                                   )}
                                 </div>
                               ))}

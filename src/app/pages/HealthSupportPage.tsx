@@ -101,7 +101,7 @@ export function HealthSupportPage() {
                   href={method.href}
                   className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-[#1E1E1E] hover:shadow-lg dark:hover:shadow-lg/20 hover:border-green-500 dark:hover:border-green-500 transition-all text-center"
                 >
-                  <Icon size={24} className="mx-auto mb-2 text-green-600 dark:text-green-400" />
+                  <Icon size={24} className="mx-auto mb-2 text-green-600 dark:text-[#81C784]" />
                   <p className="font-semibold text-sm text-gray-800 dark:text-gray-200">{method.label}</p>
                   <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">{method.value}</p>
                 </a>
@@ -140,7 +140,7 @@ export function HealthSupportPage() {
             </div>
             <button
               type="submit"
-              className="w-full py-2 bg-green-600 dark:bg-green-700 text-white font-semibold rounded-lg hover:bg-green-700 dark:hover:bg-green-800 transition-colors"
+              className="w-full py-2 bg-green-600 dark:bg-[#2E7D32] text-white font-semibold rounded-lg hover:bg-green-700 dark:hover:bg-[#1B5E20] transition-colors"
             >
               Send Message
             </button>

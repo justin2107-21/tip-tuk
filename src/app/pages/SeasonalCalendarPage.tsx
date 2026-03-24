@@ -84,7 +84,7 @@ const seasonalSections: SeasonalSection[] = [
 ];
 
 const statusBadgeConfig = {
-  peak: { emoji: "🟢", label: "Peak", color: "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400" },
+  peak: { emoji: "🟢", label: "Peak", color: "bg-green-100 dark:bg-[#1B5E20]/30 text-green-700 dark:text-[#81C784]" },
   starting: { emoji: "🟡", label: "Starting", color: "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400" },
   ending: { emoji: "🟠", label: "Ending", color: "bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400" },
 };

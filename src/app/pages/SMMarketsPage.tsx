@@ -212,10 +212,10 @@ export function SMMarketsPage() {
                   setActiveCategory("🐔 Chicken");
                   setSortBy("₱/kg ↑");
                 }}
-                className={`w-full text-left px-4 py-3 hover:bg-gray-50 dark:hover:bg-[#2D2D2D] border-b border-gray-100 dark:border-[#2D2D2D] last:border-b-0 transition-colors ${selectedStore === store ? "bg-green-50 dark:bg-green-900/20" : ""}`}
+                className={`w-full text-left px-4 py-3 hover:bg-gray-50 dark:hover:bg-[#2D2D2D] border-b border-gray-100 dark:border-[#2D2D2D] last:border-b-0 transition-colors ${selectedStore === store ? "bg-green-50 dark:bg-[#1B5E20]/30" : ""}`}
               >
                 <div className="flex items-center justify-between">
-                  <span className={`${selectedStore === store ? "text-green-600 dark:text-green-400 font-semibold" : "text-gray-700 dark:text-gray-300"}`}>
+                  <span className={`${selectedStore === store ? "text-green-600 dark:text-[#81C784] font-semibold" : "text-gray-700 dark:text-gray-300"}`}>
                     📍 {store}
                   </span>
                   {selectedStore === store && <span className="text-green-600">✓</span>}
@@ -313,8 +313,8 @@ export function SMMarketsPage() {
                   {(() => {
                     const aiData = getAISavings(product.pricePerKg, activeCategory);
                     return aiData.isCheaper && (
-                      <div className="mb-2 p-2 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
-                        <p className="text-xs text-green-700 dark:text-green-400 font-semibold">🤖 AI tip: {aiData.savings}% cheaper than wet market!</p>
+                      <div className="mb-2 p-2 rounded-lg bg-green-50 dark:bg-[#1B5E20]/30 border border-green-200 dark:border-[#2E7D32]/50">
+                        <p className="text-xs text-green-700 dark:text-[#81C784] font-semibold">🤖 AI tip: {aiData.savings}% cheaper than wet market!</p>
                       </div>
                     );
                   })()}

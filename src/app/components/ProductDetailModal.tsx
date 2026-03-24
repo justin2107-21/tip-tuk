@@ -194,8 +194,8 @@ export function ProductDetailModal({ isOpen, product, onClose }: ProductDetailMo
           </div>
 
           {/* Status Message */}
-          <div className={`p-3 rounded-lg ${percentageChangeNum > 0 ? "bg-red-50 dark:bg-red-900/20" : "bg-green-50 dark:bg-green-900/20"}`}>
-            <p className={`text-sm font-medium ${percentageChangeNum > 0 ? "text-red-700 dark:text-red-400" : "text-green-700 dark:text-green-400"}`}>
+          <div className={`p-3 rounded-lg ${percentageChangeNum > 0 ? "bg-red-50 dark:bg-red-900/20" : "bg-green-50 dark:bg-[#1B5E20]/30"}`}>
+            <p className={`text-sm font-medium ${percentageChangeNum > 0 ? "text-red-700 dark:text-red-400" : "text-green-700 dark:text-[#81C784]"}`}>
               {percentageChangeNum > 0 ? "⚠️" : "✅"} {Math.abs(percentageChangeNum).toFixed(1)}% {percentageChangeNum > 0 ? "above" : "below"} {timePeriod}-day average
             </p>
           </div>

@@ -77,7 +77,7 @@ export function SubscriptionPage() {
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-1">Upgrade to Premium</h1>
           <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Unlimited alerts, AI forecasts, ad-free, and more.</p>
           {userCurrentPlan && (
-            <p className="text-xs text-gray-500 mt-1">Currently on <strong className="text-green-600 dark:text-green-400">{userCurrentPlan} Plan</strong></p>
+            <p className="text-xs text-gray-500 mt-1">Currently on <strong className="text-green-600 dark:text-[#81C784]">{userCurrentPlan} Plan</strong></p>
           )}
         </div>
 
@@ -112,12 +112,12 @@ export function SubscriptionPage() {
           <div className="border-3 border-green-500 rounded-xl p-4 bg-white dark:bg-[#1E1E1E] shadow-lg shadow-green-500/20 relative">
             <div className="absolute -top-2.5 right-3 bg-green-600 text-white px-2 py-0.5 rounded-full text-xs font-bold">⭐ Most Popular</div>
             <div className="mb-3">
-              <h3 className="text-2xl font-bold text-green-600 dark:text-green-400">Premium</h3>
+              <h3 className="text-2xl font-bold text-green-600 dark:text-[#81C784]">Premium</h3>
               <p className="text-3xl font-bold text-gray-900 dark:text-white mt-1">₱50<span className="text-xs text-gray-500">/mo</span></p>
               <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5">or ₱500/yr (save ₱100)</p>
             </div>
-            <div className="mb-3 p-2 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
-              <p className="text-xs text-green-800 dark:text-green-300 font-semibold">✨ Free 7 days, cancel anytime</p>
+              <div className="mb-3 p-2 bg-green-50 dark:bg-[#1B5E20]/30 border border-green-200 dark:border-[#2E7D32]/50 rounded-lg">
+              <p className="text-xs text-green-800 dark:text-[#81C784] font-semibold">✨ Free 7 days, cancel anytime</p>
             </div>
             <button className="w-full py-2 rounded-lg font-semibold text-xs bg-green-600 hover:bg-green-700 text-white mb-3">
               Start Free Trial
@@ -142,7 +142,7 @@ export function SubscriptionPage() {
         {/* Annual Savings */}
         <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-3 mb-5 text-center">
           <p className="text-xs sm:text-sm font-bold text-purple-900 dark:text-purple-300">
-            💰 Annual Plan: ₱500/year <span className="text-green-600">Save ₱100</span>
+            💰 Annual Plan: ₱500/year <span className="text-green-600 dark:text-[#81C784]">Save ₱100</span>
           </p>
         </div>
 
@@ -154,7 +154,7 @@ export function SubscriptionPage() {
               <tr className="bg-gray-100 dark:bg-gray-800">
                 <th className="px-2 py-1.5 text-left font-bold text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700">Feature</th>
                 <th className="px-2 py-1.5 text-center font-bold text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700">Free</th>
-                <th className="px-2 py-1.5 text-center font-bold text-green-600 dark:text-green-400 border border-gray-200 dark:border-gray-700">Premium</th>
+                <th className="px-2 py-1.5 text-center font-bold text-green-600 dark:text-[#81C784] border border-gray-200 dark:border-gray-700">Premium</th>
               </tr>
             </thead>
             <tbody>
@@ -200,17 +200,17 @@ export function SubscriptionPage() {
         </div>
 
         {/* Trust Signals & Links */}
-        <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-3 text-center">
-          <p className="text-xs text-green-900 dark:text-green-200 mb-1.5">
+        <div className="bg-green-50 dark:bg-[#1B5E20]/30 border border-green-200 dark:border-[#2E7D32]/50 rounded-lg p-3 text-center">
+          <p className="text-xs text-green-900 dark:text-[#81C784] mb-1.5">
             ✓ Cancel anytime | 🔒 Secure | 📱 All devices
           </p>
           <p className="text-xs text-gray-600 dark:text-gray-400">
             By subscribing, you agree to our{" "}
-            <button onClick={() => { setShowTermsModal(true); setTermsType("terms"); }} className="text-green-600 dark:text-green-400 hover:underline font-semibold">
+            <button onClick={() => { setShowTermsModal(true); setTermsType("terms"); }} className="text-green-600 dark:text-[#81C784] hover:underline font-semibold">
               Terms
             </button>{" "}
             and{" "}
-            <button onClick={() => { setShowTermsModal(true); setTermsType("privacy"); }} className="text-green-600 dark:text-green-400 hover:underline font-semibold">
+            <button onClick={() => { setShowTermsModal(true); setTermsType("privacy"); }} className="text-green-600 dark:text-[#81C784] hover:underline font-semibold">
               Privacy
             </button>
           </p>

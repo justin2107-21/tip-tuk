@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Bell, Clock } from "lucide-react";
+import { Bell, Clock, X } from "lucide-react";
 import { AIBadge, AITip } from "../components/AIBadge";
+import { useApp } from "../context/AppContext";
 
 const surplusStores = [
   {
@@ -50,9 +51,56 @@ const flashSales = [
   { store: "Landmark Trinoma", item: "🍗 Chicken Legs", discount: 38, timeLeft: "45m" },
 ];
 
+const chickChopSueyRecipe = {
+  name: "Chicken Chop Suey",
+  emoji: "🍳",
+  cost: 225,
+  normalCost: 310,
+  savings: 85,
+  savingsPercent: 27,
+  servings: 4,
+  cookTime: "20 min",
+  difficulty: "Easy",
+  ingredients: [
+    { name: "Chicken (600g)", emoji: "🍗", price: 120, discounted: true, normalPrice: 175, inBasket: false },
+    { name: "Broccoli (300g)", emoji: "🥦", price: 75, discounted: true, normalPrice: 120, inBasket: false },
+    { name: "Garlic (3 cloves)", emoji: "🧄", price: 10, discounted: false, normalPrice: 10, inBasket: false },
+    { name: "Soy Sauce (1 tbsp)", emoji: "🥫", price: 5, discounted: false, normalPrice: 5, inBasket: false },
+    { name: "Cooking Oil (2 tbsp)", emoji: "🍶", price: 15, discounted: false, normalPrice: 15, inBasket: false },
+  ],
+  instructions: [
+    "1. Sauté minced garlic in oil until fragrant (30 seconds).",
+    "2. Add chicken chunks and stir-fry until cooked (8-10 minutes).",
+    "3. Add broccoli florets and soy sauce, mix well.",
+    "4. Simmer until broccoli is tender-crisp (4-5 minutes).",
+    "5. Serve hot over steamed rice. Enjoy!",
+  ],
+};
+
 export function WasteReductionPage() {
+  const { addToBasket } = useApp();
   const [alerts, setAlerts] = useState<number[]>([]);
+  const [recipeOpen, setRecipeOpen] = useState(false);
+  const [addedToBasket, setAddedToBasket] = useState(false);
+
   const toggleAlert = (id: number) => setAlerts((a) => a.includes(id) ? a.filter((x) => x !== id) : [...a, id]);
+
+  const handleAddRecipeToBasket = () => {
+    // Add all recipe ingredients to basket
+    chickChopSueyRecipe.ingredients.forEach((ing) => {
+      addToBasket({
+        id: ing.name.toLowerCase().replace(/[^a-z0-9]/g, ""),
+        emoji: ing.emoji,
+        name: ing.name,
+        price: ing.price,
+        usualPrice: ing.normalPrice,
+        unit: "item",
+      });
+    });
+    setAddedToBasket(true);
+    // Reset after 2 seconds
+    setTimeout(() => setAddedToBasket(false), 2000);
+  };
 
   return (
     <div className="space-y-5">
@@ -195,7 +243,7 @@ export function WasteReductionPage() {
               <p className="text-gray-600 dark:text-gray-400">✓ Chicken - ₱120 (was ₱175)</p>
               <p className="text-gray-600 dark:text-gray-400">✓ Broccoli - ₱75 (was ₱120)</p>
               <p className="text-gray-600 dark:text-gray-400">• Garlic, Soy sauce, Oil - ₱30</p>
-              <p className="font-semibold text-green-700 dark:text-green-400 mt-2">Total: ₱225</p>
+              <p className="font-semibold text-green-700 dark:text-[#81C784] mt-2">Total: ₱225</p>
             </div>
           </div>
           <div className="bg-white dark:bg-[#2D2D2D] rounded-lg p-3 border border-amber-100 dark:border-amber-800">
@@ -203,21 +251,138 @@ export function WasteReductionPage() {
             <div className="space-y-1 text-xs">
               <p className="text-gray-600 dark:text-gray-400">Normal price: ₱310</p>
               <p className="text-gray-600 dark:text-gray-400">Your price: ₱225</p>
-              <p className="font-bold text-green-700 dark:text-green-400 mt-2">Savings: ₱85 (27%)</p>
+              <p className="font-bold text-green-700 dark:text-[#81C784] mt-2">Savings: ₱85 (27%)</p>
             </div>
           </div>
         </div>
 
         {/* CTA Buttons */}
         <div className="flex gap-2 mt-4">
-          <button className="flex-1 py-2.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-semibold text-sm transition-colors">
+          <button 
+            onClick={() => setRecipeOpen(true)}
+            className="flex-1 py-2.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-semibold text-sm transition-colors">
             📖 View Full Recipe
           </button>
-          <button className="flex-1 py-2.5 bg-amber-100 dark:bg-amber-900/40 hover:bg-amber-200 dark:hover:bg-amber-800/60 text-amber-700 dark:text-amber-300 rounded-lg font-semibold text-sm transition-colors">
-            🛒 Add to Basket
+          <button 
+            onClick={handleAddRecipeToBasket}
+            className={`flex-1 py-2.5 rounded-lg font-semibold text-sm transition-colors ${
+              addedToBasket 
+                ? "bg-green-600 text-white" 
+                : "bg-amber-100 dark:bg-amber-900/40 hover:bg-amber-200 dark:hover:bg-amber-800/60 text-amber-700 dark:text-amber-300"
+            }`}>
+            {addedToBasket ? "✓ In My Basket" : "🛒 Add to Basket"}
           </button>
         </div>
       </div>
+
+      {/* Recipe Detail Modal */}
+      {recipeOpen && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setRecipeOpen(false)}>
+          <div className="bg-white dark:bg-[#1E1E1E] rounded-2xl max-w-2xl w-full shadow-2xl max-h-[85vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+            {/* Header */}
+            <div className="p-6 border-b border-gray-100 dark:border-[#2D2D2D] flex items-start justify-between sticky top-0 bg-white dark:bg-[#1E1E1E] z-10">
+              <div className="flex items-center gap-3">
+                <span className="text-3xl">{chickChopSueyRecipe.emoji}</span>
+                <div>
+                  <h3 className="font-bold text-lg text-gray-800 dark:text-[#FFFFFF]">{chickChopSueyRecipe.name}</h3>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Serves {chickChopSueyRecipe.servings} · ⏱ {chickChopSueyRecipe.cookTime}</p>
+                </div>
+              </div>
+              <button onClick={() => setRecipeOpen(false)} className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-[#2D2D2D] transition-colors text-gray-400">
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Content */}
+            <div className="p-6 space-y-5">
+              {/* Quick Info */}
+              <div className="grid grid-cols-3 gap-3">
+                <div className="bg-green-50 dark:bg-[#4CAF50]/15 rounded-lg p-3 border border-green-100 dark:border-[#4CAF50]/30 text-center">
+                  <p className="text-xs text-gray-600 dark:text-gray-300 mb-1">Total Cost</p>
+                  <p className="text-lg font-bold text-green-700 dark:text-[#81C784]">₱{chickChopSueyRecipe.cost}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 line-through">₱{chickChopSueyRecipe.normalCost}</p>
+                </div>
+                <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-3 border border-blue-100 dark:border-blue-800 text-center">
+                  <p className="text-xs text-gray-600 dark:text-gray-300 mb-1">Savings</p>
+                  <p className="text-lg font-bold text-blue-700 dark:text-blue-400">₱{chickChopSueyRecipe.savings}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">{chickChopSueyRecipe.savingsPercent}% off</p>
+                </div>
+                <div className="bg-orange-50 dark:bg-orange-900/20 rounded-lg p-3 border border-orange-100 dark:border-orange-800 text-center">
+                  <p className="text-xs text-gray-600 dark:text-gray-300 mb-1">Time</p>
+                  <p className="text-lg font-bold text-orange-700 dark:text-orange-400">{chickChopSueyRecipe.cookTime}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">{chickChopSueyRecipe.difficulty}</p>
+                </div>
+              </div>
+
+              {/* Ingredients */}
+              <div>
+                <h4 className="font-semibold text-gray-800 dark:text-[#FFFFFF] mb-3 flex items-center gap-2">🛒 Ingredients</h4>
+                <div className="space-y-2">
+                  {chickChopSueyRecipe.ingredients.map((ing) => (
+                    <div key={ing.name} className="flex items-start gap-3 p-3 bg-gray-50 dark:bg-[#2D2D2D] rounded-lg">
+                      <span className="text-lg flex-shrink-0">{ing.emoji}</span>
+                      <div className="flex-1">
+                        <p className="text-sm font-medium text-gray-700 dark:text-[#E0E0E0]">{ing.name}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                          {ing.discounted ? (
+                            <>
+                              <span className="line-through">₱{ing.normalPrice}</span> → ₱{ing.price}
+                            </>
+                          ) : (
+                            `₱${ing.price}`
+                          )}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        {ing.discounted && (
+                          <span className="text-xs px-2 py-1 rounded-full bg-green-100 dark:bg-[#4CAF50]/30 text-green-700 dark:text-[#81C784] font-semibold">Surplus</span>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Instructions */}
+              <div>
+                <h4 className="font-semibold text-gray-800 dark:text-[#FFFFFF] mb-3 flex items-center gap-2">👨‍🍳 Instructions</h4>
+                <div className="space-y-2">
+                  {chickChopSueyRecipe.instructions.map((step) => (
+                    <p key={step} className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed pl-4 border-l-2 border-amber-400 dark:border-amber-600">
+                      {step}
+                    </p>
+                  ))}
+                </div>
+              </div>
+
+              {/* Tip */}
+              <div className="bg-green-50 dark:bg-[#1B5E20]/30 rounded-lg p-3 border border-green-100 dark:border-[#2E7D32]/50">
+                <p className="text-sm text-green-700 dark:text-[#81C784]">
+                  <strong>💡 AI Tip:</strong> This recipe uses discounted items from SM Hypermarket Cubao, saving you 27% compared to buying fresh ingredients!
+                </p>
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="px-6 pb-6 flex gap-2">
+              <button 
+                onClick={handleAddRecipeToBasket}
+                className={`flex-1 py-2.5 rounded-lg font-semibold text-sm transition-colors ${
+                  addedToBasket 
+                    ? "bg-green-600 text-white" 
+                    : "bg-green-600 hover:bg-green-700 text-white"
+                }`}>
+                {addedToBasket ? "✓ Added to Basket!" : "🛒 Add Missing to Basket"}
+              </button>
+              <button 
+                onClick={() => setRecipeOpen(false)}
+                className="flex-1 py-2.5 bg-gray-100 dark:bg-[#2D2D2D] hover:bg-gray-200 dark:hover:bg-[#3D3D3D] text-gray-800 dark:text-[#E0E0E0] rounded-lg font-semibold text-sm transition-colors">
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

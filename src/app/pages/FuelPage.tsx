@@ -264,12 +264,6 @@ export function FuelPage() {
               >
                 <Bell size={12} /> Price Alert
               </button>
-              <button
-                onClick={() => setForecastModalOpen(true)}
-                className="flex items-center gap-1 px-3 py-1.5 bg-purple-200 hover:bg-purple-300 dark:bg-purple-800 dark:hover:bg-purple-700 text-purple-900 dark:text-purple-200 rounded-lg text-xs font-medium transition-colors"
-              >
-                📈 View Forecast
-              </button>
             </div>
           </div>
         </div>
@@ -295,7 +289,7 @@ export function FuelPage() {
                   <span className="text-xl">{brand.logo}</span>
                   <div>
                     <p className="font-semibold text-gray-800 dark:text-[#FFFFFF] text-sm">{brand.brand}</p>
-                    {savings > 0 && <p className="text-green-600 dark:text-green-400 text-xs">Save ₱{savings.toFixed(2)}</p>}
+                    {savings > 0 && <p className="text-green-600 dark:text-[#81C784] text-xs">Save ₱{savings.toFixed(2)}</p>}
                   </div>
                 </div>
                 <div className="text-right">

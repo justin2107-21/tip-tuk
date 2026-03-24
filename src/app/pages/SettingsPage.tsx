@@ -58,14 +58,14 @@ export function SettingsPage() {
               onClick={() => toggleTab(tab.id)}
               className={`p-4 rounded-xl border-2 transition-all text-left flex items-center justify-between ${
                 visibleTabs[tab.id as keyof typeof visibleTabs]
-                  ? "border-green-500 bg-green-50 dark:bg-green-900/10"
+                  ? "border-green-500 bg-green-50 dark:bg-[#1B5E20]/30"
                   : "border-gray-200 dark:border-gray-700 bg-white dark:bg-[#1E1E1E]"
               } hover:border-green-400 dark:hover:border-green-500 cursor-pointer`}
             >
               <div className="flex items-start gap-3 flex-1">
                 <div className="text-2xl">{tab.emoji}</div>
                 <div>
-                  <p className={`font-semibold text-sm ${visibleTabs[tab.id as keyof typeof visibleTabs] ? "text-green-700 dark:text-green-300" : "text-gray-800 dark:text-gray-200"}`}>
+                  <p className={`font-semibold text-sm ${visibleTabs[tab.id as keyof typeof visibleTabs] ? "text-green-700 dark:text-[#81C784]" : "text-gray-800 dark:text-gray-200"}`}>
                     {tab.name}
                   </p>
                   <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{tab.description}</p>

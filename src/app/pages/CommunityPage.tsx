@@ -526,7 +526,7 @@ export function CommunityPage() {
             <div
               key={r.id}
               className={`bg-white dark:bg-[#1E1E1E] rounded-2xl p-4 shadow-sm border relative transition-shadow hover:shadow-md
-                ${r.isNew ? "border-green-400 dark:border-green-500" : "border-gray-100 dark:border-[#2D2D2D]"}`}
+                ${r.isNew ? "border-green-400 dark:border-[#81C784]" : "border-gray-100 dark:border-[#2D2D2D]"}`}
             >
               {/* NEW badge */}
               {r.isNew && (
@@ -667,7 +667,7 @@ export function CommunityPage() {
                         onClick={() => handleItemSelect(i)}
                         className={`p-3 rounded-xl border text-sm hover:bg-green-50 dark:hover:bg-[#4CAF50]/20/20 hover:border-green-400 transition-colors text-center
                           ${selectedItem === i
-                            ? "border-green-500 bg-green-50 dark:bg-[#4CAF50]/10 dark:border-green-500 text-gray-800 dark:text-[#FFFFFF]"
+                            ? "border-green-500 bg-green-50 dark:bg-[#1B5E20]/30 dark:border-[#81C784] text-gray-800 dark:text-[#FFFFFF]"
                             : "border-gray-200 dark:border-gray-600 text-gray-700 dark:text-[#E0E0E0]"}`}
                       >
                         {i}

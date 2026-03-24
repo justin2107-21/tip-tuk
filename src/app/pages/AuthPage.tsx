@@ -8,7 +8,7 @@ export function AuthPage() {
   const { login, darkMode } = useApp();
   
   const [step, setStep] = useState<"choice" | "login" | "register">("choice");
-  const [email, setEmail] = useState("maria.santos@example.com");
+  const [email, setEmail] = useState("justin.esquita@example.com");
   const [password, setPassword] = useState("123456");
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
@@ -108,7 +108,7 @@ export function AuthPage() {
                         ? "bg-[#2D2D2D] border-gray-600 text-white"
                         : "bg-white border-gray-300 text-gray-800"
                     }`}
-                    placeholder="maria.santos@example.com"
+                    placeholder="justin.esquita@example.com"
                   />
                 </div>
               </div>
@@ -180,7 +180,7 @@ export function AuthPage() {
 
             <p className={`text-center text-sm mt-6 ${darkMode ? "text-gray-400" : "text-gray-600"}`}>
               Don't have an account?{" "}
-              <button onClick={() => setStep("register")} className="text-green-600 dark:text-green-400 font-semibold hover:underline">
+              <button onClick={() => setStep("register")} className="text-green-600 dark:text-[#81C784] font-semibold hover:underline">
                 Sign up
               </button>
             </p>
@@ -288,7 +288,7 @@ export function AuthPage() {
 
             <p className={`text-center text-sm mt-6 ${darkMode ? "text-gray-400" : "text-gray-600"}`}>
               Already have an account?{" "}
-              <button onClick={() => setStep("login")} className="text-green-600 dark:text-green-400 font-semibold hover:underline">
+              <button onClick={() => setStep("login")} className="text-green-600 dark:text-[#81C784] font-semibold hover:underline">
                 Sign in
               </button>
             </p>

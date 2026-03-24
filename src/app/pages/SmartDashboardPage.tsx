@@ -63,10 +63,10 @@ export function SmartDashboardPage() {
       {/* Welcome */}
       <div className="rounded-2xl p-6 text-white" style={{ background: "linear-gradient(135deg, #1B5E20, #2E7D32, #388E3C)" }}>
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center text-3xl">👩</div>
+          <div className="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center text-3xl">�</div>
           <div>
             <p className="text-green-200 text-sm">{greeting},</p>
-            <h1 className="text-2xl font-bold">Maria Santos! 👋</h1>
+            <h1 className="text-2xl font-bold">Justin Esquita! 👋</h1>
             <p className="text-green-200 text-sm mt-0.5">Here's your personalized price snapshot</p>
           </div>
           <button className="ml-auto relative p-2 rounded-full bg-white/15 hover:bg-white/25 transition-colors">
@@ -189,7 +189,7 @@ export function SmartDashboardPage() {
             <p className="font-bold text-gray-800 dark:text-[#FFFFFF]">🍲 AI Recipe Suggestion</p>
             <AIBadge />
           </div>
-          <div className="flex items-center gap-3 p-3 bg-green-50 dark:bg-[#4CAF50]/10 rounded-xl mb-3">
+          <div className="flex items-center gap-3 p-3 bg-green-50 dark:bg-[#1B5E20]/30 rounded-xl mb-3">
             <span className="text-4xl">{featuredRecipe.emoji}</span>
             <div>
               <p className="font-semibold text-gray-800 dark:text-[#FFFFFF]">{featuredRecipe.name}</p>
@@ -259,8 +259,8 @@ export function SmartDashboardPage() {
                   ))}
                 </div>
               </div>
-              <div className="bg-green-50 dark:bg-[#4CAF50]/10 rounded-xl p-3">
-                <p className="text-sm text-green-700 dark:text-[#4CAF50] font-medium">💡 AI Tip: All ingredients are currently at their best prices this week!</p>
+              <div className="bg-green-50 dark:bg-[#1B5E20]/30 rounded-xl p-3">
+                <p className="text-sm text-green-700 dark:text-[#81C784] font-medium">💡 AI Tip: All ingredients are currently at their best prices this week!</p>
               </div>
             </div>
             <div className="px-5 pb-5">

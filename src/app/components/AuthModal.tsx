@@ -10,7 +10,7 @@ interface AuthModalProps {
 export function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const { login, darkMode } = useApp();
   const [step, setStep] = useState<"login" | "register" | "switch">("login");
-  const [email, setEmail] = useState("maria.santos@example.com");
+  const [email, setEmail] = useState("justin.esquita@example.com");
   const [password, setPassword] = useState("123456");
   const [fullName, setFullName] = useState("");
   const [rememberMe, setRememberMe] = useState(true);
@@ -34,7 +34,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
   };
 
   const handleSwitchAccount = (accountName: string) => {
-    const accountEmail = accountName === "Maria Santos" ? "maria.santos@example.com" : "justin.21@example.com";
+    const accountEmail = accountName === "Justin Esquita" ? "justin.esquita@example.com" : "justin.21@example.com";
     login(accountName, accountEmail);
     setStep("login");
     onClose();
@@ -72,7 +72,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#2D2D2D] text-gray-800 dark:text-white text-sm outline-none focus:ring-2 focus:ring-green-500"
-                  placeholder="maria.santos@example.com"
+                  placeholder="justin.esquita@example.com"
                 />
               </div>
 
@@ -98,7 +98,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
               </div>
 
               <div className="text-right">
-                <button type="button" className="text-sm text-green-600 dark:text-green-400 hover:underline">
+                <button type="button" className="text-sm text-green-600 dark:text-[#81C784] hover:underline">
                   Forgot Password?
                 </button>
               </div>
@@ -116,7 +116,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                   <button
                     type="button"
                     onClick={() => setStep("register")}
-                    className="text-green-600 dark:text-green-400 font-semibold hover:underline"
+                    className="text-green-600 dark:text-[#81C784] font-semibold hover:underline"
                   >
                     Sign up here
                   </button>
@@ -226,7 +226,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                   <button
                     type="button"
                     onClick={() => setStep("login")}
-                    className="text-green-600 dark:text-green-400 font-semibold hover:underline"
+                    className="text-green-600 dark:text-[#81C784] font-semibold hover:underline"
                   >
                     Log in here
                   </button>
@@ -240,14 +240,14 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
             <div className="space-y-3">
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">Select an account to continue as:</p>
               <button
-                onClick={() => handleSwitchAccount("Maria Santos")}
+                onClick={() => handleSwitchAccount("Justin Esquita")}
                 className="w-full p-4 text-left border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-green-600 text-white flex items-center justify-center font-semibold">M</div>
+                  <div className="w-10 h-10 rounded-full bg-green-600 text-white flex items-center justify-center font-semibold">J</div>
                   <div>
-                    <p className="font-semibold text-gray-800 dark:text-white">Maria Santos</p>
-                    <p className="text-xs text-gray-500">maria.santos@example.com</p>
+                    <p className="font-semibold text-gray-800 dark:text-white">Justin Esquita</p>
+                    <p className="text-xs text-gray-500">justin.esquita@example.com</p>
                   </div>
                 </div>
               </button>
