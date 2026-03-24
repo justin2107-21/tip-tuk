@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ThumbsUp, ThumbsDown, MessageSquare, Camera, X, ChevronDown } from "lucide-react";
 import { AIBadge } from "../components/AIBadge";
+import { LeafletMap } from "../components/maps/LeafletMap";
 import { useApp } from "../context/AppContext";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -38,19 +39,19 @@ interface MapPinData {
   price: string;
   timeAgo: string;
   verified: boolean;
-  x: string;
-  y: string;
-  tooltipDir: "above" | "below";
+  lat: number;
+  lng: number;
+  emoji?: string;
 }
 
 // ─── Static Data ─────────────────────────────────────────────────────────────
 const mapPins: MapPinData[] = [
-  { id: "kamuning",  label: "Kamuning Market",       item: "🥦 Broccoli",     price: "₱87/kg",  timeAgo: "2 hours ago", verified: true,  x: "43%", y: "38%", tooltipDir: "below" },
-  { id: "cubao",     label: "Cubao Market",           item: "🧄 Bawang",       price: "₱260/kg", timeAgo: "6 hours ago", verified: false, x: "58%", y: "33%", tooltipDir: "below" },
-  { id: "farmers",   label: "Farmer's Market, QC",   item: "🍅 Kamatis",      price: "₱40/kg",  timeAgo: "4 hours ago", verified: true,  x: "64%", y: "43%", tooltipDir: "below" },
-  { id: "pasig",     label: "Pasig Public Market",    item: "🍗 Chicken",      price: "₱165/kg", timeAgo: "1 hour ago",  verified: true,  x: "75%", y: "58%", tooltipDir: "above" },
-  { id: "makati",    label: "Makati Central Market",  item: "🥩 Pork Liempo",  price: "₱285/kg", timeAgo: "8 hours ago", verified: true,  x: "48%", y: "78%", tooltipDir: "above" },
-  { id: "taguig",    label: "Taguig/BGC Market",      item: "🥬 Kangkong",     price: "₱25/kg",  timeAgo: "3 hours ago", verified: true,  x: "68%", y: "83%", tooltipDir: "above" },
+  { id: "kamuning",  label: "Kamuning Market",       item: "🥦 Broccoli",     price: "₱87/kg",  timeAgo: "2 hours ago", verified: true,  lat: 14.6326, lng: 121.0227, emoji: "🥦" },
+  { id: "cubao",     label: "Cubao Market",           item: "🧄 Bawang",       price: "₱260/kg", timeAgo: "6 hours ago", verified: false, lat: 14.5887, lng: 121.0472, emoji: "🧄" },
+  { id: "farmers",   label: "Farmer's Market, QC",   item: "🍅 Kamatis",      price: "₱40/kg",  timeAgo: "4 hours ago", verified: true,  lat: 14.6235, lng: 121.0389, emoji: "🍅" },
+  { id: "pasig",     label: "Pasig Public Market",    item: "🍗 Chicken",      price: "₱165/kg", timeAgo: "1 hour ago",  verified: true,  lat: 14.5647, lng: 121.1022, emoji: "🍗" },
+  { id: "makati",    label: "Makati Central Market",  item: "🥩 Pork Liempo",  price: "₱285/kg", timeAgo: "8 hours ago", verified: true,  lat: 14.5620, lng: 121.0092, emoji: "🥩" },
+  { id: "taguig",    label: "Taguig/BGC Market",      item: "🥬 Kangkong",     price: "₱25/kg",  timeAgo: "3 hours ago", verified: true,  lat: 14.5450, lng: 121.0621, emoji: "🥬" },
 ];
 
 const initialReports: Report[] = [
@@ -285,10 +286,24 @@ export function CommunityPage() {
   const { darkMode } = useApp();
 
   // Map state
-  const [activePin, setActivePin]         = useState<string | null>(null);
-  const [zoom, setZoom]                   = useState(1);
   const [activeRegion, setActiveRegion]   = useState("Metro Manila");
   const [regionOpen, setRegionOpen]       = useState(false);
+
+  // Convert mapPins to Leaflet markers format
+  const leafletMarkers = mapPins.map((pin) => ({
+    id: pin.id,
+    lat: pin.lat,
+    lng: pin.lng,
+    label: pin.label,
+    item: pin.item,
+    price: pin.price,
+    verified: pin.verified,
+    icon: pin.emoji || "📍",
+    color: pin.verified ? "#2E7D32" : "#F59E0B",
+  }));
+
+  // OLD - kept for reference but not used
+  const notUsedAnyMore = { activePin: null, zoom: 1 };
 
   // Reports state
   const [reports, setReports]             = useState<Report[]>(initialReports);
@@ -448,54 +463,20 @@ export function CommunityPage() {
             )}
           </div>
 
-          {/* Zoom controls */}
-          <div className="flex items-center gap-1">
-            <span className="text-xs text-gray-400 dark:text-gray-500 mr-1 hidden sm:inline">Zoom</span>
-            <button
-              onClick={() => setZoom(z => Math.min(+(z + 0.2).toFixed(1), 2.0))}
-              className="w-11 h-11 rounded-xl bg-gray-100 dark:bg-[#2D2D2D] text-gray-700 dark:text-[#E0E0E0] hover:bg-green-100 dark:hover:bg-[#4CAF50]/20/30 flex items-center justify-center transition-colors text-xl font-bold select-none"
-              aria-label="Zoom in"
-            >+</button>
-            <button
-              onClick={() => setZoom(z => Math.max(+(z - 0.2).toFixed(1), 0.6))}
-              className="w-11 h-11 rounded-xl bg-gray-100 dark:bg-[#2D2D2D] text-gray-700 dark:text-[#E0E0E0] hover:bg-green-100 dark:hover:bg-[#4CAF50]/20/30 flex items-center justify-center transition-colors text-xl font-bold select-none"
-              aria-label="Zoom out"
-            >−</button>
-            <button
-              onClick={() => setZoom(1)}
-              className="h-11 px-3 rounded-xl bg-gray-100 dark:bg-[#2D2D2D] text-gray-500 dark:text-[#9E9E9E] hover:bg-gray-200 dark:hover:bg-[#1E1E1E] text-xs font-medium transition-colors"
-              aria-label="Reset zoom"
-            >Reset</button>
+          <div className="ml-auto text-xs text-gray-400">
+            🗺️ Interactive Leaflet map - drag to move, scroll to zoom
           </div>
         </div>
 
         {/* Map viewport */}
-        <div
-          className="relative overflow-hidden rounded-b-2xl"
-          style={{ paddingBottom: "56%" }}
-          onClick={() => { setActivePin(null); setRegionOpen(false); }}
-        >
-          {/* SVG layer — scales with zoom */}
-          <div
-            className="absolute inset-0"
-            style={{ transform: `scale(${zoom})`, transformOrigin: "center center", transition: "transform 0.25s ease" }}
-          >
-            <MetroManilaMap darkMode={darkMode} />
-          </div>
-
-          {/* Pin layer — positions fixed relative to container (not zoomed) */}
-          <div className="absolute inset-0" style={{ zIndex: 20 }}>
-            {mapPins.map(pin => (
-              <MapPin
-                key={pin.id}
-                pin={pin}
-                isActive={activePin === pin.id}
-                darkMode={darkMode}
-                onToggle={() => setActivePin(prev => prev === pin.id ? null : pin.id)}
-                onClose={() => setActivePin(null)}
-              />
-            ))}
-          </div>
+        <div className="relative rounded-b-2xl overflow-hidden">
+          <LeafletMap
+            markers={leafletMarkers}
+            center={[14.5995, 120.9842]}
+            zoom={11}
+            height="600px"
+            darkMode={darkMode}
+          />
         </div>
 
         {/* Map legend */}

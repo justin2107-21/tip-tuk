@@ -42,10 +42,10 @@ export function Navbar({ onMobileMenuToggle, mobileMenuOpen }: NavbarProps) {
 
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 flex-shrink-0">
-          <img src="/favicon1.ico" alt="Anopresyo" className="w-14 h-14 rounded-full shadow-sm" />
+          <img src="/favicon1.ico" alt="TipTuk" className="w-14 h-14 rounded-full shadow-sm" />
           <div className="hidden sm:block">
             <span className="text-white font-bold text-xl" style={{ fontFamily: "Poppins, sans-serif" }}>
-              Ano<span style={{ color: "#FFB300" }}>presyo</span>
+              Tip<span style={{ color: "#FFB300" }}>Tuk</span>
             </span>
           </div>
         </Link>

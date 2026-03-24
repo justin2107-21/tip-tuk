@@ -3,59 +3,178 @@ import { Link } from "react-router";
 import { TrendingDown, TrendingUp, Bell, Plus, Heart, ChevronRight } from "lucide-react";
 import { AIBadge, AITip } from "../components/AIBadge";
 import { useApp } from "../context/AppContext";
+import { ProductDetailModal } from "../components/ProductDetailModal";
+import { AddToBasketButton } from "../components/AddToBasketButton";
+import { Toast } from "../components/Toast";
 
 // Mock data with categories and drop periods for 7D/30D/90D filtering
 const allBestDeals = [
-  { id: "kangkong", emoji: "🥬", name: "Kangkong", price: 25, usual: 40, savings: 15, unit: "kg", period: "7D" },
-  { id: "broccoli", emoji: "🥦", name: "Broccoli", price: 87, usual: 100, savings: 13, unit: "kg", period: "7D" },
-  { id: "ampalaya", emoji: "🥒", name: "Ampalaya", price: 40, usual: 60, savings: 20, unit: "kg", period: "7D" },
-  { id: "banana", emoji: "🍌", name: "Lakatan Banana", price: 65, usual: 80, savings: 15, unit: "kg", period: "30D" },
-  { id: "papaya", emoji: "🍈", name: "Papaya", price: 30, usual: 45, savings: 15, unit: "kg", period: "30D" },
-  { id: "sitaw", emoji: "🫘", name: "Sitaw", price: 35, usual: 50, savings: 15, unit: "kg", period: "30D" },
-  { id: "pechay", emoji: "🥬", name: "Pechay", price: 28, usual: 45, savings: 17, unit: "kg", period: "90D" },
-  { id: "tilapia", emoji: "🐟", name: "Tilapia", price: 115, usual: 140, savings: 25, unit: "kg", period: "90D" },
-  { id: "camote", emoji: "🍠", name: "Kamote", price: 22, usual: 35, savings: 13, unit: "kg", period: "90D" },
+  // 7D Best Deals
+  { id: "galunggong-7d", emoji: "🐟", name: "Local Round Scad (Galunggong)", price: 293, usual: 315, savings: 22, unit: "kg", period: "7D" },
+  { id: "alumahan-7d", emoji: "🐟", name: "Alumahan", price: 333, usual: 356, savings: 23, unit: "kg", period: "7D" },
+  { id: "red-onion-7d", emoji: "🧅", name: "Imported Red Onion (Medium size)", price: 92, usual: 96, savings: 4, unit: "kg", period: "7D" },
+  // 30D Best Deals
+  { id: "lettuce-romaine-30d", emoji: "🥬", name: "Lettuce (Romaine)", price: 147, usual: 171, savings: 24, unit: "kg", period: "30D" },
+  { id: "galunggong-30d", emoji: "🐟", name: "Local Round Scad (Galunggong)", price: 293, usual: 326, savings: 33, unit: "kg", period: "30D" },
+  { id: "red-onion-30d", emoji: "🧅", name: "Imported Red Onion (Medium size)", price: 92, usual: 101, savings: 9, unit: "kg", period: "30D" },
+  { id: "white-onion-30d", emoji: "🧅", name: "Imported White Onion (Medium size)", price: 104, usual: 114, savings: 10, unit: "kg", period: "30D" },
+  { id: "avocado-30d", emoji: "🥑", name: "Avocado", price: 270, usual: 291, savings: 21, unit: "kg", period: "30D" },
+  { id: "broccoli-30d", emoji: "🥦", name: "Broccoli", price: 136, usual: 145, savings: 9, unit: "kg", period: "30D" },
+  { id: "chili-30d", emoji: "🌶️", name: "Chili (Siling Labuyo)", price: 163, usual: 173, savings: 10, unit: "kg", period: "30D" },
+  { id: "alumahan-30d", emoji: "🐟", name: "Alumahan", price: 333, usual: 353, savings: 20, unit: "kg", period: "30D" },
+  { id: "cabbage-30d", emoji: "🥬", name: "Cabbage Repolyo (Wonder Ball)", price: 69, usual: 73, savings: 4, unit: "kg", period: "30D" },
+  { id: "tomato-30d", emoji: "🍅", name: "Tomato (Kamatis)", price: 63, usual: 66, savings: 3, unit: "kg", period: "30D" },
+  // 90D Best Deals
+  { id: "chili-90d", emoji: "🌶️", name: "Chili (Siling Labuyo)", price: 163, usual: 378, savings: 215, unit: "kg", period: "90D" },
+  { id: "tomato-90d", emoji: "🍅", name: "Tomato (Kamatis)", price: 63, usual: 108, savings: 45, unit: "kg", period: "90D" },
+  { id: "lettuce-romaine-90d", emoji: "🥬", name: "Lettuce (Romaine)", price: 147, usual: 243, savings: 96, unit: "kg", period: "90D" },
+  { id: "red-onion-90d", emoji: "🧅", name: "Imported Red Onion (Medium size)", price: 92, usual: 133, savings: 41, unit: "kg", period: "90D" },
+  { id: "local-red-onion-90d", emoji: "🧅", name: "Local Red Onion (Pulang Sibuyas)", price: 110, usual: 155, savings: 45, unit: "kg", period: "90D" },
+  { id: "broccoli-90d", emoji: "🥦", name: "Broccoli", price: 136, usual: 188, savings: 52, unit: "kg", period: "90D" },
+  { id: "lettuce-green-ice-90d", emoji: "🥬", name: "Lettuce (Green Ice)", price: 149, usual: 204, savings: 55, unit: "kg", period: "90D" },
+  { id: "lettuce-iceberg-90d", emoji: "🥬", name: "Lettuce (Iceberg)", price: 206, usual: 273, savings: 67, unit: "kg", period: "90D" },
+  { id: "potato-90d", emoji: "🥔", name: "White Potato (Patatas)", price: 102, usual: 130, savings: 28, unit: "kg", period: "90D" },
+  { id: "avocado-90d", emoji: "🥑", name: "Avocado", price: 270, usual: 329, savings: 59, unit: "kg", period: "90D" },
 ];
 
 const expensiveItems = [
-  { id: "garlic", emoji: "🧄", name: "Bawang (Garlic)", price: 280, usual: 180, increase: 55 },
-  { id: "onion", emoji: "🧅", name: "Red Onion", price: 120, usual: 80, increase: 50 },
-  { id: "pork", emoji: "🥩", name: "Pork Liempo", price: 290, usual: 250, increase: 16 },
-  { id: "lemon", emoji: "🍋", name: "Calamansi", price: 90, usual: 60, increase: 50 },
+  { id: "carrot", emoji: "🥕", name: "Carrot (Karot)", price: 165, usual: 113, increase: 46 },
+  { id: "squash", emoji: "🎃", name: "Squash (Kalabasa)", price: 76, usual: 62, increase: 23 },
+  { id: "beans", emoji: "🫘", name: "Baguio Beans (Habitchuelas)", price: 144, usual: 121, increase: 19 },
+  { id: "watermelon", emoji: "🍉", name: "Watermelon", price: 89, usual: 80, increase: 11 },
+  { id: "egg-brown-xl", emoji: "🥚", name: "Chicken Egg (Brown, Extra Large)", price: 11, usual: 10, increase: 10 },
+  { id: "papaya", emoji: "🥭", name: "Papaya", price: 79, usual: 72, increase: 10 },
+  { id: "rice-premium", emoji: "🍚", name: "Imported Premium", price: 59, usual: 54, increase: 9 },
+  { id: "rice-milled", emoji: "🍚", name: "Imported Regular Milled", price: 44, usual: 41, increase: 7 },
+  { id: "rice-local-milled", emoji: "🍚", name: "Local Well Milled", price: 48, usual: 45, increase: 7 },
+  { id: "palm-oil", emoji: "🫒", name: "Palm Oil - 350ml", price: 38, usual: 36, increase: 6 },
 ];
 
-// Full Bantay Presyo list with categories
+// Full Bantay Presyo list with categories - comprehensive market data
 const fullItemList = [
-  { id: "chicken", emoji: "🍗", name: "Chicken (Whole)", price: 165, usual: 175, status: "MURA", category: "Meats" },
-  { id: "eggs", emoji: "🥚", name: "Itlog (Eggs)", price: 8, usual: 8, status: "STABLE", unit: "pc", category: "Meats" },
-  { id: "rice", emoji: "🍚", name: "Sinandomeng Rice", price: 52, usual: 50, status: "MAHAL", category: "Rice" },
-  { id: "tilapia2", emoji: "🐟", name: "Tilapia", price: 120, usual: 130, status: "MURA", category: "Fish" },
-  { id: "tomato", emoji: "🍅", name: "Kamatis (Tomato)", price: 45, usual: 50, status: "MURA", category: "Vegetables" },
-  { id: "eggplant", emoji: "🍆", name: "Talong (Eggplant)", price: 35, usual: 35, status: "STABLE", category: "Vegetables" },
-  { id: "potato", emoji: "🥔", name: "Patatas (Potato)", price: 75, usual: 65, status: "MAHAL", category: "Vegetables" },
-  { id: "carrot", emoji: "🥕", name: "Karot (Carrot)", price: 55, usual: 60, status: "MURA", category: "Vegetables" },
-  { id: "pechay2", emoji: "🥬", name: "Pechay", price: 30, usual: 35, status: "MURA", category: "Vegetables" },
-  { id: "mango", emoji: "🥭", name: "Carabao Mango", price: 95, usual: 85, status: "MAHAL", category: "Fruits" },
-  { id: "garlic2", emoji: "🧄", name: "Bawang (Garlic)", price: 280, usual: 180, status: "MAHAL", category: "Spices" },
-  { id: "onion2", emoji: "🧅", name: "Sibuyas (Onion)", price: 120, usual: 80, status: "MAHAL", category: "Spices" },
-  { id: "ginger", emoji: "🫚", name: "Luya (Ginger)", price: 90, usual: 80, status: "MAHAL", category: "Spices" },
-  { id: "bangus", emoji: "🐟", name: "Bangus (Milkfish)", price: 155, usual: 165, status: "MURA", category: "Fish" },
-  { id: "pork2", emoji: "🥩", name: "Pork Liempo", price: 290, usual: 250, status: "MAHAL", category: "Meats" },
-  { id: "beef", emoji: "🥩", name: "Beef Brisket", price: 450, usual: 420, status: "MAHAL", category: "Meats" },
-  { id: "kangkong2", emoji: "🥬", name: "Kangkong", price: 25, usual: 40, status: "MURA", category: "Vegetables" },
-  { id: "broccoli2", emoji: "🥦", name: "Broccoli", price: 87, usual: 100, status: "MURA", category: "Vegetables" },
-  { id: "banana2", emoji: "🍌", name: "Lakatan Banana", price: 65, usual: 80, status: "MURA", category: "Fruits" },
-  { id: "papaya2", emoji: "🍈", name: "Papaya", price: 30, usual: 45, status: "MURA", category: "Fruits" },
+  // Fish - MURA
+  { id: "galunggong", emoji: "🐟", name: "Local Round Scad (Galunggong)", price: 293.02, usual: 315, status: "MURA", category: "Fish" },
+  { id: "alumahan", emoji: "🐟", name: "Alumahan", price: 332.69, usual: 356, status: "MURA", category: "Fish" },
+  { id: "imported-galunggong", emoji: "🐟", name: "Imported Round Scad (Galunggong)", price: 292, usual: 295, status: "STABLE", category: "Fish" },
+  { id: "milkfish", emoji: "🐟", name: "Milkfish (Bangus)", price: 228.25, usual: 235, status: "STABLE", category: "Fish" },
+  { id: "sardines", emoji: "🐟", name: "Sardines (Tamban)", price: 153.57, usual: 158, status: "STABLE", category: "Fish" },
+  { id: "tilapia", emoji: "🐟", name: "Tilapia", price: 154.05, usual: 154, status: "STABLE", category: "Fish" },
+  
+  // Vegetables - MURA
+  { id: "red-onion-imported", emoji: "🧅", name: "Imported Red Onion (Medium size)", price: 91.75, usual: 96, status: "MURA", category: "Vegetables" },
+  
+  // Vegetables - STABLE
+  { id: "white-onion-imported", emoji: "🧅", name: "Imported White Onion (Medium size)", price: 103.75, usual: 107, status: "STABLE", category: "Vegetables" },
+  { id: "cabbage-wonder", emoji: "🥬", name: "Cabbage Repolyo (Wonder Ball)", price: 69.29, usual: 71, status: "STABLE", category: "Vegetables" },
+  { id: "cabbage-rare", emoji: "🥬", name: "Cabbage Repolyo (Rare Ball)", price: 71.10, usual: 72, status: "STABLE", category: "Vegetables" },
+  { id: "cabbage-scorpio", emoji: "🥬", name: "Cabbage Repolyo (Scorpio)", price: 81.45, usual: 82, status: "STABLE", category: "Vegetables" },
+  { id: "celery", emoji: "🥬", name: "Celery", price: 157.61, usual: 159, status: "STABLE", category: "Vegetables" },
+  { id: "potato", emoji: "🥔", name: "White Potato (Patatas)", price: 102.18, usual: 103, status: "STABLE", category: "Vegetables" },
+  { id: "carrot", emoji: "🥕", name: "Carrot (Karot)", price: 164.89, usual: 165, status: "STABLE", category: "Vegetables" },
+  { id: "pechay-tagalog", emoji: "🥬", name: "Pechay Tagalog", price: 73.26, usual: 74, status: "STABLE", category: "Vegetables" },
+  { id: "pechay-baguio", emoji: "🥬", name: "Pechay Baguio", price: 78.49, usual: 79, status: "STABLE", category: "Vegetables" },
+  { id: "lettuce-romaine", emoji: "🥬", name: "Lettuce (Romaine)", price: 146.89, usual: 146, status: "STABLE", category: "Vegetables" },
+  { id: "lettuce-green-ice", emoji: "🥬", name: "Lettuce (Green Ice)", price: 149.29, usual: 146, status: "STABLE", category: "Vegetables" },
+  { id: "broccoli", emoji: "🥦", name: "Broccoli", price: 135.71, usual: 135, status: "STABLE", category: "Vegetables" },
+  { id: "chayote", emoji: "🥒", name: "Chayote (Sayote)", price: 58.71, usual: 58, status: "STABLE", category: "Vegetables" },
+  { id: "bittergourd", emoji: "🥒", name: "Bittergourd (Ampalaya)", price: 132.18, usual: 129, status: "STABLE", category: "Vegetables" },
+  { id: "tomato", emoji: "🍅", name: "Tomato (Kamatis)", price: 63.18, usual: 61, status: "STABLE", category: "Vegetables" },
+  { id: "eggplant", emoji: "🍆", name: "Eggplant (Talong)", price: 94.89, usual: 90, status: "STABLE", category: "Vegetables" },
+  { id: "ginger", emoji: "🫚", name: "Ginger (Luya)", price: 156.80, usual: 155, status: "STABLE", category: "Vegetables" },
+  
+  // Vegetables - MAHAL
+  { id: "lettuce-iceberg", emoji: "🥬", name: "Lettuce (Iceberg)", price: 206.22, usual: 196, status: "MAHAL", category: "Vegetables" },
+  { id: "squash", emoji: "🎃", name: "Squash (Kalabasa)", price: 76.43, usual: 72, status: "MAHAL", category: "Vegetables" },
+  { id: "cauliflower", emoji: "🥦", name: "Cauliflower", price: 133.67, usual: 124, status: "MAHAL", category: "Vegetables" },
+  { id: "bell-pepper-green", emoji: "🫑", name: "Bell Pepper (Green)", price: 298.57, usual: 252, status: "MAHAL", category: "Vegetables" },
+  { id: "bell-pepper-red", emoji: "🫑", name: "Bell Pepper (Red)", price: 305.19, usual: 245, status: "MAHAL", category: "Vegetables" },
+  
+  // Fruits
+  { id: "avocado", emoji: "🥑", name: "Avocado", price: 270.36, usual: 274, status: "STABLE", category: "Fruits" },
+  { id: "watermelon", emoji: "🍉", name: "Watermelon", price: 89.38, usual: 84, status: "MAHAL", category: "Fruits" },
+  { id: "papaya", emoji: "🥭", name: "Papaya", price: 79.39, usual: 74, status: "MAHAL", category: "Fruits" },
+  { id: "banana-lakatan", emoji: "🍌", name: "Banana (Lakatan)", price: 99.63, usual: 99, status: "STABLE", category: "Fruits" },
+  { id: "banana-latundan", emoji: "🍌", name: "Banana (Latundan)", price: 75.98, usual: 75, status: "STABLE", category: "Fruits" },
+  { id: "banana-saba", emoji: "🍌", name: "Banana (Saba)", price: 56.97, usual: 56, status: "STABLE", category: "Fruits" },
+  { id: "pomelo", emoji: "🍊", name: "Pomelo", price: 189.64, usual: 186, status: "STABLE", category: "Fruits" },
+  { id: "melon", emoji: "🍈", name: "Melon", price: 107.09, usual: 105, status: "STABLE", category: "Fruits" },
+  { id: "mango-carabao", emoji: "🥭", name: "Mango (Carabao)", price: 181.69, usual: 175, status: "STABLE", category: "Fruits" },
+  
+  // Rice
+  { id: "rice-basmati", emoji: "🍚", name: "Basmati", price: 202.78, usual: 206, status: "STABLE", category: "Rice" },
+  { id: "rice-imported-premium", emoji: "🍚", name: "Imported Premium", price: 58.83, usual: 59, status: "STABLE", category: "Rice" },
+  { id: "rice-imported-special", emoji: "🍚", name: "Imported Other Special Rice", price: 60.68, usual: 61, status: "STABLE", category: "Rice" },
+  { id: "rice-imported-glutinous", emoji: "🍚", name: "Imported Glutinous", price: 61.75, usual: 61, status: "STABLE", category: "Rice" },
+  { id: "rice-imported-well-milled", emoji: "🍚", name: "Imported Well Milled", price: 47.85, usual: 48, status: "STABLE", category: "Rice" },
+  { id: "rice-imported-milled", emoji: "🍚", name: "Imported Regular Milled", price: 43.57, usual: 43, status: "STABLE", category: "Rice" },
+  { id: "rice-jasponica", emoji: "🍚", name: "Jasponica/Japonica", price: 63.70, usual: 63, status: "STABLE", category: "Rice" },
+  { id: "rice-local-premium", emoji: "🍚", name: "Local Premium", price: 54.59, usual: 54, status: "STABLE", category: "Rice" },
+  { id: "rice-local-special", emoji: "🍚", name: "Local Other Special Rice", price: 60.25, usual: 60, status: "STABLE", category: "Rice" },
+  { id: "rice-local-glutinous", emoji: "🍚", name: "Local Glutinous", price: 73.98, usual: 75, status: "STABLE", category: "Rice" },
+  { id: "rice-local-well-milled", emoji: "🍚", name: "Local Well Milled", price: 48.14, usual: 48, status: "STABLE", category: "Rice" },
+  { id: "rice-local-milled", emoji: "🍚", name: "Local Regular Milled", price: 42.37, usual: 42, status: "STABLE", category: "Rice" },
+  { id: "rice-benteng", emoji: "🍚", name: "P20 Benteng Bigas Meron Na", price: 20, usual: 20, status: "STABLE", category: "Rice" },
+  
+  // Spices
+  { id: "garlic-local", emoji: "🧄", name: "Local Garlic (Bawang)", price: 384, usual: 390, status: "STABLE", category: "Spices" },
+  { id: "garlic-imported", emoji: "🧄", name: "Imported Garlic (Bawang)", price: 149.93, usual: 149, status: "STABLE", category: "Spices" },
+  { id: "onion-red-local", emoji: "🧅", name: "Local Red Onion (Pulang Sibuyas)", price: 109.57, usual: 109, status: "STABLE", category: "Spices" },
+  { id: "onion-white-local", emoji: "🧅", name: "Local White Onion (Puting Sibuyas)", price: 95.82, usual: 95, status: "STABLE", category: "Spices" },
+  { id: "calamansi", emoji: "🍋", name: "Calamansi", price: 129.14, usual: 131, status: "STABLE", category: "Spices" },
+  { id: "chili-siling-labuyo", emoji: "🌶️", name: "Chili (Siling Labuyo)", price: 163, usual: 163, status: "STABLE", category: "Spices" },
+  { id: "chili-green", emoji: "🌶️", name: "Chili (Green)", price: 95.98, usual: 98, status: "STABLE", category: "Spices" },
+  { id: "sugar-washed", emoji: "🍬", name: "Sugar (Washed)", price: 75.02, usual: 75, status: "STABLE", category: "Spices" },
+  { id: "sugar-brown", emoji: "🍬", name: "Sugar (Brown)", price: 73.63, usual: 74, status: "STABLE", category: "Spices" },
+  { id: "sugar-refined", emoji: "🍬", name: "Sugar (Refined)", price: 82.46, usual: 82, status: "STABLE", category: "Spices" },
+  
+  // Eggs & Others
+  { id: "egg-white-pewee", emoji: "🥚", name: "Chicken Egg (White, Pewee)", price: 6.63, usual: 7, status: "STABLE", category: "Others" },
+  { id: "egg-white-extra-small", emoji: "🥚", name: "Chicken Egg (White, Extra Small)", price: 7.14, usual: 7, status: "STABLE", category: "Others" },
+  { id: "egg-white-small", emoji: "🥚", name: "Chicken Egg (White, Small)", price: 7.61, usual: 8, status: "STABLE", category: "Others" },
+  { id: "egg-white-medium", emoji: "🥚", name: "Chicken Egg (White, Medium)", price: 8.19, usual: 8, status: "STABLE", category: "Others" },
+  { id: "egg-white-large", emoji: "🥚", name: "Chicken Egg (White, Large)", price: 8.72, usual: 9, status: "STABLE", category: "Others" },
+  { id: "egg-white-extra-large", emoji: "🥚", name: "Chicken Egg (White, Extra Large)", price: 9.29, usual: 9, status: "STABLE", category: "Others" },
+  { id: "egg-white-jumbo", emoji: "🥚", name: "Chicken Egg (White, Jumbo)", price: 9.95, usual: 10, status: "STABLE", category: "Others" },
+  { id: "egg-brown-medium", emoji: "🥚", name: "Chicken Egg (Brown, Medium)", price: 11.33, usual: 11, status: "STABLE", category: "Others" },
+  { id: "egg-brown-large", emoji: "🥚", name: "Chicken Egg (Brown, Large)", price: 12.50, usual: 13, status: "STABLE", category: "Others" },
+  { id: "egg-brown-extra-large", emoji: "🥚", name: "Chicken Egg (Brown, Extra Large)", price: 11, usual: 11, status: "STABLE", category: "Others" },
+  
+  // Meats & Proteins
+  { id: "whole-chicken", emoji: "🍗", name: "Whole Chicken", price: 197.64, usual: 196, status: "STABLE", category: "Meats" },
+  { id: "beef-rump", emoji: "🥩", name: "Beef Rump", price: 488.24, usual: 487, status: "STABLE", category: "Meats" },
+  { id: "beef-brisket", emoji: "🥩", name: "Beef Brisket", price: 434.71, usual: 431, status: "STABLE", category: "Meats" },
+  { id: "pork-ham", emoji: "🍖", name: "Pork Ham", price: 334.32, usual: 331, status: "STABLE", category: "Meats" },
+  { id: "pork-belly", emoji: "🥓", name: "Pork Belly", price: 388.17, usual: 383, status: "STABLE", category: "Meats" },
+  { id: "frozen-liempo", emoji: "🍖", name: "Frozen Liempo", price: 312.90, usual: 312, status: "STABLE", category: "Meats" },
+  { id: "frozen-kasim", emoji: "🍖", name: "Frozen Kasim", price: 255.18, usual: 255, status: "STABLE", category: "Meats" },
+  { id: "squid", emoji: "🦑", name: "Squid (Pusit Bisaya)", price: 471.11, usual: 466, status: "STABLE", category: "Fish" },
+  
+  // Oils & Condiments
+  { id: "palm-oil-1l", emoji: "🫒", name: "Palm Oil - 1L", price: 94.59, usual: 95, status: "STABLE", category: "Others" },
+  { id: "palm-oil-350ml", emoji: "🫒", name: "Palm Oil - 350ml", price: 38.34, usual: 38, status: "STABLE", category: "Others" },
+  { id: "coconut-oil-1l", emoji: "🥥", name: "Coconut Oil - 1L", price: 159.36, usual: 161, status: "STABLE", category: "Others" },
+  { id: "coconut-oil-350ml", emoji: "🥥", name: "Coconut Oil - 350ml", price: 58.95, usual: 59, status: "STABLE", category: "Others" },
+  
+  // Legumes & Grains
+  { id: "string-beans", emoji: "🫘", name: "String Beans (Sitao)", price: 134.11, usual: 134, status: "STABLE", category: "Vegetables" },
+  { id: "mung-bean", emoji: "🫘", name: "Mung Bean", price: 135.89, usual: 132, status: "STABLE", category: "Vegetables" },
+  { id: "baguio-beans", emoji: "🫘", name: "Baguio Beans (Habitchuelas)", price: 144.25, usual: 140, status: "STABLE", category: "Vegetables" },
+  
+  // Corn & Feed
+  { id: "yellow-corn-cob", emoji: "🌽", name: "Yellow Sweet Corn (Cob)", price: 72.34, usual: 73, status: "STABLE", category: "Others" },
+  { id: "corn-white", emoji: "🌽", name: "Corn (White)", price: 83.64, usual: 84, status: "STABLE", category: "Others" },
+  { id: "corn-cracked", emoji: "🌽", name: "Corn Cracked (Yellow, Feed Grade)", price: 50, usual: 50, status: "STABLE", category: "Others" },
+  { id: "corn-grits", emoji: "🌽", name: "Corn Grits (Feed Grade)", price: 46.67, usual: 47, status: "STABLE", category: "Others" },
 ];
 
 const PAGE_SIZE = 10;
-const categories = ["All", "Meats", "Fish", "Vegetables", "Fruits", "Rice", "Spices"];
+const categories = ["All", "Fish", "Vegetables", "Fruits", "Rice", "Spices", "Meats", "Others"];
 const periods = ["7D", "30D", "90D"];
 
 const carousel = [
-  { emoji: "🥬", name: "Kangkong", price: 25, savings: 15 },
-  { emoji: "🥦", name: "Broccoli", price: 87, savings: 13 },
-  { emoji: "🥒", name: "Ampalaya", price: 40, savings: 20 },
+  { emoji: "🐟", name: "Local Round Scad (Galunggong)", price: 293, savings: 22 },
+  { emoji: "🥬", name: "Lettuce (Romaine)", price: 147, savings: 24 },
+  { emoji: "🌶️", name: "Chili (Siling Labuyo)", price: 163, savings: 215 },
 ];
 
 export function HomePage() {
@@ -65,7 +184,9 @@ export function HomePage() {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [carouselIdx, setCarouselIdx] = useState(0);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
-  const { addToBasket } = useApp();
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
+  const [showToast, setShowToast] = useState(false);
+  const { basketToastVisible } = useApp();
 
   const toggleFav = (id: string) => setFavorites((f) => f.includes(id) ? f.filter((x) => x !== id) : [...f, id]);
 
@@ -152,7 +273,11 @@ export function HomePage() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {filteredDeals.map((item) => (
-              <div key={item.id} className="bg-white dark:bg-[#1E1E1E] rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-[#2D2D2D] hover:shadow-md transition-shadow">
+              <div
+                key={item.id}
+                onClick={() => setSelectedProduct({ id: item.id, emoji: item.emoji, name: item.name, price: item.price, usualPrice: item.usual, status: "MURA", category: "Produce" })}
+                className="bg-white dark:bg-[#1E1E1E] rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-[#2D2D2D] hover:shadow-md transition-all cursor-pointer active:scale-95"
+              >
                 <div className="flex items-start justify-between mb-2">
                   <div className="flex items-center gap-2">
                     <span className="text-3xl">{item.emoji}</span>
@@ -171,12 +296,18 @@ export function HomePage() {
                   </span>
                 </div>
                 <div className="flex gap-2">
-                  <button
-                    onClick={() => addToBasket({ id: item.id, emoji: item.emoji, name: item.name, price: item.price, usualPrice: item.usual, unit: item.unit || "kg" })}
-                    className="flex-1 flex items-center justify-center gap-1 bg-green-600 text-white py-2 rounded-xl text-sm font-medium hover:bg-green-700 transition-colors"
-                  >
-                    <Plus size={14} /> Add to Basket
-                  </button>
+                  <AddToBasketButton
+                    productId={item.id}
+                    productData={{
+                      emoji: item.emoji,
+                      name: item.name,
+                      price: item.price,
+                      usualPrice: item.usual,
+                      unit: item.unit || "kg",
+                    }}
+                    variant="default"
+                    className="flex-1"
+                  />
                   <button className="flex items-center gap-1 px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-600 text-orange-500 text-sm hover:bg-orange-50 transition-colors">
                     <Bell size={14} /> <AIBadge size="sm" />
                   </button>
@@ -194,7 +325,11 @@ export function HomePage() {
         </h2>
         <div className="space-y-2">
           {expensiveItems.map((item) => (
-            <div key={item.id} className="bg-white dark:bg-[#1E1E1E] rounded-xl px-4 py-3 shadow-sm border border-red-50 dark:border-[#2D2D2D] flex items-center gap-3">
+            <div
+              key={item.id}
+              onClick={() => setSelectedProduct({ id: item.id, emoji: item.emoji, name: item.name, price: item.price, usualPrice: item.usual, status: "MAHAL", category: "Produce" })}
+              className="bg-white dark:bg-[#1E1E1E] rounded-xl px-4 py-3 shadow-sm border border-red-50 dark:border-[#2D2D2D] flex items-center gap-3 cursor-pointer hover:shadow-md transition-all active:scale-95"
+            >
               <span className="text-2xl">{item.emoji}</span>
               <div className="flex-1">
                 <p className="font-semibold text-gray-800 dark:text-[#FFFFFF]">{item.name}</p>
@@ -260,7 +395,11 @@ export function HomePage() {
             <p className="text-center text-gray-400 py-8 text-sm">No items found.</p>
           ) : (
             visibleItems.map((item, idx) => (
-              <div key={item.id} className={`flex items-center gap-3 px-4 py-3 ${idx !== visibleItems.length - 1 ? "border-b border-gray-50 dark:border-[#2D2D2D]" : ""} hover:bg-gray-50 dark:hover:bg-[#2D2D2D]/50 transition-colors`}>
+              <div
+                key={item.id}
+                onClick={() => setSelectedProduct({ id: item.id, emoji: item.emoji, name: item.name, category: item.category, price: item.price, usualPrice: item.usual, status: item.status })}
+                className={`flex items-center gap-3 px-4 py-3 ${idx !== visibleItems.length - 1 ? "border-b border-gray-50 dark:border-[#2D2D2D]" : ""} hover:bg-gray-50 dark:hover:bg-[#2D2D2D]/50 transition-colors cursor-pointer`}
+              >
                 <span className="text-2xl">{item.emoji}</span>
                 <div className="flex-1 min-w-0">
                   <p className="font-medium text-gray-800 dark:text-[#FFFFFF] truncate">{item.name}</p>
@@ -270,15 +409,22 @@ export function HomePage() {
                   {statusDot(item.status)} {item.status}
                 </span>
                 <span className="font-bold text-gray-800 dark:text-[#FFFFFF] text-base w-16 text-right">₱{item.price}</span>
-                <button onClick={() => toggleFav(item.id)} className="text-gray-300 hover:text-red-400 transition-colors">
+                <button onClick={(e) => { e.stopPropagation(); toggleFav(item.id); }} className="text-gray-300 hover:text-red-400 transition-colors">
                   <Heart size={16} fill={favorites.includes(item.id) ? "#f87171" : "none"} stroke={favorites.includes(item.id) ? "#f87171" : "currentColor"} />
                 </button>
-                <button
-                  onClick={() => addToBasket({ id: item.id, emoji: item.emoji, name: item.name, price: item.price, usualPrice: item.usual, unit: "kg" })}
-                  className="w-8 h-8 rounded-full bg-green-100 text-green-700 hover:bg-green-600 hover:text-white flex items-center justify-center transition-colors"
-                >
-                  <Plus size={15} />
-                </button>
+                <div onClick={(e) => e.stopPropagation()}>
+                  <AddToBasketButton
+                    productId={item.id}
+                    productData={{
+                      emoji: item.emoji,
+                      name: item.name,
+                      price: item.price,
+                      usualPrice: item.usual,
+                      unit: "kg",
+                    }}
+                    variant="icon"
+                  />
+                </div>
               </div>
             ))
           )}
@@ -304,6 +450,18 @@ export function HomePage() {
           📋 Source: DA Bantay Presyo official price monitoring (90 commodities). Not a government app.
         </p>
       </div>
+
+      {/* Product Detail Modal */}
+      {selectedProduct && (
+        <ProductDetailModal
+          isOpen={!!selectedProduct}
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+        />
+      )}
+
+      {/* Toast Notification */}
+      <Toast isVisible={basketToastVisible} onDismiss={() => {}} message="✅ Added to My Basket!" type="success" />
     </div>
   );
 }

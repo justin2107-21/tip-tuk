@@ -1,261 +1,459 @@
 import React, { useState } from "react";
-import { Bell, Star, TrendingDown, TrendingUp, X } from "lucide-react";
-import { AIBadge, AITip } from "../components/AIBadge";
-import { LineChart, Line, ResponsiveContainer, Tooltip } from "recharts";
+import { Bell, Star, X, TrendingDown, TrendingUp } from "lucide-react";
+import { AIBadge } from "../components/AIBadge";
 
 const fuelTypeOptions = ["RON 95", "RON 91", "Diesel", "RON 97", "RON 100", "Diesel+", "Kerosene"];
-const areas = ["Quezon City", "Taguig", "Makati", "Manila", "Mandaluyong", "Pasig"];
+const areaOptions = ["Quezon City", "Taguig City", "Pasig City", "Caloocan City", "Muntinlupa City", "Parañaque City", "Manila City", "Pasay City", "Makati City"];
 
+// Brand data with location-based pricing variations
 const brandData = [
-  { brand: "Seaoil", logo: "🟦", ron95: 67.65, ron91: 62.45, diesel: 70.10, ron97: 72.50, ron100: 78.20, dieselPlus: 71.80, kerosene: 58.00, savings: 4.20 },
-  { brand: "CleanFuel", logo: "🟩", ron95: 68.10, ron91: 63.20, diesel: 70.85, ron97: 73.10, ron100: 79.00, dieselPlus: 72.30, kerosene: 58.50, savings: 3.75 },
-  { brand: "Phoenix", logo: "🟥", ron95: 69.80, ron91: 64.00, diesel: 72.10, ron97: 74.20, ron100: 80.50, dieselPlus: 73.50, kerosene: 59.20, savings: 2.05 },
-  { brand: "Petron", logo: "🔷", ron95: 71.00, ron91: 65.50, diesel: 73.00, ron97: 75.80, ron100: 82.00, dieselPlus: 74.80, kerosene: 60.00, savings: 0.85 },
-  { brand: "Shell", logo: "🐚", ron95: 71.25, ron91: 65.75, diesel: 73.50, ron97: 76.00, ron100: 82.50, dieselPlus: 75.20, kerosene: 60.50, savings: 0.60 },
-  { brand: "Caltex", logo: "⭐", ron95: 71.85, ron91: 66.00, diesel: 74.00, ron97: 76.50, ron100: 83.00, dieselPlus: 75.80, kerosene: 61.00, savings: 0 },
+  {
+    brand: "Flying V",
+    logo: "✈️",
+    prices: {
+      "Quezon City": { ron95: 63.90, ron91: 61.30, diesel: 65.00, ron97: 68.30, ron100: 73.80, dieselPlus: 66.60, kerosene: 56.30 },
+      "Taguig City": { ron95: 64.50, ron91: 61.80, diesel: 65.60, ron97: 68.80, ron100: 74.30, dieselPlus: 67.10, kerosene: 56.70 },
+      "Pasig City": { ron95: 64.20, ron91: 61.60, diesel: 65.30, ron97: 68.60, ron100: 74.10, dieselPlus: 66.90, kerosene: 56.50 },
+      "Caloocan City": { ron95: 64.30, ron91: 61.70, diesel: 65.40, ron97: 68.70, ron100: 74.20, dieselPlus: 67.00, kerosene: 56.60 },
+      "Muntinlupa City": { ron95: 64.40, ron91: 61.80, diesel: 65.50, ron97: 68.80, ron100: 74.30, dieselPlus: 67.10, kerosene: 56.70 },
+      "Parañaque City": { ron95: 64.35, ron91: 61.75, diesel: 65.45, ron97: 68.75, ron100: 74.25, dieselPlus: 67.05, kerosene: 56.65 },
+      "Manila City": { ron95: 64.60, ron91: 62.00, diesel: 65.70, ron97: 69.00, ron100: 74.50, dieselPlus: 67.30, kerosene: 56.90 },
+      "Pasay City": { ron95: 64.65, ron91: 62.05, diesel: 65.75, ron97: 69.05, ron100: 74.55, dieselPlus: 67.35, kerosene: 56.95 },
+      "Makati City": { ron95: 64.70, ron91: 62.10, diesel: 65.80, ron97: 69.10, ron100: 74.60, dieselPlus: 67.40, kerosene: 57.00 },
+    },
+  },
+  {
+    brand: "Independent",
+    logo: "🏪",
+    prices: {
+      "Quezon City": { ron95: 65.10, ron91: 62.00, diesel: 66.30, ron97: 69.60, ron100: 75.30, dieselPlus: 67.90, kerosene: 57.00 },
+      "Taguig City": { ron95: 65.70, ron91: 62.50, diesel: 66.90, ron97: 70.20, ron100: 75.90, dieselPlus: 68.50, kerosene: 57.60 },
+      "Pasig City": { ron95: 65.40, ron91: 62.30, diesel: 66.60, ron97: 69.90, ron100: 75.60, dieselPlus: 68.20, kerosene: 57.30 },
+      "Caloocan City": { ron95: 65.50, ron91: 62.40, diesel: 66.70, ron97: 70.00, ron100: 75.70, dieselPlus: 68.30, kerosene: 57.40 },
+      "Muntinlupa City": { ron95: 65.60, ron91: 62.50, diesel: 66.80, ron97: 70.10, ron100: 75.80, dieselPlus: 68.40, kerosene: 57.50 },
+      "Parañaque City": { ron95: 65.55, ron91: 62.45, diesel: 66.75, ron97: 70.05, ron100: 75.75, dieselPlus: 68.35, kerosene: 57.45 },
+      "Manila City": { ron95: 65.80, ron91: 62.70, diesel: 67.00, ron97: 70.30, ron100: 76.00, dieselPlus: 68.60, kerosene: 57.70 },
+      "Pasay City": { ron95: 65.85, ron91: 62.75, diesel: 67.05, ron97: 70.35, ron100: 76.05, dieselPlus: 68.65, kerosene: 57.75 },
+      "Makati City": { ron95: 65.90, ron91: 62.80, diesel: 67.10, ron97: 70.40, ron100: 76.10, dieselPlus: 68.70, kerosene: 57.80 },
+    },
+  },
+  {
+    brand: "Petron",
+    logo: "🔷",
+    prices: {
+      "Quezon City": { ron95: 69.80, ron91: 64.80, diesel: 71.30, ron97: 74.30, ron100: 79.80, dieselPlus: 72.80, kerosene: 59.60 },
+      "Taguig City": { ron95: 70.40, ron91: 65.30, diesel: 71.90, ron97: 74.90, ron100: 80.40, dieselPlus: 73.40, kerosene: 60.20 },
+      "Pasig City": { ron95: 70.10, ron91: 65.10, diesel: 71.60, ron97: 74.60, ron100: 80.10, dieselPlus: 73.10, kerosene: 59.90 },
+      "Caloocan City": { ron95: 70.20, ron91: 65.20, diesel: 71.70, ron97: 74.70, ron100: 80.20, dieselPlus: 73.20, kerosene: 60.00 },
+      "Muntinlupa City": { ron95: 70.30, ron91: 65.30, diesel: 71.80, ron97: 74.80, ron100: 80.30, dieselPlus: 73.30, kerosene: 60.10 },
+      "Parañaque City": { ron95: 70.25, ron91: 65.25, diesel: 71.75, ron97: 74.75, ron100: 80.25, dieselPlus: 73.25, kerosene: 60.05 },
+      "Manila City": { ron95: 70.50, ron91: 65.50, diesel: 72.00, ron97: 75.00, ron100: 80.50, dieselPlus: 73.50, kerosene: 60.30 },
+      "Pasay City": { ron95: 70.55, ron91: 65.55, diesel: 72.05, ron97: 75.05, ron100: 80.55, dieselPlus: 73.55, kerosene: 60.35 },
+      "Makati City": { ron95: 70.60, ron91: 65.60, diesel: 72.10, ron97: 75.10, ron100: 80.60, dieselPlus: 73.60, kerosene: 60.40 },
+    },
+  },
+  {
+    brand: "Unioil",
+    logo: "🟦",
+    prices: {
+      "Quezon City": { ron95: 71.80, ron91: 66.30, diesel: 73.00, ron97: 76.00, ron100: 81.80, dieselPlus: 74.60, kerosene: 61.00 },
+      "Taguig City": { ron95: 72.40, ron91: 66.80, diesel: 73.60, ron97: 76.60, ron100: 82.40, dieselPlus: 75.20, kerosene: 61.60 },
+      "Pasig City": { ron95: 72.10, ron91: 66.60, diesel: 73.30, ron97: 76.30, ron100: 82.10, dieselPlus: 74.90, kerosene: 61.30 },
+      "Caloocan City": { ron95: 72.20, ron91: 66.70, diesel: 73.40, ron97: 76.40, ron100: 82.20, dieselPlus: 75.00, kerosene: 61.40 },
+      "Muntinlupa City": { ron95: 72.30, ron91: 66.80, diesel: 73.50, ron97: 76.50, ron100: 82.30, dieselPlus: 75.10, kerosene: 61.50 },
+      "Parañaque City": { ron95: 72.25, ron91: 66.75, diesel: 73.45, ron97: 76.45, ron100: 82.25, dieselPlus: 75.05, kerosene: 61.45 },
+      "Manila City": { ron95: 72.50, ron91: 67.00, diesel: 73.70, ron97: 76.70, ron100: 82.50, dieselPlus: 75.30, kerosene: 61.70 },
+      "Pasay City": { ron95: 72.55, ron91: 67.05, diesel: 73.75, ron97: 76.75, ron100: 82.55, dieselPlus: 75.35, kerosene: 61.75 },
+      "Makati City": { ron95: 72.60, ron91: 67.10, diesel: 73.80, ron97: 76.80, ron100: 82.60, dieselPlus: 75.40, kerosene: 61.80 },
+    },
+  },
+  {
+    brand: "Caltex",
+    logo: "⭐",
+    prices: {
+      "Quezon City": { ron95: 73.10, ron91: 67.30, diesel: 74.30, ron97: 77.30, ron100: 82.80, dieselPlus: 75.80, kerosene: 61.80 },
+      "Taguig City": { ron95: 73.70, ron91: 67.80, diesel: 74.90, ron97: 77.90, ron100: 83.40, dieselPlus: 76.40, kerosene: 62.40 },
+      "Pasig City": { ron95: 73.40, ron91: 67.60, diesel: 74.60, ron97: 77.60, ron100: 83.10, dieselPlus: 76.10, kerosene: 62.10 },
+      "Caloocan City": { ron95: 73.50, ron91: 67.70, diesel: 74.70, ron97: 77.70, ron100: 83.20, dieselPlus: 76.20, kerosene: 62.20 },
+      "Muntinlupa City": { ron95: 73.60, ron91: 67.80, diesel: 74.80, ron97: 77.80, ron100: 83.30, dieselPlus: 76.30, kerosene: 62.30 },
+      "Parañaque City": { ron95: 73.55, ron91: 67.75, diesel: 74.75, ron97: 77.75, ron100: 83.25, dieselPlus: 76.25, kerosene: 62.25 },
+      "Manila City": { ron95: 73.80, ron91: 68.00, diesel: 75.00, ron97: 78.00, ron100: 83.50, dieselPlus: 76.50, kerosene: 62.50 },
+      "Pasay City": { ron95: 73.85, ron91: 68.05, diesel: 75.05, ron97: 78.05, ron100: 83.55, dieselPlus: 76.55, kerosene: 62.55 },
+      "Makati City": { ron95: 73.90, ron91: 68.10, diesel: 75.10, ron97: 78.10, ron100: 83.60, dieselPlus: 76.60, kerosene: 62.60 },
+    },
+  },
+  {
+    brand: "Phoenix",
+    logo: "🔥",
+    prices: {
+      "Quezon City": { ron95: 73.45, ron91: 67.60, diesel: 74.60, ron97: 77.60, ron100: 83.30, dieselPlus: 76.00, kerosene: 62.10 },
+      "Taguig City": { ron95: 74.05, ron91: 68.10, diesel: 75.20, ron97: 78.20, ron100: 83.90, dieselPlus: 76.60, kerosene: 62.70 },
+      "Pasig City": { ron95: 73.75, ron91: 67.90, diesel: 74.90, ron97: 77.90, ron100: 83.60, dieselPlus: 76.30, kerosene: 62.40 },
+      "Caloocan City": { ron95: 73.85, ron91: 68.00, diesel: 75.00, ron97: 78.00, ron100: 83.70, dieselPlus: 76.40, kerosene: 62.50 },
+      "Muntinlupa City": { ron95: 73.95, ron91: 68.10, diesel: 75.10, ron97: 78.10, ron100: 83.80, dieselPlus: 76.50, kerosene: 62.60 },
+      "Parañaque City": { ron95: 73.90, ron91: 68.05, diesel: 75.05, ron97: 78.05, ron100: 83.75, dieselPlus: 76.45, kerosene: 62.55 },
+      "Manila City": { ron95: 74.15, ron91: 68.30, diesel: 75.30, ron97: 78.30, ron100: 84.00, dieselPlus: 76.70, kerosene: 62.80 },
+      "Pasay City": { ron95: 74.20, ron91: 68.35, diesel: 75.35, ron97: 78.35, ron100: 84.05, dieselPlus: 76.75, kerosene: 62.85 },
+      "Makati City": { ron95: 74.25, ron91: 68.40, diesel: 75.40, ron97: 78.40, ron100: 84.10, dieselPlus: 76.80, kerosene: 62.90 },
+    },
+  },
+  {
+    brand: "Shell",
+    logo: "🐚",
+    prices: {
+      "Quezon City": { ron95: 73.85, ron91: 67.80, diesel: 74.90, ron97: 77.80, ron100: 83.80, dieselPlus: 76.30, kerosene: 62.30 },
+      "Taguig City": { ron95: 74.45, ron91: 68.30, diesel: 75.50, ron97: 78.40, ron100: 84.40, dieselPlus: 76.90, kerosene: 62.90 },
+      "Pasig City": { ron95: 74.15, ron91: 68.10, diesel: 75.20, ron97: 78.10, ron100: 84.10, dieselPlus: 76.60, kerosene: 62.60 },
+      "Caloocan City": { ron95: 74.25, ron91: 68.20, diesel: 75.30, ron97: 78.20, ron100: 84.20, dieselPlus: 76.70, kerosene: 62.70 },
+      "Muntinlupa City": { ron95: 74.35, ron91: 68.30, diesel: 75.40, ron97: 78.30, ron100: 84.30, dieselPlus: 76.80, kerosene: 62.80 },
+      "Parañaque City": { ron95: 74.30, ron91: 68.25, diesel: 75.35, ron97: 78.25, ron100: 84.25, dieselPlus: 76.75, kerosene: 62.75 },
+      "Manila City": { ron95: 74.55, ron91: 68.50, diesel: 75.60, ron97: 78.50, ron100: 84.50, dieselPlus: 77.00, kerosene: 63.00 },
+      "Pasay City": { ron95: 74.60, ron91: 68.55, diesel: 75.65, ron97: 78.55, ron100: 84.55, dieselPlus: 77.05, kerosene: 63.05 },
+      "Makati City": { ron95: 74.65, ron91: 68.60, diesel: 75.70, ron97: 78.60, ron100: 84.60, dieselPlus: 77.10, kerosene: 63.10 },
+    },
+  },
 ];
 
-const areaData = [
-  { area: "Quezon City", min: 67.65, max: 71.85, common: 69.50 },
-  { area: "Taguig", min: 68.00, max: 72.00, common: 70.00 },
-  { area: "Makati", min: 68.50, max: 72.50, common: 70.50 },
-  { area: "Manila", min: 67.80, max: 71.50, common: 69.80 },
-  { area: "Mandaluyong", min: 68.20, max: 71.90, common: 70.10 },
-  { area: "Pasig", min: 68.00, max: 72.10, common: 70.00 },
+// Forecast data with daily predictions
+const forecastData = [
+  { day: "Today", temp: "Current", ron95: 64.10, ron91: 61.50, diesel: 65.20, trend: "→ Stable" },
+  { day: "Tomorrow", temp: "Clear", ron95: 63.95, ron91: 61.40, diesel: 65.10, trend: "↓ Slight drop" },
+  { day: "Wed", temp: "Partly Cloudy", ron95: 62.80, ron91: 60.50, diesel: 64.30, trend: "📉 Drop (Best time!)" },
+  { day: "Thu", temp: "Sunny", ron95: 62.95, ron91: 60.65, diesel: 64.45, trend: "↑ Slight rise" },
+  { day: "Fri", temp: "Clear", ron95: 63.50, ron91: 61.00, diesel: 64.85, trend: "↑ Rising" },
+  { day: "Sat", temp: "Rainy", ron95: 64.20, ron91: 61.60, diesel: 65.40, trend: "↑ Rise continues" },
+  { day: "Sun", temp: "Cloudy", ron95: 64.40, ron91: 61.75, diesel: 65.60, trend: "→ Leveling off" },
 ];
 
-const sparkData = [
-  [{ v: 72 }, { v: 71.5 }, { v: 71 }, { v: 70.5 }, { v: 70.8 }, { v: 71.2 }, { v: 71.85 }],
-  [{ v: 65 }, { v: 64.5 }, { v: 64 }, { v: 63.5 }, { v: 64 }, { v: 65.2 }, { v: 66 }],
-  [{ v: 74 }, { v: 73.5 }, { v: 73 }, { v: 72.5 }, { v: 73 }, { v: 73.5 }, { v: 74 }],
-];
+// Helper functions
+const getPriceForType = (brand: typeof brandData[0], fuelType: string, area: string): number => {
+  const locationPrices = brand.prices[area as keyof typeof brand.prices];
+  if (!locationPrices) return 0;
+  
+  const fuelKey = fuelType === "RON 95" ? "ron95" 
+    : fuelType === "RON 91" ? "ron91"
+    : fuelType === "Diesel" ? "diesel"
+    : fuelType === "RON 97" ? "ron97"
+    : fuelType === "RON 100" ? "ron100"
+    : fuelType === "Diesel+" ? "dieselPlus"
+    : "kerosene" as keyof typeof locationPrices;
+  
+  return locationPrices[fuelKey] || 0;
+};
 
-// Only show 3 sparkline cards (RON 95, RON 91, Diesel)
-const sparkFuelTypes = ["RON 95", "RON 91", "Diesel"];
+const getRankBadge = (rank: number): string => {
+  if (rank === 0) return "🥇";
+  if (rank === 1) return "🥈";
+  if (rank === 2) return "🥉";
+  return `#${rank + 1}`;
+};
 
-function getPriceForType(b: typeof brandData[0], fuelType: string): number {
-  if (fuelType === "RON 95") return b.ron95;
-  if (fuelType === "RON 91") return b.ron91;
-  if (fuelType === "Diesel") return b.diesel;
-  if (fuelType === "RON 97") return b.ron97;
-  if (fuelType === "RON 100") return b.ron100;
-  if (fuelType === "Diesel+") return b.dieselPlus;
-  if (fuelType === "Kerosene") return b.kerosene;
-  return b.ron95;
-}
+const calculatePriceChange = (current: number, previous: number): string => {
+  const change = ((current - previous) / previous) * 100;
+  if (change > 0) return `+${change.toFixed(1)}%`;
+  if (change < 0) return `${change.toFixed(1)}%`;
+  return "Stable";
+};
 
 export function FuelPage() {
-  const [fuelType, setFuelType] = useState("RON 95");
-  const [area, setArea] = useState("Quezon City");
-  const [viewBy, setViewBy] = useState<"brand" | "area">("brand");
-  const [favorites, setFavorites] = useState<string[]>([]);
-  const [alertModalOpen, setAlertModalOpen] = useState(false);
-  const [alertTarget, setAlertTarget] = useState("");
-  const [alertArea, setAlertArea] = useState("Quezon City");
-  const [alertSaved, setAlertSaved] = useState(false);
+  const [selectedFuelType, setSelectedFuelType] = useState("RON 95");
+  const [selectedArea, setSelectedArea] = useState("Quezon City");
+  const [viewMode, setViewMode] = useState<"brand" | "area">("brand");
+  const [priceAlertOpen, setPriceAlertOpen] = useState(false);
+  const [forecastModalOpen, setForecastModalOpen] = useState(false);
+  const [alertSettings, setAlertSettings] = useState({ method: "sms", threshold: 5, fuelType: "RON 95" });
 
-  const toggleFav = (brand: string) => setFavorites((f) => f.includes(brand) ? f.filter((x) => x !== brand) : [...f, brand]);
+  // Get sorted brands by price for current selection
+  const sortedBrands = [...brandData].sort((a, b) => {
+    const priceA = getPriceForType(a, selectedFuelType, selectedArea);
+    const priceB = getPriceForType(b, selectedFuelType, selectedArea);
+    return priceA - priceB;
+  });
 
-  const sorted = [...brandData].sort((a, b) => getPriceForType(a, fuelType) - getPriceForType(b, fuelType));
-  const ncrAvg = brandData.reduce((sum, b) => sum + getPriceForType(b, fuelType), 0) / brandData.length;
-
-  const handleSaveAlert = () => {
-    setAlertSaved(true);
-    setTimeout(() => {
-      setAlertSaved(false);
-      setAlertModalOpen(false);
-      setAlertTarget("");
-    }, 1500);
-  };
+  // Get average price for current selection
+  const avgPrice = sortedBrands.reduce((sum, brand) => sum + getPriceForType(brand, selectedFuelType, selectedArea), 0) / sortedBrands.length;
+  
+  // Savings vs most expensive
+  const cheapestPrice = getPriceForType(sortedBrands[0], selectedFuelType, selectedArea);
+  const expensivePrice = getPriceForType(sortedBrands[sortedBrands.length - 1], selectedFuelType, selectedArea);
+  const maxSavings = expensivePrice - cheapestPrice;
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-4">
+      {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-gray-800 dark:text-[#FFFFFF] flex items-center gap-2">⛽ Fuel Prices</h1>
-        <p className="text-gray-500 dark:text-[#9E9E9E] text-sm mt-1">Real-time fuel prices by brand and area</p>
+        <p className="text-gray-500 dark:text-[#9E9E9E] text-sm mt-1">Real-time prices by location • Compare brands instantly</p>
       </div>
 
-      {/* Filters — now both dropdowns */}
-      <div className="flex flex-wrap gap-3 items-center">
+      {/* Controls Row */}
+      <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
         <select
-          value={fuelType}
-          onChange={(e) => setFuelType(e.target.value)}
-          className="px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-[#1E1E1E] text-gray-700 dark:text-[#E0E0E0] outline-none text-sm font-semibold"
+          value={selectedFuelType}
+          onChange={(e) => setSelectedFuelType(e.target.value)}
+          className="px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-[#1E1E1E] text-gray-700 dark:text-[#E0E0E0] outline-none text-sm font-semibold"
         >
           {fuelTypeOptions.map((ft) => <option key={ft}>{ft}</option>)}
         </select>
 
-        <select value={area} onChange={(e) => setArea(e.target.value)}
-          className="px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-[#1E1E1E] text-gray-700 dark:text-[#E0E0E0] outline-none text-sm">
-          {areas.map((a) => <option key={a}>{a}</option>)}
+        <select
+          value={selectedArea}
+          onChange={(e) => setSelectedArea(e.target.value)}
+          className="px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-[#1E1E1E] text-gray-700 dark:text-[#E0E0E0] outline-none text-sm"
+        >
+          {areaOptions.map((a) => <option key={a}>{a}</option>)}
         </select>
 
-        {/* Toggle */}
-        <div className="flex items-center bg-gray-100 dark:bg-[#1E1E1E] rounded-full p-1 gap-1">
-          <button onClick={() => setViewBy("brand")} className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${viewBy === "brand" ? "bg-white dark:bg-[#2D2D2D] shadow-sm text-gray-800 dark:text-[#FFFFFF]" : "text-gray-500"}`}>By Brand</button>
-          <button onClick={() => setViewBy("area")} className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${viewBy === "area" ? "bg-white dark:bg-[#2D2D2D] shadow-sm text-gray-800 dark:text-[#FFFFFF]" : "text-gray-500"}`}>By Area</button>
+        {/* View Toggle */}
+        <div className="flex items-center bg-gray-100 dark:bg-[#1E1E1E] rounded-full p-1 gap-1 ml-auto">
+          <button
+            onClick={() => setViewMode("brand")}
+            className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
+              viewMode === "brand"
+                ? "bg-white dark:bg-[#2D2D2D] shadow-sm text-gray-800 dark:text-[#FFFFFF]"
+                : "text-gray-500 dark:text-gray-400"
+            }`}
+          >
+            🏪 By Brand
+          </button>
+          <button
+            onClick={() => setViewMode("area")}
+            className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
+              viewMode === "area"
+                ? "bg-white dark:bg-[#2D2D2D] shadow-sm text-gray-800 dark:text-[#FFFFFF]"
+                : "text-gray-500 dark:text-gray-400"
+            }`}
+          >
+            📍 By Area
+          </button>
         </div>
       </div>
 
       {/* Summary Card */}
-      <div className="rounded-2xl p-5" style={{ background: "linear-gradient(135deg, #E65100, #F57C00)" }}>
-        <p className="text-orange-100 text-sm mb-1">NCR Average Price – {fuelType}</p>
-        <p className="text-white text-4xl font-bold">₱{ncrAvg.toFixed(2)}/L</p>
-        <p className="text-orange-100 text-sm mt-1">Range: ₱{sorted[0] ? getPriceForType(sorted[0], fuelType).toFixed(2) : "--"} – ₱{sorted[sorted.length-1] ? getPriceForType(sorted[sorted.length-1], fuelType).toFixed(2) : "--"}</p>
-        <p className="text-orange-200 text-xs mt-2">Last updated: {new Date().toLocaleString("en-PH")}</p>
-      </div>
-
-      {/* Sparklines (only for RON 95, RON 91, Diesel) */}
-      <div className="grid grid-cols-3 gap-3">
-        {sparkFuelTypes.map((ft, i) => {
-          const data = sparkData[i];
-          const last = data[data.length - 1].v;
-          const prev = data[data.length - 2].v;
-          const rising = last > prev;
-          return (
-            <div key={ft} className="bg-white dark:bg-[#1E1E1E] rounded-xl p-3 shadow-sm border border-gray-100 dark:border-[#2D2D2D]">
-              <p className="text-xs text-gray-500 font-medium mb-1">{ft}</p>
-              <p className="font-bold text-gray-800 dark:text-[#FFFFFF]">₱{last.toFixed(2)}</p>
-              <div className="flex items-center gap-1 text-xs mb-2">
-                {rising ? <TrendingUp size={12} className="text-red-500" /> : <TrendingDown size={12} className="text-green-500" />}
-                <span className={rising ? "text-red-500" : "text-green-500"}>7-day trend</span>
-              </div>
-              <ResponsiveContainer width="100%" height={40}>
-                <LineChart data={data.map((d) => ({ v: d.v }))}>
-                  <Line type="monotone" dataKey="v" stroke={rising ? "#ef4444" : "#22c55e"} strokeWidth={2} dot={false} />
-                  <Tooltip formatter={(v: number) => `₱${v.toFixed(2)}`} contentStyle={{ fontSize: 10 }} />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* AI Fuel Forecast */}
-      <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-2xl p-4 flex items-center gap-4">
-        <span className="text-3xl">🤖</span>
-        <div className="flex-1">
-          <div className="flex items-center gap-2 mb-1">
-            <p className="font-semibold text-purple-800 dark:text-purple-300">AI Fuel Forecast</p>
-            <AIBadge />
+      <div className="rounded-xl p-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white text-sm">
+        <div className="flex items-start justify-between mb-2">
+          <div>
+            <p className="text-orange-100 text-xs font-medium">📊 {selectedArea.toUpperCase()} AVG</p>
+            <p className="text-3xl font-bold mt-0.5">₱{avgPrice.toFixed(2)}</p>
           </div>
-          <p className="text-sm text-purple-700 dark:text-purple-400">
-            Based on global oil trends, {fuelType} prices may <strong>drop ₱1.50–₱2.00/L next week</strong>. Consider filling up then for maximum savings.
-          </p>
+          <p className="text-xs text-orange-100">{selectedFuelType}</p>
         </div>
-        <button
-          onClick={() => setAlertModalOpen(true)}
-          className="flex-shrink-0 flex items-center gap-1 px-3 py-2 bg-purple-600 text-white rounded-xl text-sm font-medium hover:bg-purple-700 transition-colors"
-        >
-          <Bell size={14} /> Set Alert
-        </button>
+        <div className="border-t border-orange-400 pt-2 flex items-center justify-between text-xs">
+          <span>₱{cheapestPrice.toFixed(2)} – ₱{expensivePrice.toFixed(2)}</span>
+          <span>•</span>
+          <span>Save up to ₱{maxSavings.toFixed(2)}</span>
+        </div>
       </div>
 
-      {/* Brand / Area list */}
-      {viewBy === "brand" ? (
-        <div className="space-y-2">
-          <h2 className="text-lg font-bold text-gray-800 dark:text-[#FFFFFF]">Ranked by Price – {fuelType}</h2>
-          {sorted.map((b, i) => (
-            <div key={b.brand} className="bg-white dark:bg-[#1E1E1E] rounded-xl px-4 py-3 shadow-sm border border-gray-100 dark:border-[#2D2D2D] flex items-center gap-3">
-              <span className="font-bold text-gray-400 text-sm w-5">#{i + 1}</span>
-              <span className="text-xl">{b.logo}</span>
-              <p className="flex-1 font-semibold text-gray-800 dark:text-[#FFFFFF]">{b.brand}</p>
-              {i < 3 && (
-                <span className="text-xs font-bold px-2 py-1 rounded-full bg-green-100 text-green-700">
-                  Save ₱{(getPriceForType(sorted[sorted.length - 1], fuelType) - getPriceForType(b, fuelType)).toFixed(2)}
-                </span>
-              )}
-              <span className="font-bold text-orange-600 text-lg">₱{getPriceForType(b, fuelType).toFixed(2)}</span>
-              <button onClick={() => toggleFav(b.brand)} className="text-gray-300 hover:text-yellow-400 transition-colors">
-                <Star size={16} fill={favorites.includes(b.brand) ? "#facc15" : "none"} stroke={favorites.includes(b.brand) ? "#facc15" : "currentColor"} />
+      {/* AI Forecast Widget */}
+      <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border border-purple-200 dark:border-purple-800 rounded-xl p-4">
+        <div className="flex items-start gap-3">
+          <span className="text-2xl flex-shrink-0">🤖</span>
+          <div className="flex-1">
+            <div className="flex items-center gap-2 mb-1">
+              <p className="font-bold text-purple-900 dark:text-purple-300 text-sm">AI Fuel Forecast</p>
+              <AIBadge />
+            </div>
+            <p className="text-xs text-purple-800 dark:text-purple-300 mb-2">
+              {selectedFuelType} expected to <strong>drop ₱1.50 by Wednesday</strong>. Best fill-up: <strong>Wed morning 6-8am</strong>.
+            </p>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setPriceAlertOpen(true)}
+                className="flex items-center gap-1 px-3 py-1.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-xs font-medium transition-colors"
+              >
+                <Bell size={12} /> Price Alert
+              </button>
+              <button
+                onClick={() => setForecastModalOpen(true)}
+                className="flex items-center gap-1 px-3 py-1.5 bg-purple-200 hover:bg-purple-300 dark:bg-purple-800 dark:hover:bg-purple-700 text-purple-900 dark:text-purple-200 rounded-lg text-xs font-medium transition-colors"
+              >
+                📈 View Forecast
               </button>
             </div>
-          ))}
+          </div>
         </div>
-      ) : (
+      </div>
+
+      {/* By Brand View - Compact */}
+      {viewMode === "brand" && (
         <div className="space-y-2">
-          <h2 className="text-lg font-bold text-gray-800 dark:text-[#FFFFFF]">By Area – {fuelType}</h2>
-          {areaData.map((a) => (
-            <div key={a.area} className="bg-white dark:bg-[#1E1E1E] rounded-xl px-4 py-3 shadow-sm border border-gray-100 dark:border-[#2D2D2D] flex items-center gap-3">
-              <span className="text-xl">📍</span>
-              <div className="flex-1">
-                <p className="font-semibold text-gray-800 dark:text-[#FFFFFF]">{a.area}</p>
-                <p className="text-xs text-gray-400">Range: ₱{a.min.toFixed(2)} – ₱{a.max.toFixed(2)}</p>
+          <div className="flex items-center justify-between px-1">
+            <h2 className="text-sm font-bold text-gray-800 dark:text-[#FFFFFF]">🏪 Ranked by Price - {selectedFuelType}</h2>
+            <p className="text-xs text-gray-500 dark:text-gray-400">{sortedBrands.length} brands</p>
+          </div>
+          
+          {sortedBrands.map((brand, i) => {
+            const price = getPriceForType(brand, selectedFuelType, selectedArea);
+            const savings = expensivePrice - price;
+            const rank = getRankBadge(i);
+            
+            return (
+              <div key={brand.brand} className="bg-white dark:bg-[#1E1E1E] rounded-lg p-2.5 border border-gray-100 dark:border-[#2D2D2D] hover:border-orange-300 dark:hover:border-orange-700 transition-colors flex items-center justify-between">
+                <div className="flex items-center gap-2 flex-1">
+                  <span className="text-base font-bold text-gray-400 dark:text-gray-600 w-6 text-center text-sm">{rank}</span>
+                  <span className="text-xl">{brand.logo}</span>
+                  <div>
+                    <p className="font-semibold text-gray-800 dark:text-[#FFFFFF] text-sm">{brand.brand}</p>
+                    {savings > 0 && <p className="text-green-600 dark:text-green-400 text-xs">Save ₱{savings.toFixed(2)}</p>}
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="text-xl font-bold text-gray-800 dark:text-white">₱{price.toFixed(2)}</p>
+                </div>
               </div>
-              <div className="text-right">
-                <p className="text-xs text-gray-400">Common price</p>
-                <p className="font-bold text-orange-600 text-lg">₱{a.common.toFixed(2)}</p>
-              </div>
-              <button className="text-blue-400 hover:text-blue-600 transition-colors text-sm">🗺️</button>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 
-      {/* Page Disclaimer */}
-      <div className="border-t border-gray-200 dark:border-[#2D2D2D] pt-4 mt-4">
-        <p className="text-xs text-gray-400 text-center">
-          Source: DOE — Oil Industry Management Bureau • Updates weekly
-        </p>
+      {/* By Area View - Compact */}
+      {viewMode === "area" && (
+        <div className="space-y-2">
+          <div className="flex items-center justify-between px-1">
+            <h2 className="text-sm font-bold text-gray-800 dark:text-[#FFFFFF]">📍 Ranked by Price - {selectedFuelType}</h2>
+            <p className="text-xs text-gray-500 dark:text-gray-400">{areaOptions.length} areas</p>
+          </div>
+          
+          {areaOptions.map((area, i) => {
+            const avgAreaPrice = brandData.reduce((sum, brand) => sum + getPriceForType(brand, selectedFuelType, area), 0) / brandData.length;
+            const cheapestForArea = Math.min(...brandData.map(b => getPriceForType(b, selectedFuelType, area)));
+            const mostExpensiveForArea = Math.max(...brandData.map(b => getPriceForType(b, selectedFuelType, area)));
+            
+            return (
+              <div key={area} className="bg-white dark:bg-[#1E1E1E] rounded-lg p-2.5 border border-gray-100 dark:border-[#2D2D2D] hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
+                <div className="flex items-center justify-between mb-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded-full font-semibold">#{i + 1}</span>
+                    <p className="font-semibold text-gray-800 dark:text-[#FFFFFF] text-sm">{area}</p>
+                  </div>
+                  <p className="text-lg font-bold text-gray-800 dark:text-white">₱{avgAreaPrice.toFixed(2)}</p>
+                </div>
+                <p className="text-xs text-gray-500 dark:text-gray-400">Range: ₱{cheapestForArea.toFixed(2)} – ₱{mostExpensiveForArea.toFixed(2)}</p>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* DOE Disclaimer */}
+      <div className="text-xs text-gray-500 dark:text-gray-400 border-t border-gray-100 dark:border-gray-800 pt-3">
+        <p>📌 Data source: Department of Energy (DOE) • Updated hourly</p>
+        <p>💡 Prices vary by location and may change without notice</p>
       </div>
 
-      {/* Set Alert Modal */}
-      {alertModalOpen && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setAlertModalOpen(false)}>
-          <div className="bg-white dark:bg-[#1E1E1E] rounded-2xl max-w-sm w-full p-6 shadow-2xl" onClick={(e) => e.stopPropagation()}>
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold text-lg text-gray-800 dark:text-[#FFFFFF]">🔔 Set Price Alert</h3>
-              <button onClick={() => setAlertModalOpen(false)} className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-[#2D2D2D] transition-colors text-gray-400">
+      {/* Price Alert Modal */}
+      {priceAlertOpen && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-[#1E1E1E] rounded-xl max-w-sm w-full">
+            <div className="flex items-center justify-between p-4 border-b border-gray-100 dark:border-gray-800">
+              <h3 className="font-bold text-gray-800 dark:text-white">Set Price Alert</h3>
+              <button
+                onClick={() => setPriceAlertOpen(false)}
+                className="text-gray-400 hover:text-gray-600"
+              >
                 <X size={18} />
               </button>
             </div>
-
-            {alertSaved ? (
-              <div className="text-center py-6">
-                <span className="text-5xl">✅</span>
-                <p className="font-bold text-green-700 mt-3">Alert saved!</p>
-                <p className="text-sm text-gray-500 mt-1">We'll notify you when {fuelType} drops below ₱{alertTarget}/L</p>
+            <div className="p-4 space-y-4">
+              <div>
+                <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">Fuel Type</label>
+                <select
+                  value={alertSettings.fuelType}
+                  onChange={(e) => setAlertSettings({...alertSettings, fuelType: e.target.value})}
+                  className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-[#2D2D2D] text-gray-800 dark:text-white text-sm"
+                >
+                  {fuelTypeOptions.map((ft) => <option key={ft}>{ft}</option>)}
+                </select>
               </div>
-            ) : (
-              <div className="space-y-3">
-                <div>
-                  <label className="text-sm font-medium text-gray-700 dark:text-[#E0E0E0] block mb-1">Fuel Type</label>
-                  <div className="px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#2D2D2D] text-gray-700 dark:text-[#E0E0E0] text-sm">
-                    {fuelType}
+              <div>
+                <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">Alert when price drops by ₱{alertSettings.threshold}</label>
+                <input
+                  type="range"
+                  min="0.5"
+                  max="10"
+                  step="0.5"
+                  value={alertSettings.threshold}
+                  onChange={(e) => setAlertSettings({...alertSettings, threshold: parseFloat(e.target.value)})}
+                  className="w-full"
+                />
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Threshold: ₱{alertSettings.threshold}</p>
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">Notification Method</label>
+                <select
+                  value={alertSettings.method}
+                  onChange={(e) => setAlertSettings({...alertSettings, method: e.target.value})}
+                  className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-[#2D2D2D] text-gray-800 dark:text-white text-sm"
+                >
+                  <option>SMS</option>
+                  <option>Email</option>
+                  <option>In-App Notification</option>
+                  <option>All of the above</option>
+                </select>
+              </div>
+              <button
+                onClick={() => {
+                  setPriceAlertOpen(false);
+                  alert(`✅ Alert set! You'll be notified via ${alertSettings.method} when ${alertSettings.fuelType} drops by ₱${alertSettings.threshold}`);
+                }}
+                className="w-full px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg font-semibold text-sm hover:opacity-90 transition-opacity"
+              >
+                Save Alert
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Forecast Modal */}
+      {forecastModalOpen && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-[#1E1E1E] rounded-xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+            <div className="flex items-center justify-between p-4 border-b border-gray-100 dark:border-gray-800 sticky top-0 bg-white dark:bg-[#1E1E1E]">
+              <h3 className="font-bold text-gray-800 dark:text-white">7-Day Fuel Price Forecast</h3>
+              <button
+                onClick={() => setForecastModalOpen(false)}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <X size={18} />
+              </button>
+            </div>
+            <div className="p-4 space-y-3">
+              {forecastData.map((day, i) => (
+                <div key={i} className="border border-gray-100 dark:border-gray-800 rounded-lg p-3">
+                  <div className="flex items-center justify-between mb-2">
+                    <div>
+                      <p className="font-semibold text-gray-800 dark:text-white text-sm">{day.day} • {day.temp}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{day.trend}</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-bold text-gray-800 dark:text-white text-sm">₱{getPriceForType(brandData[0], selectedFuelType, selectedArea) + (i - 2) * 0.2}</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-3 text-xs">
+                    <div className="flex-1">
+                      <p className="text-gray-500 dark:text-gray-400">RON 95</p>
+                      <p className="font-semibold text-gray-800 dark:text-white">₱{day.ron95.toFixed(2)}</p>
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-gray-500 dark:text-gray-400">RON 91</p>
+                      <p className="font-semibold text-gray-800 dark:text-white">₱{day.ron91.toFixed(2)}</p>
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-gray-500 dark:text-gray-400">Diesel</p>
+                      <p className="font-semibold text-gray-800 dark:text-white">₱{day.diesel.toFixed(2)}</p>
+                    </div>
                   </div>
                 </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-700 dark:text-[#E0E0E0] block mb-1">Target Price (₱/L)</label>
-                  <input
-                    type="number"
-                    value={alertTarget}
-                    onChange={(e) => setAlertTarget(e.target.value)}
-                    placeholder="e.g. 65.00"
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-[#2D2D2D] text-gray-700 dark:text-[#E0E0E0] outline-none focus:border-green-400 text-sm"
-                  />
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-700 dark:text-[#E0E0E0] block mb-1">Area</label>
-                  <select
-                    value={alertArea}
-                    onChange={(e) => setAlertArea(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-[#2D2D2D] text-gray-700 dark:text-[#E0E0E0] outline-none text-sm"
-                  >
-                    {areas.map((a) => <option key={a}>{a}</option>)}
-                  </select>
-                </div>
-                <button
-                  onClick={handleSaveAlert}
-                  disabled={!alertTarget}
-                  className="w-full py-2.5 bg-green-600 text-white rounded-xl font-medium hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Save Alert
-                </button>
-                <button onClick={() => setAlertModalOpen(false)} className="w-full py-2 text-sm text-gray-400 hover:text-gray-600 transition-colors">
-                  Cancel
-                </button>
+              ))}
+              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3 mt-4">
+                <p className="text-xs font-semibold text-blue-900 dark:text-blue-300 mb-1">💡 Forecast Insights</p>
+                <p className="text-xs text-blue-800 dark:text-blue-400">
+                  Prices are expected to dip mid-week due to lower global crude oil prices. Wednesday morning shows the best opportunity to refuel with potential savings of ₱1.50-2.00 per liter.
+                </p>
               </div>
-            )}
+            </div>
           </div>
         </div>
       )}

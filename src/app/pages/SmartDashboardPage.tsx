@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router";
 import { Bell, TrendingDown, MapPin, ChevronRight, X } from "lucide-react";
 import { AIBadge, AITip } from "../components/AIBadge";
+import { LeafletMap } from "../components/maps/LeafletMap";
 import { useApp } from "../context/AppContext";
 
 const personalizedDeals = [
@@ -18,9 +19,9 @@ const watchedItems = [
 ];
 
 const nearbyReports = [
-  { emoji: "🥦", item: "Broccoli", price: 87, market: "Kamuning Market", time: "2h ago", verified: true },
-  { emoji: "🍅", item: "Tomato", price: 40, market: "Farmer's Market", time: "4h ago", verified: true },
-  { emoji: "🧄", item: "Garlic", price: 260, market: "Cubao Market", time: "6h ago", verified: false },
+  { id: "broccoli-kamuning", emoji: "🥦", item: "Broccoli", price: 87, market: "Kamuning Market", time: "2h ago", verified: true, lat: 14.6326, lng: 121.0227 },
+  { id: "tomato-farmers", emoji: "🍅", item: "Tomato", price: 40, market: "Farmer's Market", time: "4h ago", verified: true, lat: 14.6235, lng: 121.0389 },
+  { id: "garlic-cubao", emoji: "🧄", item: "Garlic", price: 260, market: "Cubao Market", time: "6h ago", verified: false, lat: 14.5887, lng: 121.0472 },
 ];
 
 const quickActions = [
@@ -145,18 +146,31 @@ export function SmartDashboardPage() {
           <h2 className="text-lg font-bold text-gray-800 dark:text-[#FFFFFF] flex items-center gap-2"><MapPin size={18} /> Nearby Reports</h2>
           <Link to="/community" className="text-green-600 text-sm font-medium flex items-center gap-0.5">See all <ChevronRight size={15} /></Link>
         </div>
-        <div className="rounded-2xl overflow-hidden h-28 relative mb-3" style={{ background: "linear-gradient(135deg, #e8f5e9, #c8e6c9)" }}>
-          <div className="absolute inset-0 flex items-center justify-center text-green-700 font-medium text-sm">📍 Reports within 5km</div>
-          {nearbyReports.map((r, i) => (
-            <div key={r.item} className="absolute w-7 h-7 rounded-full bg-green-600 flex items-center justify-center text-sm shadow border-2 border-white"
-              style={{ left: `${20 + i * 28}%`, top: `${20 + (i % 2) * 45}%` }}>
-              {r.emoji}
-            </div>
-          ))}
+        
+        {/* Leaflet Map - Nearby Reports */}
+        <div className="mb-3 rounded-2xl overflow-hidden">
+          <LeafletMap
+            markers={nearbyReports.map((r) => ({
+              id: r.id,
+              lat: r.lat,
+              lng: r.lng,
+              label: r.market,
+              item: r.item,
+              price: `₱${r.price}`,
+              verified: r.verified,
+              icon: r.emoji,
+              color: r.verified ? "#2E7D32" : "#F59E0B",
+            }))}
+            center={[14.5995, 120.9842]}
+            zoom={12}
+            height="300px"
+            darkMode={false}
+          />
         </div>
+
         <div className="space-y-2">
           {nearbyReports.map((r) => (
-            <div key={r.item} className="bg-white dark:bg-[#1E1E1E] rounded-xl px-4 py-3 shadow-sm border border-gray-100 dark:border-[#2D2D2D] flex items-center gap-3">
+            <div key={r.id} className="bg-white dark:bg-[#1E1E1E] rounded-xl px-4 py-3 shadow-sm border border-gray-100 dark:border-[#2D2D2D] flex items-center gap-3">
               <span className="text-xl">{r.emoji}</span>
               <div className="flex-1">
                 <p className="text-sm font-medium text-gray-700 dark:text-[#E0E0E0]">{r.item} at {r.market}</p>
