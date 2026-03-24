@@ -182,7 +182,7 @@ export function EVPage() {
           <AITip>Based on usage patterns, EVIDA stations tend to have low wait times on weekday mornings.</AITip>
 
           {/* Leaflet Map */}
-          <div className="rounded-2xl overflow-hidden mb-4 touch-none select-none" style={{ pointerEvents: "auto" }}>
+          <div className="rounded-2xl overflow-hidden mb-4" style={{ position: "relative", zIndex: 1, pointerEvents: "auto" }}>
             <LeafletMap
               markers={filteredStations.map((s) => ({
                 id: s.id.toString(),

@@ -9,7 +9,7 @@ import { useApp } from "../../context/AppContext";
 
 export function Layout() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { basketToastVisible } = useApp();
+  const { basketToastVisible, loginToastVisible, user } = useApp();
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-[#121212]">
@@ -40,10 +40,22 @@ export function Layout() {
       <BottomNav />
       <AIChat />
 
+      {/* Login Success Toast */}
+      <div
+        className={`fixed bottom-24 md:bottom-8 left-1/2 -translate-x-1/2 z-[200] transition-all duration-300 ${
+          loginToastVisible ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-4 pointer-events-none"
+        }`}
+      >
+        <div className="flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-full shadow-xl">
+          <CheckCircle size={18} className="flex-shrink-0" />
+          <span className="font-semibold">Successfully logged in. Welcome, {user?.name}!</span>
+        </div>
+      </div>
+
       {/* Add to Basket Toast */}
       <div
         className={`fixed bottom-24 md:bottom-8 left-1/2 -translate-x-1/2 z-[200] transition-all duration-300 ${
-          basketToastVisible ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-4 pointer-events-none"
+          basketToastVisible && !loginToastVisible ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-4 pointer-events-none"
         }`}
       >
         <div className="flex items-center gap-2 bg-green-700 text-white px-5 py-3 rounded-full shadow-xl">

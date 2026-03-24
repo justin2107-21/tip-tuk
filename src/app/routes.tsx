@@ -10,6 +10,10 @@ import { CommunityPage } from "./pages/CommunityPage";
 import { WasteReductionPage } from "./pages/WasteReductionPage";
 import { BudgetPlannerPage } from "./pages/BudgetPlannerPage";
 import { SmartDashboardPage } from "./pages/SmartDashboardPage";
+import { AuthPage } from "./pages/AuthPage";
+import { SettingsPage } from "./pages/SettingsPage";
+import { HealthSupportPage } from "./pages/HealthSupportPage";
+import { SubscriptionPage } from "./pages/SubscriptionPage";
 
 function NotFound() {
   return (
@@ -26,6 +30,10 @@ function NotFound() {
 
 export const router = createBrowserRouter([
   {
+    path: "/auth",
+    Component: AuthPage,
+  },
+  {
     path: "/",
     Component: Layout,
     children: [
@@ -39,6 +47,9 @@ export const router = createBrowserRouter([
       { path: "waste", Component: WasteReductionPage },
       { path: "budget", Component: BudgetPlannerPage },
       { path: "dashboard", Component: SmartDashboardPage },
+      { path: "settings", Component: SettingsPage },
+      { path: "help", Component: HealthSupportPage },
+      { path: "subscription", Component: SubscriptionPage },
       { path: "*", Component: NotFound },
     ],
   },

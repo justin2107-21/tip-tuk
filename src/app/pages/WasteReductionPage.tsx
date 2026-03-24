@@ -158,6 +158,66 @@ export function WasteReductionPage() {
       <AITip>
         Use soon-to-expire <strong>Chicken</strong> and <strong>Broccoli</strong> from SM Cubao to make Chicken Chopsuey – saves ₱85 vs buying fresh!
       </AITip>
+
+      {/* STEP 5: AI Recipe Suggestion */}
+      <div className="bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 rounded-2xl p-5 border border-amber-200 dark:border-amber-800">
+        <div className="flex items-start gap-3 mb-3">
+          <span className="text-2xl">🍳</span>
+          <div className="flex-1">
+            <p className="font-semibold text-gray-800 dark:text-white text-sm flex items-center gap-2">STEP 5: AI Recipe Suggestion – Use What You Buy <AIBadge /></p>
+          </div>
+        </div>
+        
+        <div className="bg-white dark:bg-[#2D2D2D] rounded-xl p-4 border border-amber-100 dark:border-amber-800">
+          <p className="text-xs text-gray-600 dark:text-gray-300 mb-3 leading-relaxed">
+            At the bottom of the page, we have an AI Recipe Suggestion that ties everything together:
+          </p>
+          <div className="bg-amber-50 dark:bg-amber-900/30 rounded-lg p-3 mb-3 border-l-4 border-amber-500">
+            <p className="font-semibold text-amber-900 dark:text-amber-100 text-sm">✨ AI Recipe: Chicken Chop Suey</p>
+            <p className="text-xs text-amber-700 dark:text-amber-200 mt-1">Use soon-to-expire Chicken and Broccoli from SM Cubao to make Chicken Chopsuey – <span className="font-bold">saves ₱85 vs buying fresh!</span></p>
+          </div>
+          <p className="text-xs text-gray-600 dark:text-gray-300 mb-2 font-semibold">How does this work? The AI looks at:</p>
+          <ul className="text-xs text-gray-600 dark:text-gray-300 space-y-1 mb-3 list-disc list-inside">
+            <li>Surplus items available near the user</li>
+            <li>Items already in the user's basket</li>
+            <li>Matches them with recipes from our database</li>
+          </ul>
+          <p className="text-xs text-gray-600 dark:text-gray-300">
+            <strong>Why is this valuable?</strong> It solves a common problem: "I bought discounted items, but now I don't know what to cook with them." Our AI gives users a ready-made meal plan using the discounted items they just bought.
+          </p>
+        </div>
+
+        {/* Recipe Details */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+          <div className="bg-white dark:bg-[#2D2D2D] rounded-lg p-3 border border-amber-100 dark:border-amber-800">
+            <p className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">🛒 Ingredients from Surplus</p>
+            <div className="space-y-1 text-xs">
+              <p className="text-gray-600 dark:text-gray-400">✓ Chicken - ₱120 (was ₱175)</p>
+              <p className="text-gray-600 dark:text-gray-400">✓ Broccoli - ₱75 (was ₱120)</p>
+              <p className="text-gray-600 dark:text-gray-400">• Garlic, Soy sauce, Oil - ₱30</p>
+              <p className="font-semibold text-green-700 dark:text-green-400 mt-2">Total: ₱225</p>
+            </div>
+          </div>
+          <div className="bg-white dark:bg-[#2D2D2D] rounded-lg p-3 border border-amber-100 dark:border-amber-800">
+            <p className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">💰 Money Saved</p>
+            <div className="space-y-1 text-xs">
+              <p className="text-gray-600 dark:text-gray-400">Normal price: ₱310</p>
+              <p className="text-gray-600 dark:text-gray-400">Your price: ₱225</p>
+              <p className="font-bold text-green-700 dark:text-green-400 mt-2">Savings: ₱85 (27%)</p>
+            </div>
+          </div>
+        </div>
+
+        {/* CTA Buttons */}
+        <div className="flex gap-2 mt-4">
+          <button className="flex-1 py-2.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-semibold text-sm transition-colors">
+            📖 View Full Recipe
+          </button>
+          <button className="flex-1 py-2.5 bg-amber-100 dark:bg-amber-900/40 hover:bg-amber-200 dark:hover:bg-amber-800/60 text-amber-700 dark:text-amber-300 rounded-lg font-semibold text-sm transition-colors">
+            🛒 Add to Basket
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

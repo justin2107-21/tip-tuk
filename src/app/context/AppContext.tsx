@@ -10,6 +10,12 @@ export interface BasketItem {
   unit: string;
 }
 
+export interface User {
+  name: string;
+  email: string;
+  avatar: string;
+}
+
 interface AppContextType {
   darkMode: boolean;
   toggleDarkMode: () => void;
@@ -20,6 +26,11 @@ interface AppContextType {
   basketCount: number;
   totalCost: number;
   basketToastVisible: boolean;
+  loginToastVisible: boolean;
+  user: User | null;
+  isLoggedIn: boolean;
+  login: (name: string, email: string) => void;
+  logout: () => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -35,7 +46,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [darkMode, setDarkMode] = useState(false);
   const [basket, setBasket] = useState<BasketItem[]>(initialBasket);
   const [basketToastVisible, setBasketToastVisible] = useState(false);
+  const [loginToastVisible, setLoginToastVisible] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
   const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const loginTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const toggleDarkMode = () => {
     setDarkMode((d) => {
@@ -46,13 +60,26 @@ export function AppProvider({ children }: { children: ReactNode }) {
     });
   };
 
+  const login = (name: string, email: string) => {
+    const avatar = name.charAt(0).toUpperCase();
+    setUser({ name, email, avatar });
+    // Show login success toast
+    if (loginTimerRef.current) clearTimeout(loginTimerRef.current);
+    setLoginToastVisible(true);
+    loginTimerRef.current = setTimeout(() => setLoginToastVisible(false), 2000);
+  };
+
+  const logout = () => {
+    setUser(null);
+  };
+
   const addToBasket = (item: Omit<BasketItem, "quantity">) => {
     setBasket((prev) => {
       const exists = prev.find((b) => b.id === item.id);
       if (exists) return prev.map((b) => b.id === item.id ? { ...b, quantity: b.quantity + 1 } : b);
       return [...prev, { ...item, quantity: 1 }];
     });
-    // Show toast
+    // Show basket toast
     if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
     setBasketToastVisible(true);
     toastTimerRef.current = setTimeout(() => setBasketToastVisible(false), 1500);
@@ -71,7 +98,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const totalCost = basket.reduce((sum, b) => sum + b.price * b.quantity, 0);
 
   return (
-    <AppContext.Provider value={{ darkMode, toggleDarkMode, basket, addToBasket, removeFromBasket, updateQuantity, basketCount, totalCost, basketToastVisible }}>
+    <AppContext.Provider value={{ darkMode, toggleDarkMode, basket, addToBasket, removeFromBasket, updateQuantity, basketCount, totalCost, basketToastVisible, loginToastVisible, user, isLoggedIn: !!user, login, logout }}>
       {children}
     </AppContext.Provider>
   );

@@ -57,7 +57,24 @@ export function Sidebar({ mobile, onClose }: SidebarProps) {
         </nav>
       </div>
 
-      <div className="mt-auto px-3 py-4">
+      <div className="mt-auto px-3 py-4 space-y-3">
+        {/* Premium Button */}
+        <NavLink
+          to="/subscription"
+          className={({ isActive }) =>
+            `flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all text-sm font-semibold w-full text-center justify-center ${
+              isActive
+                ? "bg-purple-600 text-white shadow-lg shadow-purple-500/30"
+                : "bg-gradient-to-r from-purple-500 to-purple-600 text-white hover:from-purple-600 hover:to-purple-700 shadow-md"
+            }`
+          }
+          onClick={onClose}
+        >
+          <span className="text-base">💎</span>
+          <span>Premium</span>
+        </NavLink>
+
+        {/* Data Sources Box */}
         <div className="rounded-xl p-3 text-xs text-gray-500 dark:text-[#9E9E9E]"
           style={{ background: "repeating-linear-gradient(45deg, #f0fdf4, #f0fdf4 3px, #dcfce7 3px, #dcfce7 6px)" }}>
           <p className="font-semibold text-green-700 mb-1">📡 Data Sources</p>

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router";
-import { Bell, Search, Sun, Moon, User, ShoppingBasket, Menu, X } from "lucide-react";
+import { Bell, Search, Sun, Moon, User, ShoppingBasket, Menu, X, LogOut, Settings, HelpCircle } from "lucide-react";
 import { useApp } from "../../context/AppContext";
+import { AuthModal } from "../AuthModal";
 
 const notifications = [
   { id: 1, icon: "📉", title: "Broccoli dropped 5%", body: "Now ₱87/kg at Kamuning Market", time: "2 min ago", type: "price" },
@@ -17,9 +18,11 @@ interface NavbarProps {
 }
 
 export function Navbar({ onMobileMenuToggle, mobileMenuOpen }: NavbarProps) {
-  const { darkMode, toggleDarkMode, basketCount } = useApp();
+  const { darkMode, toggleDarkMode, basketCount, user, logout } = useApp();
   const [searchVal, setSearchVal] = useState("");
   const [bellOpen, setBellOpen] = useState(false);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleSearch = (e: React.FormEvent) => {
@@ -29,7 +32,7 @@ export function Navbar({ onMobileMenuToggle, mobileMenuOpen }: NavbarProps) {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 h-16 flex items-center px-4 gap-3 shadow-md"
+      <nav className="fixed top-0 left-0 right-0 z-[1000] h-16 flex items-center px-4 gap-3 shadow-md"
         style={{ background: "linear-gradient(135deg, #1B5E20 0%, #2E7D32 60%, #388E3C 100%)" }}>
         {/* Mobile menu toggle */}
         <button
@@ -45,7 +48,7 @@ export function Navbar({ onMobileMenuToggle, mobileMenuOpen }: NavbarProps) {
           <img src="/favicon1.ico" alt="TipTuk" className="w-14 h-14 rounded-full shadow-sm" />
           <div className="hidden sm:block">
             <span className="text-white font-bold text-xl" style={{ fontFamily: "Poppins, sans-serif" }}>
-              Tip<span style={{ color: "#FFB300" }}>Tuk</span>
+              Tipid<span style={{ color: "#FFB300" }}>Tuklas</span>
             </span>
           </div>
         </Link>
@@ -94,16 +97,48 @@ export function Navbar({ onMobileMenuToggle, mobileMenuOpen }: NavbarProps) {
             {darkMode ? <Sun size={20} /> : <Moon size={20} />}
           </button>
 
-          <Link to="/dashboard" className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/15 text-white hover:bg-white/25 transition-colors text-sm ml-1">
-            <User size={16} />
-            <span className="hidden sm:inline">Maria</span>
-          </Link>
+          {user ? (
+            <div className="relative group">
+              <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/15 text-white hover:bg-white/25 transition-colors text-sm ml-1">
+                <div className="w-6 h-6 rounded-full bg-white/30 flex items-center justify-center font-semibold text-xs">{user.avatar}</div>
+                <span className="hidden sm:inline">{user.name.split(" ")[0]}</span>
+              </button>
+              {/* Profile Dropdown */}
+              <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-[#1E1E1E] rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-[1100]">
+                <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+                  <p className="font-semibold text-gray-800 dark:text-white text-sm">{user.name}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">{user.email}</p>
+                </div>
+                <div className="border-t border-gray-200 dark:border-gray-700 py-2">
+                  <button onClick={() => { navigate("/settings"); setProfileOpen(false); }} className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#2D2D2D] flex items-center gap-2">
+                    <Settings size={14} /> Settings
+                  </button>
+                  <button onClick={() => { navigate("/help"); setProfileOpen(false); }} className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#2D2D2D] flex items-center gap-2">
+                    <HelpCircle size={14} /> Health & Support
+                  </button>
+                </div>
+                <div className="border-t border-gray-200 dark:border-gray-700 py-2">
+                  <button onClick={() => { logout(); setProfileOpen(false); }} className="w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 flex items-center gap-2">
+                    <LogOut size={14} /> Logout
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <button onClick={() => setAuthModalOpen(true)} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/15 text-white hover:bg-white/25 transition-colors text-sm ml-1">
+              <User size={16} />
+              <span className="hidden sm:inline">Login</span>
+            </button>
+          )}
         </div>
       </nav>
 
+      {/* Auth Modal */}
+      <AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
+
       {/* Notification Bell Modal */}
       {bellOpen && (
-        <div className="fixed inset-0 bg-black/50 z-[100] flex items-start justify-end p-4 pt-20" onClick={() => setBellOpen(false)}>
+        <div className="fixed inset-0 bg-black/50 z-[1100] flex items-start justify-end p-4 pt-20" onClick={() => setBellOpen(false)}>
           <div
             className="bg-white dark:bg-[#1E1E1E] rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden"
             onClick={(e) => e.stopPropagation()}

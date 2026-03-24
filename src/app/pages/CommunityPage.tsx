@@ -42,16 +42,21 @@ interface MapPinData {
   lat: number;
   lng: number;
   emoji?: string;
+  region: string;
 }
 
 // ─── Static Data ─────────────────────────────────────────────────────────────
 const mapPins: MapPinData[] = [
-  { id: "kamuning",  label: "Kamuning Market",       item: "🥦 Broccoli",     price: "₱87/kg",  timeAgo: "2 hours ago", verified: true,  lat: 14.6326, lng: 121.0227, emoji: "🥦" },
-  { id: "cubao",     label: "Cubao Market",           item: "🧄 Bawang",       price: "₱260/kg", timeAgo: "6 hours ago", verified: false, lat: 14.5887, lng: 121.0472, emoji: "🧄" },
-  { id: "farmers",   label: "Farmer's Market, QC",   item: "🍅 Kamatis",      price: "₱40/kg",  timeAgo: "4 hours ago", verified: true,  lat: 14.6235, lng: 121.0389, emoji: "🍅" },
-  { id: "pasig",     label: "Pasig Public Market",    item: "🍗 Chicken",      price: "₱165/kg", timeAgo: "1 hour ago",  verified: true,  lat: 14.5647, lng: 121.1022, emoji: "🍗" },
-  { id: "makati",    label: "Makati Central Market",  item: "🥩 Pork Liempo",  price: "₱285/kg", timeAgo: "8 hours ago", verified: true,  lat: 14.5620, lng: 121.0092, emoji: "🥩" },
-  { id: "taguig",    label: "Taguig/BGC Market",      item: "🥬 Kangkong",     price: "₱25/kg",  timeAgo: "3 hours ago", verified: true,  lat: 14.5450, lng: 121.0621, emoji: "🥬" },
+  { id: "kamuning",  label: "Kamuning Market",       item: "🥦 Broccoli",     price: "₱87/kg",  timeAgo: "2 hours ago", verified: true,  lat: 14.6326, lng: 121.0227, emoji: "🥦", region: "Metro Manila" },
+  { id: "cubao",     label: "Cubao Market",           item: "🧄 Bawang",       price: "₱260/kg", timeAgo: "6 hours ago", verified: false, lat: 14.5887, lng: 121.0472, emoji: "🧄", region: "Metro Manila" },
+  { id: "farmers",   label: "Farmer's Market, QC",   item: "🍅 Kamatis",      price: "₱40/kg",  timeAgo: "4 hours ago", verified: true,  lat: 14.6235, lng: 121.0389, emoji: "🍅", region: "Metro Manila" },
+  { id: "pasig",     label: "Pasig Public Market",    item: "🍗 Chicken",      price: "₱165/kg", timeAgo: "1 hour ago",  verified: true,  lat: 14.5647, lng: 121.1022, emoji: "🍗", region: "Metro Manila" },
+  { id: "makati",    label: "Makati Central Market",  item: "🥩 Pork Liempo",  price: "₱285/kg", timeAgo: "8 hours ago", verified: true,  lat: 14.5620, lng: 121.0092, emoji: "🥩", region: "Metro Manila" },
+  { id: "taguig",    label: "Taguig/BGC Market",      item: "🥬 Kangkong",     price: "₱25/kg",  timeAgo: "3 hours ago", verified: true,  lat: 14.5450, lng: 121.0621, emoji: "🥬", region: "Metro Manila" },
+  { id: "cebu",      label: "Cebu City Public Market", item: "🍌 Saging",      price: "₱45/kg",  timeAgo: "5 hours ago", verified: true,  lat: 10.3157, lng: 123.8854, emoji: "🍌", region: "Cebu City" },
+  { id: "davao",     label: "Davao City Market",      item: "🥒 Pipino",       price: "₱35/kg",  timeAgo: "7 hours ago", verified: true,  lat: 7.1278, lng: 125.5419, emoji: "🥒", region: "Davao City" },
+  { id: "iloilo",    label: "Iloilo City Central",    item: "🥬 Alugbati",     price: "₱30/kg",  timeAgo: "3 hours ago", verified: true,  lat: 10.6992, lng: 122.5598, emoji: "🥬", region: "Iloilo City" },
+  { id: "baguio",    label: "Baguio Public Market",   item: "🌽 Mais",         price: "₱55/kg",  timeAgo: "2 hours ago", verified: true,  lat: 16.4023, lng: 120.5960, emoji: "🌽", region: "Baguio City" },
 ];
 
 const initialReports: Report[] = [
@@ -112,7 +117,7 @@ const initialLeaderboard = [
 
 const itemOptions  = ["🥦 Broccoli", "🍅 Kamatis", "🧄 Bawang", "🥩 Pork", "🍗 Chicken", "🐟 Isda", "🥬 Kangkong", "🍌 Saging", "Other"];
 const marketOptions = ["Kamuning Market", "Farmer's Market, QC", "Cubao Market", "Marikina Market", "Pasig Market", "Makati Market", "Divisoria", "Other"];
-const regions = ["Metro Manila", "Cebu City", "Davao City", "Iloilo City", "Baguio City"];
+const regions = ["All", "Metro Manila", "Cebu City", "Davao City", "Iloilo City", "Baguio City"];
 
 // ─── Metro Manila SVG Map ─────────────────────────────────────────────────────
 function MetroManilaMap({ darkMode }: { darkMode: boolean }) {
@@ -289,8 +294,32 @@ export function CommunityPage() {
   const [activeRegion, setActiveRegion]   = useState("Metro Manila");
   const [regionOpen, setRegionOpen]       = useState(false);
 
+  // Map center and zoom by region
+  const regionCenters: Record<string, [number, number]> = {
+    "All": [10.5, 121.0],
+    "Metro Manila": [14.5995, 120.9842],
+    "Cebu City": [10.3157, 123.8854],
+    "Davao City": [7.1278, 125.5419],
+    "Iloilo City": [10.6992, 122.5598],
+    "Baguio City": [16.4023, 120.5960],
+  };
+
+  const regionZooms: Record<string, number> = {
+    "All": 6,
+    "Metro Manila": 11,
+    "Cebu City": 11,
+    "Davao City": 11,
+    "Iloilo City": 11,
+    "Baguio City": 11,
+  };
+
+  // Filter mapPins by region
+  const filteredPins = activeRegion === "All" 
+    ? mapPins 
+    : mapPins.filter(pin => pin.region === activeRegion);
+
   // Convert mapPins to Leaflet markers format
-  const leafletMarkers = mapPins.map((pin) => ({
+  const leafletMarkers = filteredPins.map((pin) => ({
     id: pin.id,
     lat: pin.lat,
     lng: pin.lng,
@@ -469,11 +498,11 @@ export function CommunityPage() {
         </div>
 
         {/* Map viewport */}
-        <div className="relative rounded-b-2xl overflow-hidden">
+        <div className="relative rounded-b-2xl overflow-hidden" style={{ position: "relative", zIndex: 1 }}>
           <LeafletMap
             markers={leafletMarkers}
-            center={[14.5995, 120.9842]}
-            zoom={11}
+            center={regionCenters[activeRegion]}
+            zoom={regionZooms[activeRegion]}
             height="600px"
             darkMode={darkMode}
           />
@@ -481,7 +510,7 @@ export function CommunityPage() {
 
         {/* Map legend */}
         <div className="px-4 py-2.5 border-t border-gray-100 dark:border-[#2D2D2D] flex items-center gap-4 text-xs text-gray-500 dark:text-[#9E9E9E] flex-wrap">
-          <span>📍 {mapPins.length} active report pins</span>
+          <span>📍 {filteredPins.length} active report pins</span>
           <span>✅ Verified</span>
           <span>⚠️ Unverified</span>
           <span className="ml-auto">Tap a pin to view price</span>

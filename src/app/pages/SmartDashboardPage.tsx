@@ -52,7 +52,7 @@ export function SmartDashboardPage() {
   const [recipeOpen, setRecipeOpen] = useState(false);
 
   const budget = 5000;
-  const spent = 2340;
+  const spent = 724; // Consistent with BudgetPlannerPage transactions total
   const progress = (spent / budget) * 100;
 
   const hour = new Date().getHours();
@@ -148,7 +148,7 @@ export function SmartDashboardPage() {
         </div>
         
         {/* Leaflet Map - Nearby Reports */}
-        <div className="mb-3 rounded-2xl overflow-hidden">
+        <div className="mb-3 rounded-2xl overflow-hidden" style={{ position: "relative", zIndex: 1 }}>
           <LeafletMap
             markers={nearbyReports.map((r) => ({
               id: r.id,
