@@ -47,10 +47,10 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-gray-200 dark:border-gray-700">
           {step === "login" && (
-            <h3 className="font-bold text-lg text-gray-800 dark:text-white flex items-center gap-2">🔐 Welcome Back to Anopresyo</h3>
+            <h3 className="font-bold text-lg text-gray-800 dark:text-white flex items-center gap-2">🔐 Welcome Back to TIPID TUKLAS</h3>
           )}
           {step === "register" && (
-            <h3 className="font-bold text-lg text-gray-800 dark:text-white flex items-center gap-2">📝 Create Your Anopresyo Account</h3>
+            <h3 className="font-bold text-lg text-gray-800 dark:text-white flex items-center gap-2">📝 Create Your TIPID TUKLAS Account</h3>
           )}
           {step === "switch" && (
             <h3 className="font-bold text-lg text-gray-800 dark:text-white flex items-center gap-2">🔄 Switch Account</h3>

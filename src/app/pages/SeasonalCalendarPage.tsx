@@ -104,14 +104,17 @@ export function SeasonalCalendarPage() {
     // Get average price from range
     const prices = item.priceRange.match(/₱(\d+)/g) || [];
     const avgPrice = prices.length >= 2 
-      ? (parseInt(prices[0].replace("₱", "")) + parseInt(prices[1].replace("₱", ""))) / 2
+      ? (parseInt(prices[0]?.replace("₱", "") || "50") + parseInt(prices[1]?.replace("₱", "") || "50")) / 2
       : parseInt(prices[0]?.replace("₱", "") || "50");
 
     // Add to basket
     addToBasket({
-      name: `${item.emoji} ${item.name}`,
+      id: `${item.name.toLowerCase().replace(/\s+/g, "-")}-${sectionMonths}`,
+      emoji: item.emoji,
+      name: item.name,
       price: Math.round(avgPrice),
-      quantity: 1,
+      usualPrice: Math.round(avgPrice),
+      unit: "item",
     });
 
     // Mark as added

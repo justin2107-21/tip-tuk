@@ -10,7 +10,7 @@ export function SettingsPage() {
     EV: false,
   });
 
-  const toggleTab = (tab: string) => {
+  const toggleTab = (tab: keyof typeof visibleTabs) => {
     setVisibleTabs((prev) => ({ ...prev, [tab]: !prev[tab] }));
   };
 
@@ -55,7 +55,7 @@ export function SettingsPage() {
           {tabs.map((tab) => (
             <button
               key={tab.id}
-              onClick={() => toggleTab(tab.id)}
+              onClick={() => toggleTab(tab.id as keyof typeof visibleTabs)}
               className={`p-4 rounded-xl border-2 transition-all text-left flex items-center justify-between ${
                 visibleTabs[tab.id as keyof typeof visibleTabs]
                   ? "border-green-500 bg-green-50 dark:bg-[#1B5E20]/30"

@@ -286,7 +286,7 @@ export function HomePage() {
                       <p className="text-gray-400 text-xs">per {item.unit || "kg"}</p>
                     </div>
                   </div>
-                  <span className="text-xs font-bold px-2 py-1 rounded-full bg-green-100 text-green-700">🟢 MURA</span>
+                  <span className="text-sm font-bold px-4 py-2 rounded-full bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-[#81C784]">🟢 MURA</span>
                 </div>
                 <div className="flex items-end gap-2 mb-3">
                   <span className="text-2xl font-bold text-green-700">₱{item.price}</span>
